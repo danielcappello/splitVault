@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Splits Board — Betting Split Snapshots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg: #0F1215;
+    --panel: #171B1F;
+    --panel-raised: #1D2227;
+    --hairline: #2A2F35;
+    --hairline-soft: #21262B;
+    --text: #ECEFF2;
+    --text-muted: #8A9099;
+    --text-faint: #565C64;
+    --handle: #3FB68B;   /* money / handle % — "sharp" side */
+    --handle-soft: rgba(63,182,139,0.16);
+    --bets: #E8A33D;     /* ticket / bets % — "public" side */
+    --bets-soft: rgba(232,163,61,0.16);
+    --alert: #E2574C;    /* big divergence / steam */
+    --alert-soft: rgba(226,87,76,0.14);
+    --link: #4C8DFF;
+    --radius: 3px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    line-height:1.5;
+    min-height:100vh;
+  }
+  ::selection{background:var(--handle-soft);color:var(--text);}
+  .mono{font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
+  .display{font-family:'Space Grotesk',sans-serif;}
+  a{color:var(--link);}
+
+  /* ---------- Top bar ---------- */
+  header.topbar{
+    position:sticky; top:0; z-index:30;
+    background:rgba(15,18,21,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    padding:0 20px;
+  }
+  .topbar-inner{
+    max-width:1400px; margin:0 auto;
+    display:flex; align-items:center; gap:24px;
+    height:56px;
+  }
+  .wordmark{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700; font-size:18px; letter-spacing:0.02em;
+    display:flex; align-items:baseline; gap:8px; white-space:nowrap;
+  }
+  .wordmark .dot{color:var(--handle);}
+  .wordmark small{
+    font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:10.5px;
+    color:var(--text-faint); letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .status-pill{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-muted);
+    border:1px solid var(--hairline); border-radius:20px; padding:4px 10px;
+    display:flex; align-items:center; gap:6px; white-space:nowrap;
+  }
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--handle);flex:none;}
+  .status-dot.warn{background:var(--alert);}
+
+  /* ---------- Layout ---------- */
+  main{max-width:1400px; margin:0 auto; padding:24px 20px 80px;}
+
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:1px;
+    background:var(--hairline);
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    overflow:hidden;
+    margin-bottom:20px;
+  }
+  .stat-cell{
+    background:var(--panel);
+    padding:14px 16px;
+  }
+  .stat-cell .label{
+    font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--text-faint); margin-bottom:6px;
+  }
+  .stat-cell .value{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;
+  }
+  .stat-cell .sub{font-size:11px; color:var(--text-muted); margin-top:2px;}
+
+  /* ---------- Tabs ---------- */
+  .tabs{display:flex; gap:2px; margin-bottom:16px; border-bottom:1px solid var(--hairline);}
+  .tab-btn{
+    background:none; border:none; color:var(--text-muted);
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
+    padding:10px 4px; margin-right:22px; cursor:pointer;
+    border-bottom:2px solid transparent; position:relative; top:1px;
+  }
+  .tab-btn.active{color:var(--text); border-bottom-color:var(--handle);}
+  .tab-btn:hover{color:var(--text);}
+
+  /* ---------- Filter bar ---------- */
+  .filter-bar{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+    background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:10px 12px; margin-bottom:16px;
+  }
+  .filter-group{display:flex; align-items:center; gap:6px;}
+  .filter-group label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint);}
+  select, input[type=text]{
+    background:var(--panel-raised); color:var(--text); border:1px solid var(--hairline);
+    border-radius:var(--radius); padding:6px 8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+    outline:none;
+  }
+  select:focus, input[type=text]:focus{border-color:var(--link);}
+  input[type=text]{width:170px;}
+  .filter-spacer{flex:1;}
+  .chip-toggle{
+    display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none;
+    font-size:12px; color:var(--text-muted); border:1px solid var(--hairline);
+    border-radius:20px; padding:5px 10px 5px 8px;
+  }
+  .chip-toggle input{accent-color:var(--handle);}
+  .chip-toggle.on{color:var(--text); border-color:var(--handle); background:var(--handle-soft);}
+  .reset-btn{
+    background:none; border:1px solid var(--hairline); color:var(--text-muted);
+    border-radius:var(--radius); padding:6px 10px; font-size:12px; cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .reset-btn:hover{color:var(--text); border-color:var(--text-muted);}
+
+  /* ---------- Legend key ---------- */
+  .legend-key{
+    display:flex; gap:16px; flex-wrap:wrap; font-size:11.5px; color:var(--text-muted);
+    margin-bottom:14px;
+  }
+  .legend-key span{display:flex; align-items:center; gap:5px;}
+  .swatch{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  /* ---------- Split bar (signature element) ---------- */
+  .splitbar-wrap{width:100%; min-width:100px;}
+  .splitbar-labels{
+    display:flex; justify-content:space-between;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--text-faint);
+    margin-bottom:3px;
+  }
+  .splitbar{
+    position:relative; height:6px; border-radius:3px; background:var(--hairline-soft);
+    overflow:hidden;
+  }
+  .splitbar .seg-bets{
+    position:absolute; top:0; bottom:0; left:0; background:var(--bets); opacity:0.85;
+  }
+  .splitbar .marker-handle{
+    position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--handle);
+    box-shadow:0 0 0 1px var(--bg);
+  }
+  .splitbar-foot{font-size:9.5px; color:var(--text-faint); margin-top:2px; font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- Table ---------- */
+  .table-wrap{
+    background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
+    overflow-x:auto;
+  }
+  table{width:100%; border-collapse:collapse; min-width:900px;}
+  thead th{
+    text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--text-faint); font-weight:600; padding:10px 12px;
+    border-bottom:1px solid var(--hairline); white-space:nowrap;
+    cursor:pointer; user-select:none;
+  }
+  thead th:hover{color:var(--text-muted);}
+  thead th.sorted{color:var(--text);}
+  thead th .arrow{margin-left:3px; opacity:0.6; font-size:9px;}
+  tbody tr{border-bottom:1px solid var(--hairline-soft); cursor:pointer;}
+  tbody tr:hover{background:var(--panel-raised);}
+  tbody tr.expanded{background:var(--panel-raised);}
+  tbody td{padding:10px 12px; vertical-align:middle;}
+  .matchup{display:flex; flex-direction:column; gap:1px;}
+  .matchup .teams{font-weight:600; font-size:13px;}
+  .matchup .meta{font-size:10.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace;}
+  .tag{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10px;
+    padding:2px 6px; border-radius:20px; border:1px solid var(--hairline); color:var(--text-muted);
+    white-space:nowrap;
+  }
+  .num{font-family:'IBM Plex Mono',monospace; font-size:12.5px;}
+  .divergence-badge{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
+    padding:3px 7px; border-radius:var(--radius); display:inline-block; white-space:nowrap;
+  }
+  .divergence-badge.hi{background:var(--alert-soft); color:var(--alert);}
+  .divergence-badge.mid{background:var(--bets-soft); color:var(--bets);}
+  .divergence-badge.lo{background:var(--hairline-soft); color:var(--text-faint);}
+  .empty-state{padding:48px 20px; text-align:center; color:var(--text-muted);}
+  .empty-state .display{font-size:16px; color:var(--text); margin-bottom:6px;}
+
+  /* ---------- Detail row ---------- */
+  .detail-row td{padding:0; border-bottom:1px solid var(--hairline);}
+  .detail-panel{padding:18px 20px 24px; background:#12161A;}
+  .detail-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:14px; flex-wrap:wrap;}
+  .detail-head h3{margin:0 0 3px; font-family:'Space Grotesk',sans-serif; font-size:17px;}
+  .detail-head .sub{color:var(--text-muted); font-size:12px; font-family:'IBM Plex Mono',monospace;}
+  .close-detail{background:none; border:1px solid var(--hairline); color:var(--text-muted); border-radius:var(--radius); padding:5px 10px; cursor:pointer; font-size:12px;}
+  .close-detail:hover{color:var(--text);}
+
+  .chart-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; margin-bottom:16px;}
+  .chart-card{background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius); padding:12px 14px 6px;}
+  .chart-card h4{
+    margin:0 0 8px; font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--text-faint); font-weight:600;
+  }
+  .chart-card .canvas-wrap{position:relative; height:180px;}
+  .chart-empty{color:var(--text-faint); font-size:12px; padding:20px 0; text-align:center;}
+
+  .snap-table-wrap{max-height:260px; overflow:auto; border:1px solid var(--hairline); border-radius:var(--radius);}
+  .snap-table-wrap table{min-width:100%;}
+  .snap-table-wrap thead th{position:sticky; top:0; background:var(--panel); z-index:1; cursor:default;}
+  .snap-table-wrap thead th:hover{color:var(--text-faint);}
+
+  /* ---------- Movers tab ---------- */
+  .movers-note{color:var(--text-muted); font-size:12.5px; margin-bottom:14px; max-width:720px;}
+
+  /* ---------- Loading / fallback ---------- */
+  #loadState{padding:80px 20px; text-align:center;}
+  #loadState .display{font-size:18px; margin-bottom:8px;}
+  #loadState .sub{color:var(--text-muted); font-size:13px; max-width:480px; margin:0 auto 20px;}
+  .drop-zone{
+    max-width:420px; margin:0 auto; border:1px dashed var(--hairline); border-radius:var(--radius);
+    padding:22px; color:var(--text-muted); font-size:12.5px; cursor:pointer;
+  }
+  .drop-zone:hover{border-color:var(--link); color:var(--text);}
+  .drop-zone input{display:none;}
+
+  footer{
+    max-width:1400px; margin:0 auto; padding:20px 20px 60px; color:var(--text-faint); font-size:11px;
+    font-family:'IBM Plex Mono',monospace; border-top:1px solid var(--hairline); margin-top:24px;
+  }
+
+  @media (max-width:640px){
+    .topbar-inner{gap:12px;}
+    .status-pill{display:none;}
+    .stat-cell .value{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="wordmark">SPLITS<span class="dot">·</span>BOARD <small>market snapshot history</small></div>
+    <div class="filter-spacer"></div>
+    <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText">loading…</span></div>
+  </div>
+</header>
+
+<main>
+  <div id="loadState">
+    <div class="display">Reading all_splits.csv…</div>
+    <div class="sub">Looking for <span class="mono">all_splits.csv</span> in the same directory as this page.</div>
+  </div>
+
+  <div id="app" style="display:none;">
+
+    <div class="stat-row" id="statRow"></div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="board">Board</button>
+      <button class="tab-btn" data-tab="movers">Movers</button>
+    </div>
+
+    <!-- BOARD TAB -->
+    <div id="tab-board">
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label>Sport</label>
+          <select id="fSport"></select>
+        </div>
+        <div class="filter-group">
+          <label>League</label>
+          <select id="fLeague"></select>
+        </div>
+        <div class="filter-group">
+          <label>Date</label>
+          <select id="fDate"></select>
+        </div>
+        <div class="filter-group">
+          <input type="text" id="fSearch" placeholder="Search team…">
+        </div>
+        <label class="chip-toggle" id="fMovedChip">
+          <input type="checkbox" id="fMoved"> Line moved only
+        </label>
+        <div class="filter-spacer"></div>
+        <div class="filter-group">
+          <label>Sort</label>
+          <select id="fSort">
+            <option value="divergence">Biggest divergence</option>
+            <option value="recent">Most recently updated</option>
+            <option value="date">Game date</option>
+            <option value="snapshots">Most snapshots</option>
+            <option value="alpha">Matchup A–Z</option>
+          </select>
+        </div>
+        <button class="reset-btn" id="resetFilters">Reset</button>
+      </div>
+
+      <div class="legend-key">
+        <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
+        <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
+        <span><span class="swatch" style="background:var(--alert)"></span> High divergence (money vs. tickets disagree)</span>
+      </div>
+
+      <div class="table-wrap">
+        <table id="boardTable">
+          <thead>
+            <tr>
+              <th data-sort="date">Date</th>
+              <th data-sort="matchup">Matchup</th>
+              <th data-sort="sport">Sport</th>
+              <th>Spread split</th>
+              <th>Total</th>
+              <th>Moneyline split</th>
+              <th data-sort="divergence">Signal</th>
+              <th data-sort="snapshots">Snaps</th>
+              <th data-sort="recent">Updated</th>
+            </tr>
+          </thead>
+          <tbody id="boardBody"></tbody>
+        </table>
+        <div class="empty-state" id="boardEmpty" style="display:none;">
+          <div class="display">No games match these filters</div>
+          <div>Try widening the sport, league, or date filter.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOVERS TAB -->
+    <div id="tab-movers" style="display:none;">
+      <p class="movers-note">Every team-side and market, ranked by the gap between its share of bet <em>count</em> (bets %) and its share of bet <em>dollars</em> (handle %) at the latest snapshot. A large positive gap means fewer tickets are backing that side than dollars — the classic footprint of a small number of large bets.</p>
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label>Market</label>
+          <select id="mMarket">
+            <option value="spread">Spread</option>
+            <option value="money">Moneyline</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Sport</label>
+          <select id="mSport"></select>
+        </div>
+        <div class="filter-spacer"></div>
+      </div>
+      <div class="table-wrap">
+        <table id="moversTable">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>Opponent</th>
+              <th>Sport</th>
+              <th data-sort="handle">Handle %</th>
+              <th data-sort="bets">Bets %</th>
+              <th data-sort="div">Divergence</th>
+              <th data-sort="price">Price</th>
+            </tr>
+          </thead>
+          <tbody id="moversBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer id="pageFooter" style="display:none;"></footer>
+
+<script>
+(function(){
+
+/* ============================== DATA LOADING ============================== */
+
+const CSV_PATH = './all_splits.csv';
+
+function splitCSVLine(line){
+  const out=[]; let cur=''; let inQ=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(inQ){
+      if(c==='"'){
+        if(line[i+1]==='"'){cur+='"'; i++;}
+        else inQ=false;
+      } else cur+=c;
+    } else {
+      if(c==='"') inQ=true;
+      else if(c===','){out.push(cur); cur='';}
+      else cur+=c;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+
+function parseCSV(text){
+  const lines = text.split(/\r\n|\n/).filter(l=>l.trim().length>0);
+  if(!lines.length) return [];
+  const headers = splitCSVLine(lines[0]).map(h=>h.trim());
+  const rows=[];
+  for(let i=1;i<lines.length;i++){
+    const vals = splitCSVLine(lines[i]);
+    if(vals.length < headers.length) continue;
+    const obj={};
+    headers.forEach((h,idx)=>obj[h]=(vals[idx]!==undefined?vals[idx].trim():''));
+    rows.push(obj);
+  }
+  return rows;
+}
+
+function parseSpreadNum(s){
+  if(s===undefined || s==='' || s==='-') return null;
+  const n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
+function toNum(s){
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+
+function buildGames(rows){
+  const map = new Map();
+  rows.forEach(r=>{
+    if(!r.date || !r.away_team || !r.home_team) return;
+    const gkey = [r.date, r.sport, r.league, r.away_team, r.home_team].join('|');
+    if(!map.has(gkey)){
+      map.set(gkey, {
+        key:gkey, date:r.date, sport:r.sport, league:r.league,
+        away_team:r.away_team, home_team:r.home_team,
+        snapshots:new Map()
+      });
+    }
+    const g = map.get(gkey);
+    if(!g.snapshots.has(r.updated_at)) g.snapshots.set(r.updated_at, {time:r.updated_at});
+    const snap = g.snapshots.get(r.updated_at);
+    const side = (r.team === r.home_team) ? 'home' : 'away';
+    snap[side] = {
+      team:r.team,
+      spread:r.spread, spread_num:parseSpreadNum(r.spread),
+      spread_handle:toNum(r.spread_handle), spread_bets:toNum(r.spread_bets),
+      total:r.total, total_num:parseSpreadNum(r.total),
+      total_handle:toNum(r.total_handle), total_bets:toNum(r.total_bets),
+      money:toNum(r.money), money_handle:toNum(r.money_handle), money_bets:toNum(r.money_bets)
+    };
+  });
+
+  const games=[];
+  map.forEach(g=>{
+    const times = Array.from(g.snapshots.keys()).sort();
+    if(!times.length) return;
+    g.times = times;
+    g.snaps = times.map(t=>g.snapshots.get(t));
+    g.first = g.snaps[0];
+    g.latest = g.snaps[g.snaps.length-1];
+    g.snapCount = times.length;
+    g.lastUpdated = times[times.length-1];
+
+    // divergence (handle - bets) at latest snapshot, spread + moneyline, both sides
+    let maxDiv = 0, maxDivMarket=null, maxDivSide=null;
+    ['home','away'].forEach(side=>{
+      const L = g.latest[side];
+      if(!L) return;
+      if(L.spread_handle || L.spread_bets){
+        const d = (L.spread_handle - L.spread_bets)*100;
+        if(Math.abs(d) > Math.abs(maxDiv)){ maxDiv=d; maxDivMarket='spread'; maxDivSide=side; }
+      }
+      if(L.money_handle || L.money_bets){
+        const d = (L.money_handle - L.money_bets)*100;
+        if(Math.abs(d) > Math.abs(maxDiv)){ maxDiv=d; maxDivMarket='money'; maxDivSide=side; }
+      }
+    });
+    g.maxDivergence = maxDiv;
+    g.maxDivergenceMarket = maxDivMarket;
+    g.maxDivergenceSide = maxDivSide;
+
+    // has the line (spread number or moneyline price) moved between first and latest snapshot?
+    let moved=false;
+    ['home','away'].forEach(side=>{
+      const F=g.first[side], L=g.latest[side];
+      if(!F||!L) return;
+      if(F.spread_num!==null && L.spread_num!==null && F.spread_num!==L.spread_num) moved=true;
+      if(F.money && L.money && Math.abs(F.money-L.money) > 0.01) moved=true;
+      if(F.total_num!==null && L.total_num!==null && F.total_num!==L.total_num) moved=true;
+    });
+    g.lineMoved = moved;
+
+    games.push(g);
+  });
+  return games;
+}
+
+/* ============================== STATE ============================== */
+
+let ALL_GAMES = [];
+let ALL_ROWS_COUNT = 0;
+const state = {
+  tab:'board',
+  sport:'all', league:'all', date:'all', search:'', movedOnly:false,
+  sort:'divergence',
+  moversMarket:'spread', moversSport:'all', moversSortKey:'div', moversSortDir:'desc',
+  expandedKey:null
+};
+const charts = {}; // canvas id -> Chart instance
+
+/* ============================== INIT / LOAD ============================== */
+
+async function init(){
+  try{
+    const res = await fetch(CSV_PATH, {cache:'no-store'});
+    if(!res.ok) throw new Error('fetch failed: '+res.status);
+    const text = await res.text();
+    bootFromText(text);
+  }catch(e){
+    showFallback();
+  }
+}
+
+function showFallback(){
+  const el = document.getElementById('loadState');
+  el.innerHTML = `
+    <div class="display">Couldn't load all_splits.csv automatically</div>
+    <div class="sub">This page expects <span class="mono">all_splits.csv</span> to sit next to it (e.g. served over http/https from the same folder — browsers block local file:// fetches). You can also drop the file in manually below.</div>
+    <label class="drop-zone" id="dropZone">
+      <div>Click to choose <span class="mono">all_splits.csv</span>, or drag it here</div>
+      <input type="file" id="fileInput" accept=".csv">
+    </label>
+  `;
+  const dz = document.getElementById('dropZone');
+  const fi = document.getElementById('fileInput');
+  dz.addEventListener('click', ()=>fi.click());
+  dz.addEventListener('dragover', e=>{e.preventDefault(); dz.style.borderColor='var(--link)';});
+  dz.addEventListener('dragleave', ()=>{dz.style.borderColor='var(--hairline)';});
+  dz.addEventListener('drop', e=>{
+    e.preventDefault();
+    const f = e.dataTransfer.files[0];
+    if(f) readFile(f);
+  });
+  fi.addEventListener('change', e=>{
+    const f = e.target.files[0];
+    if(f) readFile(f);
+  });
+}
+function readFile(file){
+  const reader = new FileReader();
+  reader.onload = ev => bootFromText(ev.target.result);
+  reader.readAsText(file);
+}
+
+function bootFromText(text){
+  const rows = parseCSV(text);
+  ALL_ROWS_COUNT = rows.length;
+  ALL_GAMES = buildGames(rows);
+  document.getElementById('loadState').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('pageFooter').style.display='block';
+  document.getElementById('statusDot').classList.remove('warn');
+  document.getElementById('statusText').textContent = ALL_GAMES.length + ' games · ' + rows.length + ' rows';
+  populateFilterOptions();
+  renderStats();
+  renderFooter();
+  renderBoard();
+  renderMovers();
+}
+
+/* ============================== HELPERS ============================== */
+
+function fmtPct(x){ return Math.round(x*100)+'%'; }
+function fmtPP(x){ const s = x>0?'+':''; return s+x.toFixed(1)+'pp'; }
+function sportLabel(s){
+  const map={MLB:'MLB', AFL:'AFL', SOC:'Soccer', BOX:'Boxing', UFC:'UFC/MMA'};
+  return map[s]||s;
+}
+function fmtTime(t){
+  if(!t) return '—';
+  const d = new Date(t.replace(' ','T')+'Z');
+  if(isNaN(d.getTime())) return t;
+  return d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function fmtTimeShort(t){
+  const d = new Date(t.replace(' ','T')+'Z');
+  if(isNaN(d.getTime())) return t;
+  return d.toLocaleString(undefined,{hour:'2-digit',minute:'2-digit'});
+}
+function divergenceClass(x){
+  const a = Math.abs(x);
+  if(a>=20) return 'hi';
+  if(a>=10) return 'mid';
+  return 'lo';
+}
+function uniqueSorted(arr){ return Array.from(new Set(arr)).sort(); }
+
+function splitBarHTML(handle, bets){
+  const b = Math.max(0, Math.min(100, bets*100));
+  const h = Math.max(0, Math.min(100, handle*100));
+  return `<div class="splitbar-wrap">
+    <div class="splitbar"><div class="seg-bets" style="width:${b}%"></div><div class="marker-handle" style="left:${h}%"></div></div>
+    <div class="splitbar-foot">H ${fmtPct(handle)} · B ${fmtPct(bets)}</div>
+  </div>`;
+}
+
+/* ============================== STAT ROW ============================== */
+
+function renderStats(){
+  const dates = uniqueSorted(ALL_GAMES.map(g=>g.date));
+  const sports = uniqueSorted(ALL_GAMES.map(g=>g.sport));
+  const totalSnaps = ALL_GAMES.reduce((s,g)=>s+g.snapCount,0);
+  const moved = ALL_GAMES.filter(g=>g.lineMoved).length;
+  const lastUpdated = ALL_GAMES.reduce((max,g)=> g.lastUpdated>max?g.lastUpdated:max, '');
+
+  const cells = [
+    {label:'Games tracked', value:ALL_GAMES.length, sub:sports.map(sportLabel).join(' · ')},
+    {label:'Snapshot rows', value:ALL_ROWS_COUNT.toLocaleString(), sub:totalSnaps+' game-snapshots'},
+    {label:'Date range', value:dates.length?dates[0].slice(5):'—', sub:dates.length>1?('→ '+dates[dates.length-1]):dates[0]||''},
+    {label:'Lines in motion', value:moved, sub:'of '+ALL_GAMES.length+' games moved'},
+    {label:'Latest snapshot', value:lastUpdated?fmtTimeShort(lastUpdated):'—', sub:lastUpdated?fmtTime(lastUpdated):''}
+  ];
+  document.getElementById('statRow').innerHTML = cells.map(c=>`
+    <div class="stat-cell">
+      <div class="label">${c.label}</div>
+      <div class="value mono">${c.value}</div>
+      <div class="sub">${c.sub}</div>
+    </div>`).join('');
+}
+
+function renderFooter(){
+  document.getElementById('pageFooter').innerHTML =
+    `Reads <span class="mono">all_splits.csv</span> client-side · ${ALL_ROWS_COUNT.toLocaleString()} rows parsed · handle = share of dollars wagered, bets = share of ticket count.`;
+}
+
+/* ============================== FILTER OPTIONS ============================== */
+
+function populateFilterOptions(){
+  const sports = uniqueSorted(ALL_GAMES.map(g=>g.sport));
+  const fSport = document.getElementById('fSport');
+  fSport.innerHTML = '<option value="all">All sports</option>' + sports.map(s=>`<option value="${s}">${sportLabel(s)}</option>`).join('');
+
+  const mSport = document.getElementById('mSport');
+  mSport.innerHTML = '<option value="all">All sports</option>' + sports.map(s=>`<option value="${s}">${sportLabel(s)}</option>`).join('');
+
+  refreshLeagueOptions();
+  const dates = uniqueSorted(ALL_GAMES.map(g=>g.date));
+  const fDate = document.getElementById('fDate');
+  fDate.innerHTML = '<option value="all">All dates</option>' + dates.map(d=>`<option value="${d}">${d}</option>`).join('');
+
+  fSport.addEventListener('change', e=>{ state.sport=e.target.value; refreshLeagueOptions(); state.league='all'; renderBoard(); });
+  document.getElementById('fLeague').addEventListener('change', e=>{ state.league=e.target.value; renderBoard(); });
+  fDate.addEventListener('change', e=>{ state.date=e.target.value; renderBoard(); });
+  document.getElementById('fSearch').addEventListener('input', e=>{ state.search=e.target.value.toLowerCase(); renderBoard(); });
+  document.getElementById('fSort').addEventListener('change', e=>{ state.sort=e.target.value; renderBoard(); });
+  document.getElementById('fMoved').addEventListener('change', e=>{
+    state.movedOnly = e.target.checked;
+    document.getElementById('fMovedChip').classList.toggle('on', state.movedOnly);
+    renderBoard();
+  });
+  document.getElementById('resetFilters').addEventListener('click', ()=>{
+    state.sport='all'; state.league='all'; state.date='all'; state.search=''; state.movedOnly=false; state.sort='divergence';
+    document.getElementById('fSport').value='all';
+    refreshLeagueOptions();
+    document.getElementById('fDate').value='all';
+    document.getElementById('fSearch').value='';
+    document.getElementById('fMoved').checked=false;
+    document.getElementById('fMovedChip').classList.remove('on');
+    document.getElementById('fSort').value='divergence';
+    renderBoard();
+  });
+
+  mSport.addEventListener('change', e=>{ state.moversSport=e.target.value; renderMovers(); });
+  document.getElementById('mMarket').addEventListener('change', e=>{ state.moversMarket=e.target.value; renderMovers(); });
+
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      state.tab = btn.dataset.tab;
+      document.getElementById('tab-board').style.display = state.tab==='board' ? 'block':'none';
+      document.getElementById('tab-movers').style.display = state.tab==='movers' ? 'block':'none';
+    });
+  });
+
+  document.querySelectorAll('#boardTable thead th[data-sort]').forEach(th=>{
+    th.addEventListener('click', ()=>{
+      state.sort = th.dataset.sort==='recent' ? 'recent' : th.dataset.sort==='date' ? 'date' : th.dataset.sort==='snapshots' ? 'snapshots' : th.dataset.sort==='matchup' ? 'alpha' : th.dataset.sort==='sport' ? 'sport' : 'divergence';
+      document.getElementById('fSort').value = ['divergence','recent','date','snapshots','alpha'].includes(state.sort) ? state.sort : 'divergence';
+      renderBoard();
+    });
+  });
+
+  document.querySelectorAll('#moversTable thead th[data-sort]').forEach(th=>{
+    th.addEventListener('click', ()=>{
+      const key = th.dataset.sort;
+      if(state.moversSortKey===key) state.moversSortDir = state.moversSortDir==='desc'?'asc':'desc';
+      else { state.moversSortKey = key; state.moversSortDir='desc'; }
+      renderMovers();
+    });
+  });
+}
+
+function refreshLeagueOptions(){
+  const fLeague = document.getElementById('fLeague');
+  const pool = state.sport==='all' ? ALL_GAMES : ALL_GAMES.filter(g=>g.sport===state.sport);
+  const leagues = uniqueSorted(pool.map(g=>g.league));
+  fLeague.innerHTML = '<option value="all">All leagues</option>' + leagues.map(l=>`<option value="${l}">${l}</option>`).join('');
+  fLeague.value = state.league && leagues.includes(state.league) ? state.league : 'all';
+}
+
+/* ============================== BOARD RENDER ============================== */
+
+function filteredGames(){
+  return ALL_GAMES.filter(g=>{
+    if(state.sport!=='all' && g.sport!==state.sport) return false;
+    if(state.league!=='all' && g.league!==state.league) return false;
+    if(state.date!=='all' && g.date!==state.date) return false;
+    if(state.movedOnly && !g.lineMoved) return false;
+    if(state.search){
+      const hay = (g.home_team+' '+g.away_team).toLowerCase();
+      if(!hay.includes(state.search)) return false;
+    }
+    return true;
+  });
+}
+
+function sortGames(games){
+  const arr = games.slice();
+  switch(state.sort){
+    case 'recent': arr.sort((a,b)=> b.lastUpdated.localeCompare(a.lastUpdated)); break;
+    case 'date': arr.sort((a,b)=> b.date.localeCompare(a.date)); break;
+    case 'snapshots': arr.sort((a,b)=> b.snapCount - a.snapCount); break;
+    case 'alpha': arr.sort((a,b)=> (a.home_team+a.away_team).localeCompare(b.home_team+b.away_team)); break;
+    case 'sport': arr.sort((a,b)=> a.sport.localeCompare(b.sport)); break;
+    default: arr.sort((a,b)=> Math.abs(b.maxDivergence) - Math.abs(a.maxDivergence));
+  }
+  return arr;
+}
+
+function renderBoard(){
+  const games = sortGames(filteredGames());
+  const body = document.getElementById('boardBody');
+  document.getElementById('boardEmpty').style.display = games.length ? 'none' : 'block';
+
+  document.querySelectorAll('#boardTable thead th[data-sort]').forEach(th=>{
+    const map = {divergence:'divergence', recent:'recent', date:'date', snapshots:'snapshots', alpha:'matchup', sport:'sport'};
+    th.classList.toggle('sorted', map[state.sort]===th.dataset.sort);
+  });
+
+  body.innerHTML = games.map(g=>{
+    const L = g.latest;
+    const home = L.home, away = L.away;
+    const spreadCell = (home && home.spread_num!==null) ?
+      `<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">${escapeHtml(g.home_team)} ${home.spread}</div>${splitBarHTML(home.spread_handle, home.spread_bets)}`
+      : `<span class="tag">n/a</span>`;
+    const totalCell = (home && home.total_num!==null) ? `<span class="num">${home.total}</span>` : `<span class="tag">n/a</span>`;
+    const moneyCell = (home) ? `<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">${escapeHtml(g.home_team)} @ ${home.money.toFixed(2)}</div>${splitBarHTML(home.money_handle, home.money_bets)}` : '';
+    const divCls = divergenceClass(g.maxDivergence);
+    const divLabel = g.maxDivergenceMarket ? `${g.maxDivergenceMarket==='spread'?'Spread':'ML'} · ${g[g.maxDivergenceSide==='home'?'home_team':'away_team']}` : '';
+
+    return `<tr data-key="${escapeAttr(g.key)}">
+      <td class="num">${g.date}</td>
+      <td>
+        <div class="matchup">
+          <span class="teams">${escapeHtml(g.away_team)} @ ${escapeHtml(g.home_team)}</span>
+          <span class="meta">${g.lineMoved?'line moved':'line steady'}</span>
+        </div>
+      </td>
+      <td><span class="tag">${sportLabel(g.sport)}</span></td>
+      <td>${spreadCell}</td>
+      <td>${totalCell}</td>
+      <td>${moneyCell}</td>
+      <td>
+        <div class="divergence-badge ${divCls}">${fmtPP(g.maxDivergence)}</div>
+        <div style="font-size:10px;color:var(--text-faint);margin-top:3px;">${divLabel}</div>
+      </td>
+      <td class="num">${g.snapCount}</td>
+      <td class="num" style="font-size:11.5px;color:var(--text-muted);">${fmtTime(g.lastUpdated)}</td>
+    </tr>`;
+  }).join('');
+
+  body.querySelectorAll('tr').forEach(tr=>{
+    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key));
+  });
+
+  if(state.expandedKey && games.some(g=>g.key===state.expandedKey)){
+    insertDetailRow(state.expandedKey);
+  }
+}
+
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeAttr(s){ return escapeHtml(s); }
+
+/* ============================== DETAIL PANEL ============================== */
+
+function toggleDetail(key){
+  if(state.expandedKey===key){
+    state.expandedKey=null;
+    destroyChartsFor(key);
+    const existing = document.querySelector('.detail-row');
+    if(existing) existing.remove();
+    document.querySelectorAll('#boardBody tr').forEach(r=>r.classList.remove('expanded'));
+    return;
+  }
+  const prev = document.querySelector('.detail-row');
+  if(prev){ destroyChartsFor(state.expandedKey); prev.remove(); }
+  document.querySelectorAll('#boardBody tr').forEach(r=>r.classList.remove('expanded'));
+  state.expandedKey = key;
+  insertDetailRow(key);
+}
+
+function insertDetailRow(key){
+  const g = ALL_GAMES.find(g=>g.key===key);
+  if(!g) return;
+  const rowEl = document.querySelector(`#boardBody tr[data-key="${cssEscape(key)}"]`);
+  if(!rowEl) return;
+  rowEl.classList.add('expanded');
+
+  const tr = document.createElement('tr');
+  tr.className = 'detail-row';
+  const td = document.createElement('td');
+  td.colSpan = 9;
+  td.appendChild(buildDetailPanel(g));
+  tr.appendChild(td);
+  rowEl.after(tr);
+
+  requestAnimationFrame(()=> mountCharts(g));
+}
+
+function buildDetailPanel(g){
+  const wrap = document.createElement('div');
+  wrap.className = 'detail-panel';
+
+  const hasSpread = g.latest.home && g.latest.home.spread_num!==null;
+
+  wrap.innerHTML = `
+    <div class="detail-head">
+      <div>
+        <h3>${escapeHtml(g.away_team)} @ ${escapeHtml(g.home_team)}</h3>
+        <div class="sub">${g.date} · ${sportLabel(g.sport)}${g.league && g.league!==g.sport?(' · league '+escapeHtml(g.league)):''} · ${g.snapCount} snapshots (${fmtTime(g.times[0])} → ${fmtTime(g.lastUpdated)})</div>
+      </div>
+      <button class="close-detail">Close</button>
+    </div>
+    <div class="chart-grid">
+      ${hasSpread ? `<div class="chart-card"><h4>Spread — handle % vs bets %</h4><div class="canvas-wrap"><canvas id="c-spread-${safeId(g.key)}"></canvas></div></div>` : ''}
+      <div class="chart-card"><h4>Moneyline — handle % vs bets %</h4><div class="canvas-wrap"><canvas id="c-money-${safeId(g.key)}"></canvas></div></div>
+      <div class="chart-card"><h4>Moneyline price movement</h4><div class="canvas-wrap"><canvas id="c-price-${safeId(g.key)}"></canvas></div></div>
+      ${hasSpread ? `<div class="chart-card"><h4>Total — handle % vs bets %</h4><div class="canvas-wrap"><canvas id="c-total-${safeId(g.key)}"></canvas></div></div>` : ''}
+    </div>
+    <div class="snap-table-wrap">
+      <table>
+        <thead><tr>
+          <th>Time</th><th>Side</th><th>Spread</th><th>Spr. Handle</th><th>Spr. Bets</th>
+          <th>Total</th><th>Tot. Handle</th><th>Tot. Bets</th><th>Price</th><th>ML Handle</th><th>ML Bets</th>
+        </tr></thead>
+        <tbody>
+          ${g.snaps.slice().reverse().map(s=>['home','away'].map(side=>{
+            const d = s[side];
+            if(!d) return '';
+            return `<tr>
+              <td class="num" style="font-size:11px;">${fmtTime(s.time)}</td>
+              <td>${escapeHtml(d.team)}</td>
+              <td class="num">${d.spread_num!==null?d.spread:'—'}</td>
+              <td class="num">${d.spread_num!==null?fmtPct(d.spread_handle):'—'}</td>
+              <td class="num">${d.spread_num!==null?fmtPct(d.spread_bets):'—'}</td>
+              <td class="num">${d.total_num!==null?d.total:'—'}</td>
+              <td class="num">${d.total_num!==null?fmtPct(d.total_handle):'—'}</td>
+              <td class="num">${d.total_num!==null?fmtPct(d.total_bets):'—'}</td>
+              <td class="num">${d.money.toFixed(2)}</td>
+              <td class="num">${fmtPct(d.money_handle)}</td>
+              <td class="num">${fmtPct(d.money_bets)}</td>
+            </tr>`;
+          }).join('')).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  wrap.querySelector('.close-detail').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    toggleDetail(g.key);
+  });
+  wrap.querySelectorAll('table tr').forEach(r=> r.addEventListener('click', e=>e.stopPropagation()));
+  return wrap;
+}
+
+function safeId(key){ return key.replace(/[^a-zA-Z0-9]/g,'_'); }
+function cssEscape(s){ return s.replace(/["\\]/g,'\\$&'); }
+
+function destroyChartsFor(key){
+  if(!key) return;
+  const sid = safeId(key);
+  ['c-spread-','c-money-','c-price-','c-total-'].forEach(pfx=>{
+    const id = pfx+sid;
+    if(charts[id]){ charts[id].destroy(); delete charts[id]; }
+  });
+}
+
+function mountCharts(g){
+  const sid = safeId(g.key);
+  const labels = g.times.map(fmtTimeShort);
+  const gridColor = 'rgba(255,255,255,0.05)';
+  const baseOpts = {
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'index', intersect:false},
+    plugins:{ legend:{labels:{color:'#8A9099', boxWidth:10, font:{size:10.5}}}, tooltip:{titleFont:{size:11}, bodyFont:{size:11}} },
+    scales:{
+      x:{ticks:{color:'#565C64', font:{size:9.5}, maxRotation:0, autoSkip:true, maxTicksLimit:7}, grid:{color:gridColor}},
+      y:{ticks:{color:'#565C64', font:{size:9.5}}, grid:{color:gridColor}}
+    }
+  };
+
+  const spreadCanvas = document.getElementById('c-spread-'+sid);
+  if(spreadCanvas){
+    charts[spreadCanvas.id] = new Chart(spreadCanvas, {
+      type:'line',
+      data:{ labels, datasets:[
+        ds(g.home_team+' handle', g.snaps.map(s=>s.home?s.home.spread_handle*100:null), '#3FB68B', false),
+        ds(g.home_team+' bets', g.snaps.map(s=>s.home?s.home.spread_bets*100:null), '#3FB68B', true),
+        ds(g.away_team+' handle', g.snaps.map(s=>s.away?s.away.spread_handle*100:null), '#E8A33D', false),
+        ds(g.away_team+' bets', g.snaps.map(s=>s.away?s.away.spread_bets*100:null), '#E8A33D', true),
+      ]},
+      options:{...baseOpts, scales:{...baseOpts.scales, y:{...baseOpts.scales.y, min:0, max:100, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}}
+    });
+  }
+
+  const moneyCanvas = document.getElementById('c-money-'+sid);
+  charts[moneyCanvas.id] = new Chart(moneyCanvas, {
+    type:'line',
+    data:{ labels, datasets:[
+      ds(g.home_team+' handle', g.snaps.map(s=>s.home?s.home.money_handle*100:null), '#3FB68B', false),
+      ds(g.home_team+' bets', g.snaps.map(s=>s.home?s.home.money_bets*100:null), '#3FB68B', true),
+      ds(g.away_team+' handle', g.snaps.map(s=>s.away?s.away.money_handle*100:null), '#E8A33D', false),
+      ds(g.away_team+' bets', g.snaps.map(s=>s.away?s.away.money_bets*100:null), '#E8A33D', true),
+    ]},
+    options:{...baseOpts, scales:{...baseOpts.scales, y:{...baseOpts.scales.y, min:0, max:100, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}}
+  });
+
+  const priceCanvas = document.getElementById('c-price-'+sid);
+  charts[priceCanvas.id] = new Chart(priceCanvas, {
+    type:'line',
+    data:{ labels, datasets:[
+      ds(g.home_team, g.snaps.map(s=>s.home?s.home.money:null), '#4C8DFF', false),
+      ds(g.away_team, g.snaps.map(s=>s.away?s.away.money:null), '#E2574C', false),
+    ]},
+    options:baseOpts
+  });
+
+  const totalCanvas = document.getElementById('c-total-'+sid);
+  if(totalCanvas){
+    charts[totalCanvas.id] = new Chart(totalCanvas, {
+      type:'line',
+      data:{ labels, datasets:[
+        ds(g.home_team+' handle', g.snaps.map(s=>s.home?s.home.total_handle*100:null), '#3FB68B', false),
+        ds(g.home_team+' bets', g.snaps.map(s=>s.home?s.home.total_bets*100:null), '#3FB68B', true),
+        ds(g.away_team+' handle', g.snaps.map(s=>s.away?s.away.total_handle*100:null), '#E8A33D', false),
+        ds(g.away_team+' bets', g.snaps.map(s=>s.away?s.away.total_bets*100:null), '#E8A33D', true),
+      ]},
+      options:{...baseOpts, scales:{...baseOpts.scales, y:{...baseOpts.scales.y, min:0, max:100, ticks:{...baseOpts.scales.y.ticks, callback:v=>v+'%'}}}}
+    });
+  }
+}
+
+function ds(label, data, color, dashed){
+  return {
+    label, data, borderColor:color, backgroundColor:color,
+    borderDash: dashed ? [4,3] : [],
+    pointRadius:0, borderWidth:1.75, tension:0.15, spanGaps:true
+  };
+}
+
+/* ============================== MOVERS TAB ============================== */
+
+function buildMoversRows(){
+  const market = state.moversMarket;
+  const rows=[];
+  ALL_GAMES.forEach(g=>{
+    if(state.moversSport!=='all' && g.sport!==state.moversSport) return;
+    ['home','away'].forEach(side=>{
+      const d = g.latest[side];
+      if(!d) return;
+      let handle, bets, price;
+      if(market==='spread'){
+        if(d.spread_num===null) return;
+        handle=d.spread_handle; bets=d.spread_bets; price=d.spread;
+      } else {
+        handle=d.money_handle; bets=d.money_bets; price=d.money.toFixed(2);
+      }
+      if(handle===0 && bets===0) return;
+      const opp = side==='home' ? g.away_team : g.home_team;
+      rows.push({
+        team:d.team, opponent:opp, sport:g.sport, handle, bets,
+        div:(handle-bets)*100, price, date:g.date
+      });
+    });
+  });
+  rows.sort((a,b)=>{
+    let av=a[state.moversSortKey], bv=b[state.moversSortKey];
+    if(state.moversSortKey==='div'){ av=Math.abs(av); bv=Math.abs(bv); }
+    const dir = state.moversSortDir==='desc' ? -1 : 1;
+    return av>bv ? dir*1 : av<bv ? dir*-1 : 0;
+  });
+  return rows;
+}
+
+function renderMovers(){
+  const rows = buildMoversRows().slice(0,150);
+  document.querySelectorAll('#moversTable thead th[data-sort]').forEach(th=>{
+    th.classList.toggle('sorted', th.dataset.sort===state.moversSortKey);
+    th.querySelector('.arrow')?.remove();
+    if(th.dataset.sort===state.moversSortKey){
+      const arrow = document.createElement('span');
+      arrow.className='arrow';
+      arrow.textContent = state.moversSortDir==='desc' ? '▼' : '▲';
+      th.appendChild(arrow);
+    }
+  });
+  document.getElementById('moversBody').innerHTML = rows.map(r=>`
+    <tr>
+      <td>${escapeHtml(r.team)}</td>
+      <td style="color:var(--text-muted)">${escapeHtml(r.opponent)}</td>
+      <td><span class="tag">${sportLabel(r.sport)}</span></td>
+      <td class="num" style="color:var(--handle)">${fmtPct(r.handle)}</td>
+      <td class="num" style="color:var(--bets)">${fmtPct(r.bets)}</td>
+      <td><span class="divergence-badge ${divergenceClass(r.div)}">${fmtPP(r.div)}</span></td>
+      <td class="num">${r.price}</td>
+    </tr>
+  `).join('') || `<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--text-muted);">No rows for this market/sport combination.</td></tr>`;
+}
+
+init();
+})();
+</script>
+</body>
+</html>
