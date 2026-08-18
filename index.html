@@ -1206,8 +1206,11 @@ function buildMoversRows(){
     return {
       team:s.data.team, opponent:opp, sport:s.game.sport, handle:mf.handle, bets:mf.bets,
       div:(mf.handle-mf.bets)*100, price:priceDisplay,
-      result: market==='money' ? s.data.result : null,
-      pnl: market==='money' ? s.data.pnl : null
+      /* result/pnl are the settled outcome of the moneyline bet on THIS row's team —
+         that's the actual bet for this game, independent of which market (spread/total/
+         moneyline) is currently selected for display/filtering above. */
+      result: s.data.result,
+      pnl: s.data.pnl
     };
   }).filter(Boolean);
 
@@ -1237,7 +1240,7 @@ function renderMovers(){
   document.getElementById('moversBody').innerHTML = rows.map(r=>{
     const resultCell = r.result
       ? '<span class="pnl-val '+(r.pnl>0?'pos':(r.pnl<0?'neg':''))+'">'+r.result+' '+fmtPnl(r.pnl)+'u</span>'
-      : (state.filters.market==='money' ? '<span class="tag pending">Pending</span>' : '<span class="tag">n/a</span>');
+      : '<span class="tag pending">Pending</span>';
     return '<tr>'+
       '<td>'+escapeHtml(r.team)+'</td>'+
       '<td style="color:var(--text-muted)">'+escapeHtml(r.opponent)+'</td>'+
