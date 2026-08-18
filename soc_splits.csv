@@ -1,0 +1,39 @@
+"date","league","home_team","away_team","team","spread","spread_handle","spread_bets","total","total_handle","total_bets","money","money_handle","money_bets","updated_at","home_team_score","away_team_score","winning_team","result","pnl"
+2026-08-15,"40817",Sheffield United,Birmingham City,Birmingham City,-,0.0,0.0,-,0.0,0.0,3.3,0.24,0.25,2026-08-16 22:25:18.609,0,0,Draw,Loss,-1.0
+2026-08-15,"40817",Sheffield United,Birmingham City,Sheffield United,-,0.0,0.0,-,0.0,0.0,2.25,0.76,0.75,2026-08-16 22:25:18.609,0,0,Draw,Loss,-1.0
+2026-08-15,"40817",Charlton Athletic,Derby County,Charlton Athletic,-,0.0,0.0,-,0.0,0.0,2.7,0.58,0.47,2026-08-16 22:25:18.609,2,1,Charlton Athletic,Win,1.7000000476837158
+2026-08-15,"40817",Charlton Athletic,Derby County,Derby County,-,0.0,0.0,-,0.0,0.0,2.75,0.42,0.53,2026-08-16 22:25:18.609,2,1,Charlton Athletic,Loss,-1.0
+2026-08-15,"40031",Deportivo Alaves,Getafe,Deportivo Alaves,-,0.0,0.0,-,0.0,0.0,2.4,0.76,0.66,2026-08-16 22:25:17.009,3,0,Deportivo Alaves,Win,1.4000000953674316
+2026-08-15,"40031",Deportivo Alaves,Getafe,Getafe,-,0.0,0.0,-,0.0,0.0,3.75,0.24,0.34,2026-08-16 22:25:17.009,3,0,Deportivo Alaves,Loss,-1.0
+2026-08-15,"40817",Middlesbrough,Lincoln City,Lincoln City,-,0.0,0.0,-,0.0,0.0,6.5,0.03,0.02,2026-08-16 22:25:18.609,2,1,Middlesbrough,Loss,-1.0
+2026-08-15,"40817",Middlesbrough,Lincoln City,Middlesbrough,-,0.0,0.0,-,0.0,0.0,1.5128205,0.97,0.98,2026-08-16 22:25:18.609,2,1,Middlesbrough,Win,0.5128204822540283
+2026-08-15,"40817",Bristol City,Millwall,Bristol City,-,0.0,0.0,-,0.0,0.0,2.5,0.42,0.56,2026-08-16 22:25:18.609,0,2,Millwall,Loss,-1.0
+2026-08-15,"40817",Bristol City,Millwall,Millwall,-,0.0,0.0,-,0.0,0.0,2.8,0.58,0.44,2026-08-16 22:25:18.609,0,2,Millwall,Win,1.7999999523162842
+2026-08-15,"40817",Bolton Wanderers,Preston North End,Bolton Wanderers,-,0.0,0.0,-,0.0,0.0,2.35,0.81,0.7,2026-08-16 22:25:18.609,2,1,Bolton Wanderers,Win,1.3499999046325684
+2026-08-15,"40817",Bolton Wanderers,Preston North End,Preston North End,-,0.0,0.0,-,0.0,0.0,3.05,0.19,0.3,2026-08-16 22:25:18.609,2,1,Bolton Wanderers,Loss,-1.0
+2026-08-15,"40817",Portsmouth,Queens Park Rangers,Portsmouth,-,0.0,0.0,-,0.0,0.0,2.35,0.34,0.75,2026-08-16 22:25:18.609,1,3,Queens Park Rangers,Loss,-1.0
+2026-08-15,"40817",Portsmouth,Queens Park Rangers,Queens Park Rangers,-,0.0,0.0,-,0.0,0.0,3.15,0.66,0.25,2026-08-16 22:25:18.609,1,3,Queens Park Rangers,Win,2.1500000953674316
+2026-08-15,"40817",Stoke City,Swansea City,Stoke City,-,0.0,0.0,-,0.0,0.0,2.35,0.81,0.79,2026-08-16 22:25:18.609,1,2,Swansea City,Loss,-1.0
+2026-08-15,"40817",Stoke City,Swansea City,Swansea City,-,0.0,0.0,-,0.0,0.0,3.05,0.19,0.21,2026-08-16 22:25:18.609,1,2,Swansea City,Win,2.049999952316284
+2026-08-15,"40031",Sevilla,Rayo Vallecano,Sevilla,-,0.0,0.0,-,0.0,0.0,2.7,0.83,0.88,2026-08-16 22:25:17.009,2,1,Sevilla,Win,1.7000000476837158
+2026-08-15,"40031",Sevilla,Rayo Vallecano,Rayo Vallecano,-,0.0,0.0,-,0.0,0.0,3.05,0.17,0.12,2026-08-16 22:25:17.009,2,1,Sevilla,Loss,-1.0
+2026-08-15,"40817",Norwich City,West Bromwich Albion,Norwich City,-,0.0,0.0,-,0.0,0.0,2.0,0.95,0.89,2026-08-16 22:25:18.609,1,2,West Bromwich Albion,Loss,-1.0
+2026-08-15,"40817",Norwich City,West Bromwich Albion,West Bromwich Albion,-,0.0,0.0,-,0.0,0.0,3.75,0.05,0.11,2026-08-16 22:25:18.609,1,2,West Bromwich Albion,Win,2.75
+2026-08-16,"40031",Espanyol,Levante,Espanyol,-,0.0,0.0,-,0.0,0.0,2.1,0.79,0.9,2026-08-17 22:25:19.531,3,0,Espanyol,Win,1.0999999046325684
+2026-08-16,"40031",Espanyol,Levante,Levante,-,0.0,0.0,-,0.0,0.0,3.75,0.21,0.1,2026-08-17 22:25:19.531,3,0,Espanyol,Loss,-1.0
+2026-08-16,"40031",Celta Vigo,Osasuna,Celta Vigo,-,0.0,0.0,-,0.0,0.0,2.05,0.93,0.91,2026-08-17 22:25:19.531,,,,,
+2026-08-16,"40031",Celta Vigo,Osasuna,Osasuna,-,0.0,0.0,-,0.0,0.0,3.65,0.07,0.09,2026-08-17 22:25:19.531,,,,,
+2026-08-16,"40817",Watford,Southampton,Southampton,-,0.0,0.0,-,0.0,0.0,2.0,0.96,0.88,2026-08-17 22:25:21.009,2,1,Watford,Loss,-1.0
+2026-08-16,"40817",Watford,Southampton,Watford,-,0.0,0.0,-,0.0,0.0,3.6,0.04,0.12,2026-08-17 22:25:21.009,2,1,Watford,Win,2.5999999046325684
+2026-08-16,"40031",Racing Santander,Villarreal,Racing Santander,-,0.0,0.0,-,0.0,0.0,3.7,0.02,0.04,2026-08-17 22:25:19.531,2,2,Draw,Loss,-1.0
+2026-08-16,"40031",Racing Santander,Villarreal,Villarreal,-,0.0,0.0,-,0.0,0.0,1.9523809,0.98,0.96,2026-08-17 22:25:19.531,2,2,Draw,Loss,-1.0
+2026-08-16,"40817",Burnley,West Ham United,Burnley,-,0.0,0.0,-,0.0,0.0,3.0,0.06,0.14,2026-08-17 22:25:21.009,2,2,Draw,Loss,-1.0
+2026-08-16,"40817",Burnley,West Ham United,West Ham United,-,0.0,0.0,-,0.0,0.0,2.35,0.94,0.86,2026-08-17 22:25:21.009,2,2,Draw,Loss,-1.0
+2026-08-17,"40031",Deportivo A Coruña,Elche,Deportivo A Coruña,-,0.0,0.0,-,0.0,0.0,2.2,0.77,0.59,2026-08-18 22:25:12.634,,,,,
+2026-08-17,"40031",Deportivo A Coruña,Elche,Elche,-,0.0,0.0,-,0.0,0.0,3.65,0.23,0.41,2026-08-18 22:25:12.634,,,,,
+2026-08-17,"40817",Cardiff,Wrexham,Cardiff,-,0.0,0.0,-,0.0,0.0,2.5,0.33,0.57,2026-08-18 22:25:14.084,,,,,
+2026-08-17,"40817",Cardiff,Wrexham,Wrexham,-,0.0,0.0,-,0.0,0.0,2.75,0.67,0.43,2026-08-18 22:25:14.084,,,,,
+2026-08-19,"40031",Atletico Madrid,Malaga,Atletico Madrid,-,0.0,0.0,-,0.0,0.0,1.3225807,0.99,0.99,2026-08-19 06:25:17.548,,,,,
+2026-08-19,"40031",Atletico Madrid,Malaga,Malaga,-,0.0,0.0,-,0.0,0.0,9.5,0.01,0.01,2026-08-19 06:25:17.548,,,,,
+2026-08-20,"40031",Rayo Vallecano,Deportivo Alaves,Deportivo Alaves,-,0.0,0.0,-,0.0,0.0,3.6,0.21,0.23,2026-08-19 06:25:17.548,,,,,
+2026-08-20,"40031",Rayo Vallecano,Deportivo Alaves,Rayo Vallecano,-,0.0,0.0,-,0.0,0.0,2.25,0.79,0.77,2026-08-19 06:25:17.548,,,,,
