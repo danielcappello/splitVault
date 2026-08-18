@@ -73,6 +73,52 @@
 
   main{max-width:1400px; margin:0 auto; padding:24px 20px 80px;}
 
+  /* ---------- Global filter panel ---------- */
+  .filter-panel{
+    background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:12px 12px 4px; margin-bottom:16px;
+  }
+  .filter-panel-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .filter-panel-head .display{font-size:13px; font-weight:600;}
+  .filter-panel-head .sub{font-size:11px; color:var(--text-faint);}
+  .filter-bar{
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px;
+    margin-bottom:10px;
+  }
+  .filter-group{display:flex; align-items:center; gap:6px;}
+  .filter-group label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); white-space:nowrap;}
+  select, input[type=text], input[type=number]{
+    background:var(--panel-raised); color:var(--text); border:1px solid var(--hairline);
+    border-radius:var(--radius); padding:6px 8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+    outline:none;
+  }
+  select:focus, input:focus{border-color:var(--link);}
+  input[type=text]{width:160px;}
+  input[type=number]{width:64px;}
+  .filter-spacer{flex:1;}
+  .reset-btn, .toggle-btn{
+    background:none; border:1px solid var(--hairline); color:var(--text-muted);
+    border-radius:var(--radius); padding:6px 10px; font-size:12px; cursor:pointer;
+    font-family:'IBM Plex Mono',monospace; white-space:nowrap;
+  }
+  .reset-btn:hover, .toggle-btn:hover{color:var(--text); border-color:var(--text-muted);}
+  .toggle-btn.open{color:var(--text); border-color:var(--link);}
+  .more-filters{display:none; border-top:1px solid var(--hairline-soft); padding-top:10px; margin-top:2px;}
+  .more-filters.open{display:flex;}
+  .active-filter-count{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--handle);
+    background:var(--handle-soft); border-radius:20px; padding:2px 8px;
+  }
+  .strategy-presets{display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:10px 0 12px; border-top:1px solid var(--hairline-soft);}
+  .strategy-presets-label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); margin-right:2px;}
+  .preset-btn{
+    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--text-muted);
+    border-radius:20px; padding:6px 12px; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif;
+  }
+  .preset-btn:hover{color:var(--text); border-color:var(--text-muted);}
+  .preset-btn.active{color:var(--bg); background:var(--handle); border-color:var(--handle); font-weight:600;}
+
+  /* ---------- Stat row ---------- */
   .stat-row{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -107,35 +153,6 @@
   }
   .tab-btn.active{color:var(--text); border-bottom-color:var(--handle);}
   .tab-btn:hover{color:var(--text);}
-
-  .filter-bar{
-    display:flex; flex-wrap:wrap; align-items:center; gap:10px;
-    background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
-    padding:10px 12px; margin-bottom:16px;
-  }
-  .filter-group{display:flex; align-items:center; gap:6px;}
-  .filter-group label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint);}
-  select, input[type=text]{
-    background:var(--panel-raised); color:var(--text); border:1px solid var(--hairline);
-    border-radius:var(--radius); padding:6px 8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
-    outline:none;
-  }
-  select:focus, input[type=text]:focus{border-color:var(--link);}
-  input[type=text]{width:170px;}
-  .filter-spacer{flex:1;}
-  .chip-toggle{
-    display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none;
-    font-size:12px; color:var(--text-muted); border:1px solid var(--hairline);
-    border-radius:20px; padding:5px 10px 5px 8px;
-  }
-  .chip-toggle input{accent-color:var(--handle);}
-  .chip-toggle.on{color:var(--text); border-color:var(--handle); background:var(--handle-soft);}
-  .reset-btn{
-    background:none; border:1px solid var(--hairline); color:var(--text-muted);
-    border-radius:var(--radius); padding:6px 10px; font-size:12px; cursor:pointer;
-    font-family:'IBM Plex Mono',monospace;
-  }
-  .reset-btn:hover{color:var(--text); border-color:var(--text-muted);}
 
   .legend-key{
     display:flex; gap:16px; flex-wrap:wrap; font-size:11.5px; color:var(--text-muted);
@@ -230,24 +247,7 @@
 
   .movers-note{color:var(--text-muted); font-size:12.5px; margin-bottom:14px; max-width:720px;}
 
-  .strategy-panel{margin-bottom:16px;}
-  .strategy-presets{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px;}
-  .strategy-presets-label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); margin-right:2px;}
-  .preset-btn{
-    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--text-muted);
-    border-radius:20px; padding:6px 12px; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif;
-  }
-  .preset-btn:hover{color:var(--text); border-color:var(--text-muted);}
-  .preset-btn.active{color:var(--bg); background:var(--handle); border-color:var(--handle); font-weight:600;}
-  .strategy-panel .filter-bar{margin-bottom:8px;}
-  .strategy-panel .filter-bar:last-child{margin-bottom:16px;}
-  input[type=number]{
-    background:var(--panel-raised); color:var(--text); border:1px solid var(--hairline);
-    border-radius:var(--radius); padding:6px 8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
-    outline:none;
-  }
-  input[type=number]:focus{border-color:var(--link);}
-  input[type=number]::-webkit-inner-spin-button{opacity:0.5;}
+  .filter-group.sort-group{margin-left:auto;}
 
   .perf-grid{display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-bottom:16px;}
   @media (max-width:900px){.perf-grid{grid-template-columns:1fr;}}
@@ -300,6 +300,71 @@
 
   <div id="app" style="display:none;">
 
+    <!-- ============ GLOBAL FILTER PANEL — applies to every tab ============ -->
+    <div class="filter-panel">
+      <div class="filter-panel-head">
+        <span class="display">Filters</span>
+        <span class="sub">apply across Board, Signal &amp; Performance</span>
+        <span class="active-filter-count" id="activeFilterCount" style="display:none;"></span>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-group"><label>Sport</label><select id="gSport"></select></div>
+        <div class="filter-group"><label>From</label><select id="gDateFrom"></select></div>
+        <div class="filter-group"><label>To</label><select id="gDateTo"></select></div>
+        <div class="filter-group"><input type="text" id="gTeam" placeholder="Search team…"></div>
+        <div class="filter-group">
+          <label>Result</label>
+          <select id="gResult">
+            <option value="all">Any</option>
+            <option value="win">Win</option>
+            <option value="loss">Loss</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Team role</label>
+          <select id="gRole">
+            <option value="all">Home &amp; away</option>
+            <option value="home">Home only</option>
+            <option value="away">Away only</option>
+          </select>
+        </div>
+        <div class="filter-spacer"></div>
+        <button class="toggle-btn" id="moreToggle">More filters ▾</button>
+        <button class="reset-btn" id="globalReset">Reset all</button>
+      </div>
+
+      <div class="filter-bar more-filters" id="moreFilters">
+        <div class="filter-group">
+          <label>Market</label>
+          <select id="gMarket">
+            <option value="money">Moneyline</option>
+            <option value="spread">Spread</option>
+            <option value="total">Total</option>
+          </select>
+        </div>
+        <div class="filter-group"><label id="gValueMinLabel">Price min</label><input type="number" id="gValueMin" step="0.01"></div>
+        <div class="filter-group"><label id="gValueMaxLabel">max</label><input type="number" id="gValueMax" step="0.01"></div>
+        <div class="filter-group"><label>Handle % min</label><input type="number" id="gHandleMin" step="1"></div>
+        <div class="filter-group"><label>max</label><input type="number" id="gHandleMax" step="1"></div>
+        <div class="filter-group"><label>Bets % min</label><input type="number" id="gBetsMin" step="1"></div>
+        <div class="filter-group"><label>max</label><input type="number" id="gBetsMax" step="1"></div>
+        <div class="filter-group"><label>Divergence min</label><input type="number" id="gDivMin" step="1"></div>
+        <div class="filter-group"><label>max</label><input type="number" id="gDivMax" step="1"></div>
+      </div>
+
+      <div class="strategy-presets" id="strategyPresets">
+        <span class="strategy-presets-label">Presets</span>
+        <button class="preset-btn" data-preset="money">Follow the money</button>
+        <button class="preset-btn" data-preset="public">Fade the public</button>
+        <button class="preset-btn" data-preset="dogs">Underdogs only</button>
+        <button class="preset-btn" data-preset="favs">Favorites only</button>
+        <button class="preset-btn" data-preset="home">Home teams only</button>
+        <button class="preset-btn" data-preset="away">Away teams only</button>
+      </div>
+    </div>
+
     <div class="stat-row" id="statRow"></div>
 
     <div class="tabs">
@@ -308,24 +373,15 @@
       <button class="tab-btn" data-tab="performance">Performance</button>
     </div>
 
+    <!-- BOARD TAB -->
     <div id="tab-board">
       <div class="filter-bar">
-        <div class="filter-group">
-          <label>Sport</label>
-          <select id="fSport"></select>
+        <div class="legend-key" style="margin-bottom:0;">
+          <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
+          <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
+          <span><span class="swatch" style="background:var(--alert)"></span> High divergence / loss</span>
         </div>
-        <div class="filter-group">
-          <label>Date</label>
-          <select id="fDate"></select>
-        </div>
-        <div class="filter-group">
-          <input type="text" id="fSearch" placeholder="Search team…">
-        </div>
-        <label class="chip-toggle" id="fSettledChip">
-          <input type="checkbox" id="fSettled"> Settled only
-        </label>
-        <div class="filter-spacer"></div>
-        <div class="filter-group">
+        <div class="filter-group sort-group">
           <label>Sort</label>
           <select id="fSort">
             <option value="divergence">Biggest divergence</option>
@@ -334,13 +390,6 @@
             <option value="alpha">Matchup A–Z</option>
           </select>
         </div>
-        <button class="reset-btn" id="resetFilters">Reset</button>
-      </div>
-
-      <div class="legend-key">
-        <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
-        <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
-        <span><span class="swatch" style="background:var(--alert)"></span> High divergence / loss</span>
       </div>
 
       <div class="table-wrap">
@@ -362,30 +411,14 @@
         </table>
         <div class="empty-state" id="boardEmpty" style="display:none;">
           <div class="display">No games match these filters</div>
-          <div>Try widening the sport, date, or settled filter.</div>
+          <div>Try widening the filters above.</div>
         </div>
       </div>
     </div>
 
+    <!-- SIGNAL TAB -->
     <div id="tab-signal" style="display:none;">
-      <p class="movers-note">Every team-side and market, ranked by the gap between its share of bet <em>count</em> (bets %) and its share of bet <em>dollars</em> (handle %). A large positive gap means fewer tickets are backing that side than dollars — the footprint of a small number of large bets. Where the game has settled, the result and PnL of a flat $1 moneyline stake on that team are shown alongside it.</p>
-      <div class="filter-bar">
-        <div class="filter-group">
-          <label>Market</label>
-          <select id="mMarket">
-            <option value="spread">Spread</option>
-            <option value="money">Moneyline</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Sport</label>
-          <select id="mSport"></select>
-        </div>
-        <label class="chip-toggle" id="mSettledChip">
-          <input type="checkbox" id="mSettled"> Settled only
-        </label>
-        <div class="filter-spacer"></div>
-      </div>
+      <p class="movers-note">Every team-side matching the filters above, for the market chosen in <span class="mono">More filters → Market</span>, ranked by the gap between its share of bet <em>count</em> (bets %) and its share of bet <em>dollars</em> (handle %). Where the game has settled, the result and PnL of a flat $1 moneyline stake on that team are shown alongside it.</p>
       <div class="table-wrap">
         <table id="moversTable">
           <thead>
@@ -405,91 +438,18 @@
       </div>
     </div>
 
+    <!-- PERFORMANCE TAB -->
     <div id="tab-performance" style="display:none;">
-      <p class="movers-note">Backtest a flat $1 moneyline stake on every team in every settled game. Build a strategy below — which side, which price range, how lopsided the handle-vs-bets split has to be — and the results, chart and table all recompute for just that slice.</p>
-
-      <div class="strategy-panel">
-        <div class="strategy-presets" id="strategyPresets">
-          <span class="strategy-presets-label">Presets</span>
-          <button class="preset-btn" data-preset="money">Follow the money</button>
-          <button class="preset-btn" data-preset="public">Fade the public</button>
-          <button class="preset-btn" data-preset="dogs">Underdogs only</button>
-          <button class="preset-btn" data-preset="favs">Favorites only</button>
-          <button class="preset-btn" data-preset="home">Home teams only</button>
-          <button class="preset-btn" data-preset="away">Away teams only</button>
-        </div>
-
-        <div class="filter-bar">
-          <div class="filter-group">
-            <label>Sport</label>
-            <select id="sSport"></select>
-          </div>
-          <div class="filter-group">
-            <label>Side</label>
-            <select id="sSide">
-              <option value="all">Favorites &amp; underdogs</option>
-              <option value="fav">Favorites (price &lt; 2.00)</option>
-              <option value="dog">Underdogs (price ≥ 2.00)</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label>Team</label>
-            <select id="sHomeAway">
-              <option value="all">Home &amp; away</option>
-              <option value="home">Home only</option>
-              <option value="away">Away only</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label>Signal market</label>
-            <select id="sMarket">
-              <option value="money">Moneyline handle/bets</option>
-              <option value="spread">Spread handle/bets</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="filter-bar">
-          <div class="filter-group">
-            <label>Divergence min</label>
-            <input type="number" id="sMinDiv" placeholder="-100" step="1" style="width:70px;">
-          </div>
-          <div class="filter-group">
-            <label>Divergence max</label>
-            <input type="number" id="sMaxDiv" placeholder="100" step="1" style="width:70px;">
-          </div>
-          <div class="filter-group">
-            <label>Price min</label>
-            <input type="number" id="sMinPrice" placeholder="1.01" step="0.01" style="width:70px;">
-          </div>
-          <div class="filter-group">
-            <label>Price max</label>
-            <input type="number" id="sMaxPrice" placeholder="20.00" step="0.01" style="width:70px;">
-          </div>
-          <div class="filter-group">
-            <label>From</label>
-            <select id="sDateFrom"></select>
-          </div>
-          <div class="filter-group">
-            <label>To</label>
-            <select id="sDateTo"></select>
-          </div>
-          <div class="filter-spacer"></div>
-          <button class="reset-btn" id="strategyReset">Reset strategy</button>
-        </div>
-      </div>
-
-      <div class="stat-row" id="strategyStatRow"></div>
-
+      <p class="movers-note">Backtest of a flat $1 moneyline stake on every team-side matching the filters above — settled games only.</p>
       <div class="perf-grid">
         <div class="chart-card">
           <h4>Cumulative PnL over time</h4>
-          <div class="chart-sub">Flat $1 stake on every team, moneyline, settled games only</div>
+          <div class="chart-sub" id="cumPnlSub">Flat $1 stake on every matching team, settled games only</div>
           <div class="canvas-wrap" id="cumPnlWrap"><canvas id="cumPnlChart"></canvas></div>
         </div>
         <div class="chart-card">
           <h4>Win rate by divergence bucket</h4>
-          <div class="chart-sub">Moneyline handle % minus bets %, at settlement</div>
+          <div class="chart-sub" id="bucketSub">Handle % minus bets %, at settlement</div>
           <div class="canvas-wrap short" id="bucketWrap"><canvas id="bucketChart"></canvas></div>
         </div>
       </div>
@@ -519,6 +479,8 @@
 (function(){
 
 const CSV_PATH = './mlb_splits.csv';
+
+/* ============================== CSV PARSING ============================== */
 
 function splitCSVLine(line){
   const out=[]; let cur=''; let inQ=false;
@@ -588,6 +550,8 @@ function fmtDate(iso){
   return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'});
 }
 
+/* ============================== DATA MODEL ============================== */
+
 function buildGames(rows){
   const map = new Map();
   rows.forEach(r=>{
@@ -652,20 +616,31 @@ function buildGames(rows){
   return games;
 }
 
+/* ============================== STATE ============================== */
+
 let ALL_GAMES = [];
 let ALL_ROWS_COUNT = 0;
+
 const state = {
   tab:'board',
-  sport:'all', date:'all', search:'', settledOnly:false,
-  sort:'divergence',
-  moversMarket:'spread', moversSport:'all', moversSettledOnly:false, moversSortKey:'div', moversSortDir:'desc',
-  strategy:{
-    sport:'all', side:'all', homeAway:'all', market:'money',
-    minDiv:null, maxDiv:null, minPrice:null, maxPrice:null,
-    dateFrom:'all', dateTo:'all', preset:null
-  },
-  expandedKey:null
+  boardSort:'divergence',
+  moversSortKey:'div', moversSortDir:'desc',
+  moreOpen:false,
+  expandedKey:null,
+  filters:{
+    sport:'all', dateFrom:'all', dateTo:'all', team:'', result:'all', role:'all',
+    market:'money',
+    valueMin:null, valueMax:null,
+    handleMin:null, handleMax:null,
+    betsMin:null, betsMax:null,
+    divMin:null, divMax:null,
+    preset:null
+  }
 };
+
+const MARKET_LABELS = {money:'Moneyline', spread:'Spread', total:'Total'};
+
+/* ============================== INIT / LOAD ============================== */
 
 async function init(){
   try{
@@ -718,12 +693,15 @@ function bootFromText(text){
   document.getElementById('statusDot').classList.remove('warn');
   document.getElementById('statusText').textContent = ALL_GAMES.length + ' games · ' + rows.length + ' rows';
   populateFilterOptions();
-  renderStats();
+  wireGlobalFilters();
+  wireTabs();
+  wireBoardSort();
+  wireSignalSort();
+  renderAll();
   renderFooter();
-  renderBoard();
-  renderMovers();
-  renderPerformance();
 }
+
+/* ============================== HELPERS ============================== */
 
 function fmtPct(x){ return Math.round(x*100)+'%'; }
 function fmtPP(x){ const s = x>0?'+':''; return s+x.toFixed(1)+'pp'; }
@@ -739,6 +717,8 @@ function divergenceClass(x){
   return 'lo';
 }
 function uniqueSorted(arr){ return Array.from(new Set(arr)).sort(); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function cssEscape(s){ return s.replace(/["\\]/g,'\\$&'); }
 
 function splitBarHTML(handle, bets){
   const b = Math.max(0, Math.min(100, bets*100));
@@ -748,32 +728,128 @@ function splitBarHTML(handle, bets){
     '<div class="splitbar-foot">H '+fmtPct(handle)+' · B '+fmtPct(bets)+'</div></div>';
 }
 
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function cssEscape(s){ return s.replace(/["\\]/g,'\\$&'); }
+/* market-specific field accessor: returns {value, handle, bets} for a side under a given market, or null if that market doesn't apply to this side */
+function marketFields(data, market){
+  if(market==='spread'){
+    if(data.spread_num===null) return null;
+    return {value:data.spread_num, handle:data.spread_handle, bets:data.spread_bets};
+  }
+  if(market==='total'){
+    if(data.total_num===null) return null;
+    return {value:data.total_num, handle:data.total_handle, bets:data.total_bets};
+  }
+  return {value:data.money, handle:data.money_handle, bets:data.money_bets};
+}
 
-function settledSides(games){
+/* ============================== GLOBAL FILTER MATCHING ============================== */
+
+function matchesFilters(game, side, data){
+  const f = state.filters;
+  if(f.sport!=='all' && game.sport!==f.sport) return false;
+  if(f.dateFrom!=='all' && game.dateISO < f.dateFrom) return false;
+  if(f.dateTo!=='all' && game.dateISO > f.dateTo) return false;
+  if(f.role!=='all' && side!==f.role) return false;
+  if(f.team){
+    const hay = (game.home_team+' '+game.away_team).toLowerCase();
+    if(!hay.includes(f.team)) return false;
+  }
+  if(f.result!=='all'){
+    if(f.result==='pending'){ if(data.result) return false; }
+    else { if(!data.result || data.result.toLowerCase()!==f.result) return false; }
+  }
+
+  const mf = marketFields(data, f.market);
+  if(!mf) return false;
+  if(f.valueMin!==null && mf.value < f.valueMin) return false;
+  if(f.valueMax!==null && mf.value > f.valueMax) return false;
+  if(f.handleMin!==null && mf.handle*100 < f.handleMin) return false;
+  if(f.handleMax!==null && mf.handle*100 > f.handleMax) return false;
+  if(f.betsMin!==null && mf.bets*100 < f.betsMin) return false;
+  if(f.betsMax!==null && mf.bets*100 > f.betsMax) return false;
+  const dv = (mf.handle - mf.bets)*100;
+  if(f.divMin!==null && dv < f.divMin) return false;
+  if(f.divMax!==null && dv > f.divMax) return false;
+
+  return true;
+}
+
+/* every side (team-row) across all games that passes the current filters */
+function matchingSides(){
   const out=[];
-  (games||ALL_GAMES).forEach(g=>{
+  ALL_GAMES.forEach(g=>{
     ['home','away'].forEach(side=>{
-      const d=g.sides[side];
-      if(d && d.result && d.pnl!==null) out.push({game:g, side, data:d});
+      const d = g.sides[side];
+      if(!d) return;
+      if(matchesFilters(g, side, d)) out.push({game:g, side, data:d});
     });
   });
   return out;
 }
 
+/* games where at least one side passes the current filters */
+function matchingGames(){
+  const passingKeys = new Set(matchingSides().map(s=>s.game.key));
+  return ALL_GAMES.filter(g=>passingKeys.has(g.key));
+}
+
+function settledOnly(sides){
+  return sides.filter(s=>s.data.result && s.data.pnl!==null);
+}
+
+function activeFilterCount(){
+  const f = state.filters;
+  let n=0;
+  if(f.sport!=='all') n++;
+  if(f.dateFrom!=='all') n++;
+  if(f.dateTo!=='all') n++;
+  if(f.team) n++;
+  if(f.result!=='all') n++;
+  if(f.role!=='all') n++;
+  if(f.valueMin!==null) n++;
+  if(f.valueMax!==null) n++;
+  if(f.handleMin!==null) n++;
+  if(f.handleMax!==null) n++;
+  if(f.betsMin!==null) n++;
+  if(f.betsMax!==null) n++;
+  if(f.divMin!==null) n++;
+  if(f.divMax!==null) n++;
+  return n;
+}
+
+/* ============================== RENDER ORCHESTRATION ============================== */
+
+function renderAll(){
+  updateActiveFilterBadge();
+  renderStats();
+  renderBoard();
+  renderMovers();
+  renderPerformance();
+}
+
+function updateActiveFilterBadge(){
+  const n = activeFilterCount();
+  const badge = document.getElementById('activeFilterCount');
+  if(n>0){
+    badge.style.display='inline-block';
+    badge.textContent = n+' active';
+  } else {
+    badge.style.display='none';
+  }
+}
+
+/* ============================== STAT ROW (dynamic on filters) ============================== */
+
 function renderStats(){
-  const sports = uniqueSorted(ALL_GAMES.map(g=>g.sport));
-  const settled = settledSides();
-  const pending = ALL_GAMES.filter(g=>!g.settled).length;
+  const games = matchingGames();
+  const settled = settledOnly(matchingSides());
   const wins = settled.filter(s=>s.data.result==='Win').length;
   const winRate = settled.length ? (wins/settled.length*100) : null;
   const totalPnl = settled.reduce((s,x)=>s+x.data.pnl,0);
   const roi = settled.length ? (totalPnl/settled.length*100) : null;
 
   const cells = [
-    {label:'Games tracked', value:ALL_GAMES.length, sub:sports.map(sportLabel).join(' · ')},
-    {label:'Settled ML bets', value:settled.length, sub:pending+' games pending'},
+    {label:'Games matching', value:games.length, sub:'of '+ALL_GAMES.length+' total'},
+    {label:'Settled ML bets', value:settled.length, sub:'in current filters'},
     {label:'Win rate', value: winRate!==null ? winRate.toFixed(1)+'%' : '—', sub: settled.length+' settled'},
     {label:'Total PnL', value: fmtPnl(totalPnl)!==null ? fmtPnl(totalPnl)+'u' : '—', sub:'flat $1 stakes', cls: totalPnl>0?'pos':(totalPnl<0?'neg':'')},
     {label:'ROI', value: roi!==null ? (roi>0?'+':'')+roi.toFixed(1)+'%' : '—', sub:'per bet placed', cls: roi>0?'pos':(roi<0?'neg':'')}
@@ -791,51 +867,140 @@ function renderFooter(){
     'Reads <span class="mono">mlb_splits.csv</span> client-side · '+ALL_ROWS_COUNT.toLocaleString()+' rows parsed · handle = share of dollars wagered, bets = share of ticket count, pnl = return on a flat $1 moneyline stake.';
 }
 
+/* ============================== FILTER PANEL WIRING ============================== */
+
 function populateFilterOptions(){
   const sports = uniqueSorted(ALL_GAMES.map(g=>g.sport));
   const sportOpts = '<option value="all">All sports</option>' + sports.map(s=>'<option value="'+s+'">'+sportLabel(s)+'</option>').join('');
-  document.getElementById('fSport').innerHTML = sportOpts;
-  document.getElementById('mSport').innerHTML = sportOpts;
-  document.getElementById('sSport').innerHTML = sportOpts;
+  document.getElementById('gSport').innerHTML = sportOpts;
 
   const dates = uniqueSorted(ALL_GAMES.map(g=>g.dateISO));
-  const fDate = document.getElementById('fDate');
-  fDate.innerHTML = '<option value="all">All dates</option>' + dates.map(d=>'<option value="'+d+'">'+fmtDate(d)+'</option>').join('');
-
   const dateOpts = dates.map(d=>'<option value="'+d+'">'+fmtDate(d)+'</option>').join('');
-  document.getElementById('sDateFrom').innerHTML = '<option value="all">Any</option>' + dateOpts;
-  document.getElementById('sDateTo').innerHTML = '<option value="all">Any</option>' + dateOpts;
+  document.getElementById('gDateFrom').innerHTML = '<option value="all">Any</option>' + dateOpts;
+  document.getElementById('gDateTo').innerHTML = '<option value="all">Any</option>' + dateOpts;
+}
 
-  document.getElementById('fSport').addEventListener('change', e=>{ state.sport=e.target.value; renderBoard(); });
-  fDate.addEventListener('change', e=>{ state.date=e.target.value; renderBoard(); });
-  document.getElementById('fSearch').addEventListener('input', e=>{ state.search=e.target.value.toLowerCase(); renderBoard(); });
-  document.getElementById('fSort').addEventListener('change', e=>{ state.sort=e.target.value; renderBoard(); });
-  document.getElementById('fSettled').addEventListener('change', e=>{
-    state.settledOnly = e.target.checked;
-    document.getElementById('fSettledChip').classList.toggle('on', state.settledOnly);
-    renderBoard();
+function updateValueLabels(){
+  const market = state.filters.market;
+  const label = market==='money' ? 'Price' : (market==='spread' ? 'Spread' : 'Total');
+  document.getElementById('gValueMinLabel').textContent = label+' min';
+  document.getElementById('gValueMaxLabel').textContent = 'max';
+}
+
+const STRATEGY_PRESETS = {
+  money: {market:'money', divMin:10, divMax:null, role:'all', valueMin:null, valueMax:null},
+  public:{market:'money', divMin:null, divMax:-10, role:'all', valueMin:null, valueMax:null},
+  dogs:  {market:'money', valueMin:2.0, valueMax:null, role:'all', divMin:null, divMax:null},
+  favs:  {market:'money', valueMin:null, valueMax:1.999, role:'all', divMin:null, divMax:null},
+  home:  {role:'home'},
+  away:  {role:'away'}
+};
+
+function blankFilters(){
+  return {
+    sport:'all', dateFrom:'all', dateTo:'all', team:'', result:'all', role:'all',
+    market:'money', valueMin:null, valueMax:null, handleMin:null, handleMax:null,
+    betsMin:null, betsMax:null, divMin:null, divMax:null, preset:null
+  };
+}
+
+function applyFiltersToControls(){
+  const f = state.filters;
+  document.getElementById('gSport').value = f.sport;
+  document.getElementById('gDateFrom').value = f.dateFrom;
+  document.getElementById('gDateTo').value = f.dateTo;
+  document.getElementById('gTeam').value = f.team;
+  document.getElementById('gResult').value = f.result;
+  document.getElementById('gRole').value = f.role;
+  document.getElementById('gMarket').value = f.market;
+  document.getElementById('gValueMin').value = f.valueMin===null ? '' : f.valueMin;
+  document.getElementById('gValueMax').value = f.valueMax===null ? '' : f.valueMax;
+  document.getElementById('gHandleMin').value = f.handleMin===null ? '' : f.handleMin;
+  document.getElementById('gHandleMax').value = f.handleMax===null ? '' : f.handleMax;
+  document.getElementById('gBetsMin').value = f.betsMin===null ? '' : f.betsMin;
+  document.getElementById('gBetsMax').value = f.betsMax===null ? '' : f.betsMax;
+  document.getElementById('gDivMin').value = f.divMin===null ? '' : f.divMin;
+  document.getElementById('gDivMax').value = f.divMax===null ? '' : f.divMax;
+  updateValueLabels();
+  document.querySelectorAll('.preset-btn').forEach(b=> b.classList.toggle('active', b.dataset.preset===f.preset));
+}
+
+function wireGlobalFilters(){
+  const f = state.filters;
+
+  const bindSelect = (id, key) => {
+    document.getElementById(id).addEventListener('change', e=>{
+      f[key] = e.target.value;
+      f.preset = null;
+      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+      if(key==='market') updateValueLabels();
+      renderAll();
+    });
+  };
+  bindSelect('gSport','sport');
+  bindSelect('gDateFrom','dateFrom');
+  bindSelect('gDateTo','dateTo');
+  bindSelect('gResult','result');
+  bindSelect('gRole','role');
+  bindSelect('gMarket','market');
+
+  document.getElementById('gTeam').addEventListener('input', e=>{
+    f.team = e.target.value.toLowerCase();
+    f.preset = null;
+    document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+    renderAll();
   });
-  document.getElementById('resetFilters').addEventListener('click', ()=>{
-    state.sport='all'; state.date='all'; state.search=''; state.settledOnly=false; state.sort='divergence';
-    document.getElementById('fSport').value='all';
-    document.getElementById('fDate').value='all';
-    document.getElementById('fSearch').value='';
-    document.getElementById('fSettled').checked=false;
-    document.getElementById('fSettledChip').classList.remove('on');
-    document.getElementById('fSort').value='divergence';
-    renderBoard();
+
+  const bindNumber = (id, key) => {
+    document.getElementById(id).addEventListener('input', e=>{
+      const v = e.target.value;
+      f[key] = v==='' ? null : parseFloat(v);
+      f.preset = null;
+      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+      renderAll();
+    });
+  };
+  bindNumber('gValueMin','valueMin');
+  bindNumber('gValueMax','valueMax');
+  bindNumber('gHandleMin','handleMin');
+  bindNumber('gHandleMax','handleMax');
+  bindNumber('gBetsMin','betsMin');
+  bindNumber('gBetsMax','betsMax');
+  bindNumber('gDivMin','divMin');
+  bindNumber('gDivMax','divMax');
+
+  document.getElementById('moreToggle').addEventListener('click', ()=>{
+    state.moreOpen = !state.moreOpen;
+    document.getElementById('moreFilters').classList.toggle('open', state.moreOpen);
+    document.getElementById('moreToggle').classList.toggle('open', state.moreOpen);
+    document.getElementById('moreToggle').textContent = state.moreOpen ? 'More filters ▲' : 'More filters ▾';
   });
 
-  document.getElementById('mSport').addEventListener('change', e=>{ state.moversSport=e.target.value; renderMovers(); });
-  document.getElementById('mMarket').addEventListener('change', e=>{ state.moversMarket=e.target.value; renderMovers(); });
-  document.getElementById('mSettled').addEventListener('change', e=>{
-    state.moversSettledOnly = e.target.checked;
-    document.getElementById('mSettledChip').classList.toggle('on', state.moversSettledOnly);
-    renderMovers();
+  document.getElementById('globalReset').addEventListener('click', ()=>{
+    state.filters = blankFilters();
+    applyFiltersToControls();
+    renderAll();
   });
 
-  wireStrategyControls();
+  document.querySelectorAll('.preset-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.dataset.preset;
+      const wasActive = state.filters.preset===key;
+      const sport = state.filters.sport; // keep sport choice across presets
+      if(wasActive){
+        state.filters = Object.assign(blankFilters(), {sport});
+      } else {
+        state.filters = Object.assign(blankFilters(), {sport}, STRATEGY_PRESETS[key], {preset:key});
+      }
+      applyFiltersToControls();
+      renderAll();
+    });
+  });
 
+  applyFiltersToControls();
+}
+
+function wireTabs(){
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -844,20 +1009,24 @@ function populateFilterOptions(){
       document.getElementById('tab-board').style.display = state.tab==='board' ? 'block':'none';
       document.getElementById('tab-signal').style.display = state.tab==='signal' ? 'block':'none';
       document.getElementById('tab-performance').style.display = state.tab==='performance' ? 'block':'none';
-      if(state.tab==='performance') renderPerformance();
     });
   });
+}
 
+function wireBoardSort(){
+  document.getElementById('fSort').addEventListener('change', e=>{ state.boardSort=e.target.value; renderBoard(); });
   document.querySelectorAll('#boardTable thead th[data-sort]').forEach(th=>{
     th.addEventListener('click', ()=>{
       const map = {date:'date', matchup:'alpha', sport:'sport', divergence:'divergence', pnl:'pnl'};
-      state.sort = map[th.dataset.sort] || 'divergence';
+      state.boardSort = map[th.dataset.sort] || 'divergence';
       const sel = document.getElementById('fSort');
-      if(['divergence','date','pnl','alpha'].includes(state.sort)) sel.value = state.sort;
+      if(['divergence','date','pnl','alpha'].includes(state.boardSort)) sel.value = state.boardSort;
       renderBoard();
     });
   });
+}
 
+function wireSignalSort(){
   document.querySelectorAll('#moversTable thead th[data-sort]').forEach(th=>{
     th.addEventListener('click', ()=>{
       const key = th.dataset.sort;
@@ -868,100 +1037,11 @@ function populateFilterOptions(){
   });
 }
 
-const STRATEGY_PRESETS = {
-  money: {minDiv:10, maxDiv:null, side:'all', homeAway:'all', market:'money'},
-  public:{minDiv:null, maxDiv:-10, side:'all', homeAway:'all', market:'money'},
-  dogs:  {side:'dog', homeAway:'all', minDiv:null, maxDiv:null, market:'money'},
-  favs:  {side:'fav', homeAway:'all', minDiv:null, maxDiv:null, market:'money'},
-  home:  {homeAway:'home', side:'all', minDiv:null, maxDiv:null, market:'money'},
-  away:  {homeAway:'away', side:'all', minDiv:null, maxDiv:null, market:'money'}
-};
-
-function applyStrategyToControls(){
-  const s = state.strategy;
-  document.getElementById('sSport').value = s.sport;
-  document.getElementById('sSide').value = s.side;
-  document.getElementById('sHomeAway').value = s.homeAway;
-  document.getElementById('sMarket').value = s.market;
-  document.getElementById('sMinDiv').value = s.minDiv===null ? '' : s.minDiv;
-  document.getElementById('sMaxDiv').value = s.maxDiv===null ? '' : s.maxDiv;
-  document.getElementById('sMinPrice').value = s.minPrice===null ? '' : s.minPrice;
-  document.getElementById('sMaxPrice').value = s.maxPrice===null ? '' : s.maxPrice;
-  document.getElementById('sDateFrom').value = s.dateFrom;
-  document.getElementById('sDateTo').value = s.dateTo;
-  document.querySelectorAll('.preset-btn').forEach(b=> b.classList.toggle('active', b.dataset.preset===s.preset));
-}
-
-function wireStrategyControls(){
-  const s = state.strategy;
-  const bindSelect = (id, key) => {
-    document.getElementById(id).addEventListener('change', e=>{
-      s[key] = e.target.value;
-      s.preset = null;
-      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
-      renderPerformance();
-    });
-  };
-  bindSelect('sSport','sport');
-  bindSelect('sSide','side');
-  bindSelect('sHomeAway','homeAway');
-  bindSelect('sMarket','market');
-  bindSelect('sDateFrom','dateFrom');
-  bindSelect('sDateTo','dateTo');
-
-  const bindNumber = (id, key) => {
-    document.getElementById(id).addEventListener('input', e=>{
-      const v = e.target.value;
-      s[key] = v==='' ? null : parseFloat(v);
-      s.preset = null;
-      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
-      renderPerformance();
-    });
-  };
-  bindNumber('sMinDiv','minDiv');
-  bindNumber('sMaxDiv','maxDiv');
-  bindNumber('sMinPrice','minPrice');
-  bindNumber('sMaxPrice','maxPrice');
-
-  document.querySelectorAll('.preset-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const key = btn.dataset.preset;
-      const wasActive = state.strategy.preset===key;
-      const sport = state.strategy.sport; // keep sport choice across presets
-      if(wasActive){
-        state.strategy = {sport, side:'all', homeAway:'all', market:'money', minDiv:null, maxDiv:null, minPrice:null, maxPrice:null, dateFrom:'all', dateTo:'all', preset:null};
-      } else {
-        const p = STRATEGY_PRESETS[key];
-        state.strategy = Object.assign({sport, minPrice:null, maxPrice:null, dateFrom:'all', dateTo:'all'}, p, {preset:key});
-      }
-      applyStrategyToControls();
-      renderPerformance();
-    });
-  });
-
-  document.getElementById('strategyReset').addEventListener('click', ()=>{
-    state.strategy = {sport:'all', side:'all', homeAway:'all', market:'money', minDiv:null, maxDiv:null, minPrice:null, maxPrice:null, dateFrom:'all', dateTo:'all', preset:null};
-    applyStrategyToControls();
-    renderPerformance();
-  });
-}
-
-function filteredGames(){
-  return ALL_GAMES.filter(g=>{
-    if(state.sport!=='all' && g.sport!==state.sport) return false;
-    if(state.date!=='all' && g.dateISO!==state.date) return false;
-    if(state.settledOnly && !g.settled) return false;
-    if(state.search){
-      const hay = (g.home_team+' '+g.away_team).toLowerCase();
-      if(!hay.includes(state.search)) return false;
-    }
-    return true;
-  });
-}
+/* ============================== BOARD TAB ============================== */
 
 function sortGames(games){
   const arr = games.slice();
-  switch(state.sort){
+  switch(state.boardSort){
     case 'date': arr.sort((a,b)=> b.dateISO.localeCompare(a.dateISO)); break;
     case 'pnl': arr.sort((a,b)=> Math.abs(b.maxAbsPnl||0) - Math.abs(a.maxAbsPnl||0)); break;
     case 'alpha': arr.sort((a,b)=> (a.home_team+a.away_team).localeCompare(b.home_team+b.away_team)); break;
@@ -997,13 +1077,13 @@ function pnlCellHTML(g){
 }
 
 function renderBoard(){
-  const games = sortGames(filteredGames());
+  const games = sortGames(matchingGames());
   const body = document.getElementById('boardBody');
   document.getElementById('boardEmpty').style.display = games.length ? 'none' : 'block';
 
   document.querySelectorAll('#boardTable thead th[data-sort]').forEach(th=>{
     const map = {divergence:'divergence', date:'date', pnl:'pnl', alpha:'matchup', sport:'sport'};
-    th.classList.toggle('sorted', map[state.sort]===th.dataset.sort);
+    th.classList.toggle('sorted', map[state.boardSort]===th.dataset.sort);
   });
 
   body.innerHTML = games.map(g=>{
@@ -1105,30 +1185,23 @@ function buildDetailPanel(g){
   return wrap;
 }
 
+/* ============================== SIGNAL TAB ============================== */
+
 function buildMoversRows(){
-  const market = state.moversMarket;
-  const rows=[];
-  ALL_GAMES.forEach(g=>{
-    if(state.moversSport!=='all' && g.sport!==state.moversSport) return;
-    if(state.moversSettledOnly && !g.settled) return;
-    ['home','away'].forEach(side=>{
-      const d = g.sides[side];
-      if(!d) return;
-      let handle, bets, price;
-      if(market==='spread'){
-        if(d.spread_num===null) return;
-        handle=d.spread_handle; bets=d.spread_bets; price=d.spread;
-      } else {
-        handle=d.money_handle; bets=d.money_bets; price=d.money.toFixed(2);
-      }
-      if(handle===0 && bets===0) return;
-      const opp = side==='home' ? g.away_team : g.home_team;
-      rows.push({
-        team:d.team, opponent:opp, sport:g.sport, handle, bets,
-        div:(handle-bets)*100, price, result:d.result, pnl:d.pnl, date:g.dateISO
-      });
-    });
-  });
+  const market = state.filters.market;
+  const rows = matchingSides().map(s=>{
+    const mf = marketFields(s.data, market);
+    if(!mf) return null;
+    const opp = s.side==='home' ? s.game.away_team : s.game.home_team;
+    const priceDisplay = market==='money' ? mf.value.toFixed(2) : String(mf.value);
+    return {
+      team:s.data.team, opponent:opp, sport:s.game.sport, handle:mf.handle, bets:mf.bets,
+      div:(mf.handle-mf.bets)*100, price:priceDisplay,
+      result: market==='money' ? s.data.result : null,
+      pnl: market==='money' ? s.data.pnl : null
+    };
+  }).filter(Boolean);
+
   rows.sort((a,b)=>{
     let av=a[state.moversSortKey], bv=b[state.moversSortKey];
     if(state.moversSortKey==='div'){ av=Math.abs(av); bv=Math.abs(bv); }
@@ -1140,7 +1213,7 @@ function buildMoversRows(){
 }
 
 function renderMovers(){
-  const rows = buildMoversRows().slice(0,150);
+  const rows = buildMoversRows().slice(0,200);
   document.querySelectorAll('#moversTable thead th[data-sort]').forEach(th=>{
     th.classList.toggle('sorted', th.dataset.sort===state.moversSortKey);
     const oldArrow = th.querySelector('.arrow');
@@ -1155,7 +1228,7 @@ function renderMovers(){
   document.getElementById('moversBody').innerHTML = rows.map(r=>{
     const resultCell = r.result
       ? '<span class="pnl-val '+(r.pnl>0?'pos':(r.pnl<0?'neg':''))+'">'+r.result+' '+fmtPnl(r.pnl)+'u</span>'
-      : '<span class="tag pending">Pending</span>';
+      : (state.filters.market==='money' ? '<span class="tag pending">Pending</span>' : '<span class="tag">n/a</span>');
     return '<tr>'+
       '<td>'+escapeHtml(r.team)+'</td>'+
       '<td style="color:var(--text-muted)">'+escapeHtml(r.opponent)+'</td>'+
@@ -1166,8 +1239,10 @@ function renderMovers(){
       '<td class="num">'+r.price+'</td>'+
       '<td class="num">'+resultCell+'</td>'+
     '</tr>';
-  }).join('') || '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted);">No rows for this market/sport combination.</td></tr>';
+  }).join('') || '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted);">No rows match the current filters.</td></tr>';
 }
+
+/* ============================== PERFORMANCE TAB ============================== */
 
 let cumChart=null, bucketChart=null;
 
@@ -1180,58 +1255,10 @@ function divergenceBucket(x){
 }
 const BUCKET_LABELS = ['< -10pp','-10 to 0pp','0 to +10pp','+10 to +20pp','>= +20pp'];
 
-function strategyPool(){
-  const s = state.strategy;
-  const gamePool = s.sport==='all' ? ALL_GAMES : ALL_GAMES.filter(g=>g.sport===s.sport);
-  return settledSides(gamePool).filter(x=>{
-    const d = x.data;
-    if(s.side==='fav' && !(d.money < 2.0)) return false;
-    if(s.side==='dog' && !(d.money >= 2.0)) return false;
-    if(s.homeAway!=='all' && x.side!==s.homeAway) return false;
-    if(s.minPrice!==null && d.money < s.minPrice) return false;
-    if(s.maxPrice!==null && d.money > s.maxPrice) return false;
-    let dv;
-    if(s.market==='spread'){
-      if(d.spread_num===null) return false;
-      dv = (d.spread_handle - d.spread_bets)*100;
-    } else {
-      dv = (d.money_handle - d.money_bets)*100;
-    }
-    if(s.minDiv!==null && dv < s.minDiv) return false;
-    if(s.maxDiv!==null && dv > s.maxDiv) return false;
-    if(s.dateFrom!=='all' && x.game.dateISO < s.dateFrom) return false;
-    if(s.dateTo!=='all' && x.game.dateISO > s.dateTo) return false;
-    return true;
-  });
-}
-
-function renderStrategyStats(settled){
-  const wins = settled.filter(s=>s.data.result==='Win').length;
-  const winRate = settled.length ? wins/settled.length*100 : null;
-  const totalPnl = settled.reduce((sum,x)=>sum+x.data.pnl,0);
-  const roi = settled.length ? totalPnl/settled.length*100 : null;
-  const avgPrice = settled.length ? settled.reduce((sum,x)=>sum+x.data.money,0)/settled.length : null;
-  const avgDiv = settled.length ? settled.reduce((sum,x)=>sum+(x.data.money_handle-x.data.money_bets)*100,0)/settled.length : null;
-
-  const cells = [
-    {label:'Bets in strategy', value:settled.length, sub:'flat $1 each'},
-    {label:'Win rate', value: winRate!==null ? winRate.toFixed(1)+'%' : '—', sub: wins+' wins'},
-    {label:'Total PnL', value: fmtPnl(totalPnl)!==null ? fmtPnl(totalPnl)+'u' : '—', sub:'units returned', cls: totalPnl>0?'pos':(totalPnl<0?'neg':'')},
-    {label:'ROI', value: roi!==null ? (roi>0?'+':'')+roi.toFixed(1)+'%' : '—', sub:'per bet placed', cls: roi>0?'pos':(roi<0?'neg':'')},
-    {label:'Avg price', value: avgPrice!==null ? avgPrice.toFixed(2) : '—', sub:'moneyline odds'},
-    {label:'Avg divergence', value: avgDiv!==null ? fmtPP(avgDiv) : '—', sub:'handle − bets'}
-  ];
-  document.getElementById('strategyStatRow').innerHTML = cells.map(c=>
-    '<div class="stat-cell">'+
-      '<div class="label">'+c.label+'</div>'+
-      '<div class="value mono '+(c.cls||'')+'">'+c.value+'</div>'+
-      '<div class="sub">'+c.sub+'</div>'+
-    '</div>').join('');
-}
-
 function renderPerformance(){
-  const settled = strategyPool();
-  renderStrategyStats(settled);
+  const settled = settledOnly(matchingSides());
+  const marketLabel = MARKET_LABELS[state.filters.market];
+  document.getElementById('bucketSub').textContent = marketLabel+' handle % minus bets %, at settlement';
 
   const byDate = new Map();
   settled.forEach(s=>{
@@ -1245,7 +1272,7 @@ function renderPerformance(){
   const cumWrap = document.getElementById('cumPnlWrap');
   if(cumChart){ cumChart.destroy(); cumChart=null; }
   if(!dates.length){
-    cumWrap.innerHTML = '<div class="chart-empty">No settled bets yet for this filter.</div>';
+    cumWrap.innerHTML = '<div class="chart-empty">No settled bets match the current filters.</div>';
   } else {
     if(!document.getElementById('cumPnlChart')){
       cumWrap.innerHTML = '<canvas id="cumPnlChart"></canvas>';
@@ -1277,7 +1304,9 @@ function renderPerformance(){
 
   const buckets = [0,1,2,3,4].map(()=>({count:0, wins:0, pnl:0}));
   settled.forEach(s=>{
-    const dv = (s.data.money_handle - s.data.money_bets)*100;
+    const mf = marketFields(s.data, state.filters.market);
+    if(!mf) return;
+    const dv = (mf.handle - mf.bets)*100;
     const b = divergenceBucket(dv);
     buckets[b].count++;
     if(s.data.result==='Win') buckets[b].wins++;
@@ -1287,7 +1316,7 @@ function renderPerformance(){
   if(bucketChart){ bucketChart.destroy(); bucketChart=null; }
   const anyBucketData = buckets.some(b=>b.count>0);
   if(!anyBucketData){
-    bucketWrap.innerHTML = '<div class="chart-empty">No settled bets yet for this filter.</div>';
+    bucketWrap.innerHTML = '<div class="chart-empty">No settled bets match the current filters.</div>';
   } else {
     if(!document.getElementById('bucketChart')){
       bucketWrap.innerHTML = '<canvas id="bucketChart"></canvas>';
@@ -1349,7 +1378,7 @@ function renderPerformance(){
       '<td class="num '+(r.pnl>0?'pnl-val pos':(r.pnl<0?'pnl-val neg':''))+'">'+fmtPnl(r.pnl)+'u</td>'+
       '<td class="num '+(r.roi>0?'pnl-val pos':(r.roi<0?'pnl-val neg':''))+'">'+(r.roi>0?'+':'')+r.roi.toFixed(1)+'%</td>'+
     '</tr>'
-  ).join('') : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted);">No settled bets yet for this filter.</td></tr>';
+  ).join('') : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted);">No settled bets match the current filters.</td></tr>';
 }
 
 init();
