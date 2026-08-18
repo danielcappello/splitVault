@@ -904,6 +904,15 @@ function blankFilters(){
   };
 }
 
+/* IMPORTANT: state.filters must keep the same object identity for the lifetime of
+   the page — event listener closures below capture a reference to it once. Never
+   reassign state.filters directly; always mutate it in place via setFilters(). */
+function setFilters(newVals){
+  const f = state.filters;
+  Object.keys(f).forEach(k=>{ delete f[k]; });
+  Object.assign(f, newVals);
+}
+
 function applyFiltersToControls(){
   const f = state.filters;
   document.getElementById('gSport').value = f.sport;
@@ -977,7 +986,7 @@ function wireGlobalFilters(){
   });
 
   document.getElementById('globalReset').addEventListener('click', ()=>{
-    state.filters = blankFilters();
+    setFilters(blankFilters());
     applyFiltersToControls();
     renderAll();
   });
@@ -988,9 +997,9 @@ function wireGlobalFilters(){
       const wasActive = state.filters.preset===key;
       const sport = state.filters.sport; // keep sport choice across presets
       if(wasActive){
-        state.filters = Object.assign(blankFilters(), {sport});
+        setFilters(Object.assign(blankFilters(), {sport}));
       } else {
-        state.filters = Object.assign(blankFilters(), {sport}, STRATEGY_PRESETS[key], {preset:key});
+        setFilters(Object.assign(blankFilters(), {sport}, STRATEGY_PRESETS[key], {preset:key}));
       }
       applyFiltersToControls();
       renderAll();
