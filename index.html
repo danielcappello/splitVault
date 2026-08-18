@@ -294,8 +294,8 @@
 
 <main>
   <div id="loadState">
-    <div class="display">Reading mlb_splits.csv…</div>
-    <div class="sub">Looking for <span class="mono">mlb_splits.csv</span> in the same directory as this page.</div>
+    <div class="display">Reading mlb_splits.csv &amp; soc_splits.csv…</div>
+    <div class="sub">Looking for <span class="mono">mlb_splits.csv</span> and <span class="mono">soc_splits.csv</span> in the same directory as this page.</div>
   </div>
 
   <div id="app" style="display:none;">
@@ -478,7 +478,14 @@
 <script>
 (function(){
 
-const CSV_PATH = './mlb_splits.csv';
+/* Each data file this page knows how to consume. mlb_splits.csv already carries its
+   own `sport` column; soc_splits.csv has no `sport` column at all (only `league`), so
+   we tag every row from that file with the fallback sport below. Add more entries
+   here to pull in additional sports files from the same directory. */
+const CSV_SOURCES = [
+  { path:'./mlb_splits.csv', fallbackSport:null },
+  { path:'./soc_splits.csv', fallbackSport:'SOC' }
+];
 
 /* ============================== CSV PARSING ============================== */
 
@@ -642,25 +649,41 @@ const MARKET_LABELS = {money:'Moneyline', spread:'Spread', total:'Total'};
 
 /* ============================== INIT / LOAD ============================== */
 
-async function init(){
+async function fetchSource(src){
   try{
-    const res = await fetch(CSV_PATH, {cache:'no-store'});
-    if(!res.ok) throw new Error('fetch failed: '+res.status);
+    const res = await fetch(src.path, {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
     const text = await res.text();
-    bootFromText(text);
+    return {ok:true, path:src.path, fallbackSport:src.fallbackSport, text};
   }catch(e){
-    showFallback();
+    return {ok:false, path:src.path, fallbackSport:src.fallbackSport};
   }
 }
 
+async function init(){
+  const results = await Promise.all(CSV_SOURCES.map(fetchSource));
+  const loaded = results.filter(r=>r.ok);
+  if(!loaded.length){
+    showFallback();
+  } else {
+    bootFromSources(results);
+  }
+}
+
+function inferFallbackSport(filename){
+  const match = CSV_SOURCES.find(s=>s.path.replace('./','')===filename);
+  return match ? match.fallbackSport : null; // unknown file: leave sport as whatever the CSV itself has
+}
+
 function showFallback(){
+  const names = CSV_SOURCES.map(s=>s.path.replace('./',''));
   const el = document.getElementById('loadState');
   el.innerHTML =
-    '<div class="display">Couldn\'t load mlb_splits.csv automatically</div>' +
-    '<div class="sub">This page expects <span class="mono">mlb_splits.csv</span> to sit next to it (e.g. served over http/https from the same folder — browsers block local file:// fetches). You can also drop the file in manually below.</div>' +
+    '<div class="display">Couldn\'t load '+names.join(' / ')+' automatically</div>' +
+    '<div class="sub">This page expects '+names.map(n=>'<span class="mono">'+n+'</span>').join(' and ')+' to sit next to it (e.g. served over http/https from the same folder — browsers block local file:// fetches). You can also drop the file(s) in manually below — one, or both at once.</div>' +
     '<label class="drop-zone" id="dropZone">' +
-      '<div>Click to choose <span class="mono">mlb_splits.csv</span>, or drag it here</div>' +
-      '<input type="file" id="fileInput" accept=".csv">' +
+      '<div>Click to choose one or more CSV files, or drag them here</div>' +
+      '<input type="file" id="fileInput" accept=".csv" multiple>' +
     '</label>';
   const dz = document.getElementById('dropZone');
   const fi = document.getElementById('fileInput');
@@ -669,36 +692,58 @@ function showFallback(){
   dz.addEventListener('dragleave', ()=>{dz.style.borderColor='var(--hairline)';});
   dz.addEventListener('drop', e=>{
     e.preventDefault();
-    const f = e.dataTransfer.files[0];
-    if(f) readFile(f);
+    if(e.dataTransfer.files.length) readFiles(e.dataTransfer.files);
   });
   fi.addEventListener('change', e=>{
-    const f = e.target.files[0];
-    if(f) readFile(f);
+    if(e.target.files.length) readFiles(e.target.files);
   });
 }
-function readFile(file){
-  const reader = new FileReader();
-  reader.onload = ev => bootFromText(ev.target.result);
-  reader.readAsText(file);
+function readFiles(fileList){
+  const files = Array.from(fileList);
+  let remaining = files.length;
+  const collected = [];
+  files.forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      collected.push({ok:true, path:'./'+file.name, fallbackSport:inferFallbackSport(file.name), text:ev.target.result});
+      remaining--;
+      if(remaining===0) bootFromSources(collected);
+    };
+    reader.readAsText(file);
+  });
 }
 
-function bootFromText(text){
-  const rows = parseCSV(text);
+function bootFromSources(results){
+  let rows = [];
+  const loadedNames = [];
+  const missingNames = [];
+  results.forEach(r=>{
+    const name = r.path.replace('./','');
+    if(r.ok){
+      const parsed = parseCSV(r.text);
+      parsed.forEach(row=>{ if(!row.sport && r.fallbackSport) row.sport = r.fallbackSport; });
+      rows = rows.concat(parsed);
+      loadedNames.push(name);
+    } else {
+      missingNames.push(name);
+    }
+  });
   ALL_ROWS_COUNT = rows.length;
   ALL_GAMES = buildGames(rows);
   document.getElementById('loadState').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('pageFooter').style.display='block';
-  document.getElementById('statusDot').classList.remove('warn');
-  document.getElementById('statusText').textContent = ALL_GAMES.length + ' games · ' + rows.length + ' rows';
+  document.getElementById('statusDot').classList.toggle('warn', missingNames.length>0);
+  let statusMsg = ALL_GAMES.length + ' games · ' + rows.length + ' rows · ' + loadedNames.join(' + ');
+  if(missingNames.length) statusMsg += ' (missing '+missingNames.join(', ')+')';
+  document.getElementById('statusText').textContent = statusMsg;
   populateFilterOptions();
   wireGlobalFilters();
   wireTabs();
   wireBoardSort();
   wireSignalSort();
   renderAll();
-  renderFooter();
+  renderFooter(loadedNames, missingNames);
 }
 
 /* ============================== HELPERS ============================== */
@@ -862,9 +907,13 @@ function renderStats(){
     '</div>').join('');
 }
 
-function renderFooter(){
-  document.getElementById('pageFooter').innerHTML =
-    'Reads <span class="mono">mlb_splits.csv</span> client-side · '+ALL_ROWS_COUNT.toLocaleString()+' rows parsed · handle = share of dollars wagered, bets = share of ticket count, pnl = return on a flat $1 moneyline stake.';
+function renderFooter(loadedNames, missingNames){
+  const names = (loadedNames && loadedNames.length) ? loadedNames : CSV_SOURCES.map(s=>s.path.replace('./',''));
+  let txt = 'Reads '+names.map(n=>'<span class="mono">'+n+'</span>').join(' + ')+' client-side · '+ALL_ROWS_COUNT.toLocaleString()+' rows parsed · handle = share of dollars wagered, bets = share of ticket count, pnl = return on a flat $1 moneyline stake.';
+  if(missingNames && missingNames.length){
+    txt += ' <span style="color:var(--alert)">· '+missingNames.join(', ')+' not found — showing available data only.</span>';
+  }
+  document.getElementById('pageFooter').innerHTML = txt;
 }
 
 /* ============================== FILTER PANEL WIRING ============================== */
