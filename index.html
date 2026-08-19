@@ -1075,6 +1075,10 @@ function wireTabs(){
       state.tab = btn.dataset.tab;
       document.getElementById('tab-upcoming').style.display = state.tab==='upcoming' ? 'block':'none';
       document.getElementById('tab-backtest').style.display = state.tab==='backtest' ? 'block':'none';
+      /* Chart.js sizes a canvas off its container at creation time — if that container
+         was display:none (as it is until this tab is opened), the canvas gets 0×0 and
+         stays blank forever. Rebuild the chart now that the container is actually visible. */
+      if(state.tab==='backtest') renderCumulativePnlChart();
     });
   });
 }
