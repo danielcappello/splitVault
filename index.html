@@ -154,6 +154,15 @@
   .tab-btn.active{color:var(--text); border-bottom-color:var(--handle);}
   .tab-btn:hover{color:var(--text);}
 
+  .subtabs{display:flex; gap:6px; margin-bottom:14px;}
+  .subtab-btn{
+    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--text-muted);
+    padding:6px 16px; border-radius:20px; font-size:12.5px; cursor:pointer;
+    font-family:'Space Grotesk',sans-serif; font-weight:600;
+  }
+  .subtab-btn:hover{color:var(--text); border-color:var(--text-muted);}
+  .subtab-btn.active{background:var(--handle); color:var(--bg); border-color:var(--handle);}
+
   .legend-key{
     display:flex; gap:16px; flex-wrap:wrap; font-size:11.5px; color:var(--text-muted);
     margin-bottom:14px;
@@ -304,7 +313,7 @@
     <div class="filter-panel">
       <div class="filter-panel-head">
         <span class="display">Filters</span>
-        <span class="sub">apply across Board, Signal &amp; Performance</span>
+        <span class="sub">apply across Upcoming &amp; Backtest</span>
         <span class="active-filter-count" id="activeFilterCount" style="display:none;"></span>
       </div>
 
@@ -336,14 +345,6 @@
       </div>
 
       <div class="filter-bar more-filters" id="moreFilters">
-        <div class="filter-group">
-          <label>Market</label>
-          <select id="gMarket">
-            <option value="money">Moneyline</option>
-            <option value="spread">Spread</option>
-            <option value="total">Total</option>
-          </select>
-        </div>
         <div class="filter-group"><label id="gValueMinLabel">Price min</label><input type="number" id="gValueMin" step="0.01"></div>
         <div class="filter-group"><label id="gValueMaxLabel">max</label><input type="number" id="gValueMax" step="0.01"></div>
         <div class="filter-group"><label>Handle % min</label><input type="number" id="gHandleMin" step="1"></div>
@@ -374,6 +375,11 @@
 
     <!-- UPCOMING TAB — games with no result yet -->
     <div id="tab-upcoming">
+      <div class="subtabs" data-scope="upcoming">
+        <button class="subtab-btn" data-market="spread">Spread</button>
+        <button class="subtab-btn" data-market="total">Total</button>
+        <button class="subtab-btn" data-market="money">Moneyline</button>
+      </div>
       <div class="filter-bar">
         <div class="legend-key" style="margin-bottom:0;">
           <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
@@ -398,9 +404,7 @@
               <th data-sort="date">Date</th>
               <th data-sort="matchup">Matchup</th>
               <th data-sort="sport">Sport</th>
-              <th>Spread split</th>
-              <th>Total</th>
-              <th>Moneyline (pick)</th>
+              <th id="uMarketColHeader">Moneyline (pick)</th>
               <th data-sort="divergence">Signal</th>
             </tr>
           </thead>
@@ -423,6 +427,11 @@
         <div class="canvas-wrap" id="cumPnlWrap"><canvas id="cumPnlChart"></canvas></div>
       </div>
 
+      <div class="subtabs" data-scope="backtest">
+        <button class="subtab-btn" data-market="spread">Spread</button>
+        <button class="subtab-btn" data-market="total">Total</button>
+        <button class="subtab-btn" data-market="money">Moneyline</button>
+      </div>
       <div class="filter-bar">
         <div class="legend-key" style="margin-bottom:0;">
           <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
@@ -448,9 +457,7 @@
               <th data-sort="date">Date</th>
               <th data-sort="matchup">Matchup</th>
               <th data-sort="sport">Sport</th>
-              <th>Spread split</th>
-              <th>Total</th>
-              <th>Moneyline (pick)</th>
+              <th id="bMarketColHeader">Moneyline (pick)</th>
               <th data-sort="divergence">Signal</th>
               <th>Result</th>
               <th data-sort="pnl">Picked team PnL ($1 stake)</th>
@@ -606,30 +613,6 @@ function buildGames(rows){
   map.forEach(g=>{
     if(!g.sides.home && !g.sides.away) return;
     g.settled = !!((g.sides.home && g.sides.home.result) || (g.sides.away && g.sides.away.result));
-
-    let maxDiv=0, maxDivMarket=null, maxDivSide=null;
-    ['home','away'].forEach(side=>{
-      const d=g.sides[side]; if(!d) return;
-      if(d.spread_num!==null){
-        const dv=(d.spread_handle-d.spread_bets)*100;
-        if(Math.abs(dv)>Math.abs(maxDiv)){maxDiv=dv;maxDivMarket='spread';maxDivSide=side;}
-      }
-      if(d.money){
-        const dv=(d.money_handle-d.money_bets)*100;
-        if(Math.abs(dv)>Math.abs(maxDiv)){maxDiv=dv;maxDivMarket='money';maxDivSide=side;}
-      }
-    });
-    g.maxDivergence=maxDiv; g.maxDivergenceMarket=maxDivMarket; g.maxDivergenceSide=maxDivSide;
-
-    let maxAbsPnl = null;
-    ['home','away'].forEach(side=>{
-      const d=g.sides[side];
-      if(d && d.pnl!==null){
-        if(maxAbsPnl===null || Math.abs(d.pnl)>Math.abs(maxAbsPnl)) maxAbsPnl=d.pnl;
-      }
-    });
-    g.maxAbsPnl = maxAbsPnl;
-
     games.push(g);
   });
   return games;
@@ -639,6 +622,8 @@ function buildGames(rows){
 
 let ALL_GAMES = [];
 let ALL_ROWS_COUNT = 0;
+
+const MARKET_LABELS = {money:'Moneyline', spread:'Spread', total:'Total'};
 
 const state = {
   tab:'upcoming',
@@ -750,6 +735,7 @@ function bootFromSources(results){
   populateFilterOptions();
   wireGlobalFilters();
   wireTabs();
+  wireSubtabs();
   wireUpcomingSort();
   wireBacktestSort();
   renderAll();
@@ -780,7 +766,7 @@ function splitBarHTML(handle, bets){
   const h = Math.max(0, Math.min(100, handle*100));
   return '<div class="splitbar-wrap">' +
     '<div class="splitbar"><div class="seg-bets" style="width:'+b+'%"></div><div class="marker-handle" style="left:'+h+'%"></div></div>' +
-    '<div class="splitbar-foot">H '+fmtPct(handle)+' · B '+fmtPct(bets)+'</div></div>';
+    '<div class="splitbar-foot">Handle '+fmtPct(handle)+' · Bets '+fmtPct(bets)+'</div></div>';
 }
 
 /* market-specific field accessor: returns {value, handle, bets} for a side under a given market, or null if that market doesn't apply to this side */
@@ -894,7 +880,9 @@ function updateActiveFilterBadge(){
 /* ============================== STAT ROW (dynamic on filters) ============================== */
 
 function renderStats(){
-  const games = matchingGames();
+  const matching = matchingGames();
+  const settledGames = matching.filter(g=>g.settled);
+  const upcomingGamesCount = matching.filter(g=>!g.settled).length;
   const settled = settledOnly(matchingSides());
   const wins = settled.filter(s=>s.data.result==='Win').length;
   const winRate = settled.length ? (wins/settled.length*100) : null;
@@ -902,8 +890,9 @@ function renderStats(){
   const roi = settled.length ? (totalPnl/settled.length*100) : null;
 
   const cells = [
-    {label:'Games matching', value:games.length, sub:'of '+ALL_GAMES.length+' total'},
-    {label:'Settled ML bets', value:settled.length, sub:'in current filters'},
+    {label:'Settled games', value:settledGames.length, sub:'backtest, matching filters'},
+    {label:'Upcoming games', value:upcomingGamesCount, sub:'not yet settled, matching filters'},
+    {label:'Settled ML bets', value:settled.length, sub:'team-sides included'},
     {label:'Win rate', value: winRate!==null ? winRate.toFixed(1)+'%' : '—', sub: settled.length+' settled'},
     {label:'Total PnL', value: fmtPnl(totalPnl)!==null ? fmtPnl(totalPnl)+'u' : '—', sub:'flat $1 stakes', cls: totalPnl>0?'pos':(totalPnl<0?'neg':'')},
     {label:'ROI', value: roi!==null ? (roi>0?'+':'')+roi.toFixed(1)+'%' : '—', sub:'per bet placed', cls: roi>0?'pos':(roi<0?'neg':'')}
@@ -945,6 +934,33 @@ function updateValueLabels(){
   document.getElementById('gValueMaxLabel').textContent = 'max';
 }
 
+function updateMarketUI(){
+  const market = state.filters.market;
+  document.querySelectorAll('.subtab-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.market===market);
+  });
+  const colLabel = MARKET_LABELS[market]+' (pick)';
+  const uHeader = document.getElementById('uMarketColHeader');
+  const bHeader = document.getElementById('bMarketColHeader');
+  if(uHeader) uHeader.textContent = colLabel;
+  if(bHeader) bHeader.textContent = colLabel;
+  updateValueLabels();
+}
+
+function wireSubtabs(){
+  document.querySelectorAll('.subtab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(state.filters.market===btn.dataset.market) return;
+      state.filters.market = btn.dataset.market;
+      state.filters.preset = null;
+      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+      updateMarketUI();
+      renderAll();
+    });
+  });
+  updateMarketUI();
+}
+
 const STRATEGY_PRESETS = {
   money: {market:'money', divMin:10, divMax:null, role:'all', valueMin:null, valueMax:null},
   public:{market:'money', divMin:null, divMax:-10, role:'all', valueMin:null, valueMax:null},
@@ -979,7 +995,6 @@ function applyFiltersToControls(){
   document.getElementById('gTeam').value = f.team;
   document.getElementById('gResult').value = f.result;
   document.getElementById('gRole').value = f.role;
-  document.getElementById('gMarket').value = f.market;
   document.getElementById('gValueMin').value = f.valueMin===null ? '' : f.valueMin;
   document.getElementById('gValueMax').value = f.valueMax===null ? '' : f.valueMax;
   document.getElementById('gHandleMin').value = f.handleMin===null ? '' : f.handleMin;
@@ -988,7 +1003,7 @@ function applyFiltersToControls(){
   document.getElementById('gBetsMax').value = f.betsMax===null ? '' : f.betsMax;
   document.getElementById('gDivMin').value = f.divMin===null ? '' : f.divMin;
   document.getElementById('gDivMax').value = f.divMax===null ? '' : f.divMax;
-  updateValueLabels();
+  updateMarketUI();
   document.querySelectorAll('.preset-btn').forEach(b=> b.classList.toggle('active', b.dataset.preset===f.preset));
 }
 
@@ -1000,7 +1015,6 @@ function wireGlobalFilters(){
       f[key] = e.target.value;
       f.preset = null;
       document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
-      if(key==='market') updateValueLabels();
       renderAll();
     });
   };
@@ -1009,7 +1023,6 @@ function wireGlobalFilters(){
   bindSelect('gDateTo','dateTo');
   bindSelect('gResult','result');
   bindSelect('gRole','role');
-  bindSelect('gMarket','market');
 
   document.getElementById('gTeam').addEventListener('input', e=>{
     f.team = e.target.value.toLowerCase();
@@ -1125,24 +1138,40 @@ function wireBacktestSort(){
 
 /* ============================== GAME TABLES (Upcoming / Backtest) ============================== */
 
-function sortGamesBy(games, key){
+function sortGamesBy(games, key, market){
   const arr = games.slice();
   switch(key){
     case 'date-asc': arr.sort((a,b)=> a.dateISO.localeCompare(b.dateISO)); break;
     case 'date-desc': arr.sort((a,b)=> b.dateISO.localeCompare(a.dateISO)); break;
-    case 'pnl': arr.sort((a,b)=> Math.abs(b.maxAbsPnl||0) - Math.abs(a.maxAbsPnl||0)); break;
+    case 'pnl': arr.sort((a,b)=>{
+      const da = a.sides[pickedSide(a, market).side];
+      const db = b.sides[pickedSide(b, market).side];
+      const va = (da && da.pnl!==null) ? Math.abs(da.pnl) : -1;
+      const vb = (db && db.pnl!==null) ? Math.abs(db.pnl) : -1;
+      return vb - va;
+    }); break;
     case 'alpha': arr.sort((a,b)=> (a.home_team+a.away_team).localeCompare(b.home_team+b.away_team)); break;
     case 'sport': arr.sort((a,b)=> a.sport.localeCompare(b.sport)); break;
-    default: arr.sort((a,b)=> Math.abs(b.maxDivergence) - Math.abs(a.maxDivergence)); // divergence
+    default: arr.sort((a,b)=> Math.abs(pickedSide(b, market).divergence) - Math.abs(pickedSide(a, market).divergence)); // divergence
   }
   return arr;
 }
 
-/* The "picked" team for a game is whichever side carries the biggest handle-vs-bets
-   divergence (the same side highlighted in the Signal column) — i.e. the side the
-   split data actually flags as interesting. */
-function pickedSide(g){
-  return g.maxDivergenceSide || 'home';
+/* The "picked" side for a game, scoped to one market, is whichever team carries the
+   biggest handle-vs-bets divergence in THAT market — the same side highlighted in
+   the Signal column for the currently active Spread / Total / Moneyline sub-tab. */
+function pickedSide(g, market){
+  market = market || state.filters.market;
+  let bestSide=null, bestAbs=-1, bestDiv=0;
+  ['home','away'].forEach(side=>{
+    const d = g.sides[side];
+    if(!d) return;
+    const mf = marketFields(d, market);
+    if(!mf) return;
+    const dv = (mf.handle - mf.bets)*100;
+    if(Math.abs(dv) > bestAbs){ bestAbs = Math.abs(dv); bestSide = side; bestDiv = dv; }
+  });
+  return {side: bestSide || 'home', divergence: bestSide ? bestDiv : 0};
 }
 
 function resultTag(g){
@@ -1158,24 +1187,29 @@ function resultTag(g){
   '</div>';
 }
 
-function pnlCellHTML(g){
-  const pick = pickedSide(g);
-  const d = g.sides[pick];
+/* PnL is always the outcome of the picked team's MONEYLINE $1 stake — that's the only
+   market this data has actual settlement results for, regardless of which market
+   (spread/total/moneyline) is currently selected via the sub-tabs. */
+function pnlCellHTML(g, pick){
+  const d = g.sides[pick.side];
   if(!d) return '<span class="tag">n/a</span>';
   if(d.pnl===null) return '<div class="pnl-line"><div class="side"><span class="nm">'+escapeHtml(d.team)+'</span><span class="pnl-val na">pending</span></div></div>';
   const cls = d.pnl>0?'pos':(d.pnl<0?'neg':'');
   return '<div class="pnl-line"><div class="side"><span class="nm">'+escapeHtml(d.team)+'</span><span class="pnl-val '+cls+'">'+fmtPnl(d.pnl)+'</span></div></div>';
 }
 
-function moneyCellHTML(g){
-  const pick = pickedSide(g);
-  const d = g.sides[pick];
-  if(!d) return '';
-  return '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(d.team)+' @ '+d.money.toFixed(2)+'</div>'+splitBarHTML(d.money_handle, d.money_bets);
+function marketCellHTML(g, pick, market){
+  const d = g.sides[pick.side];
+  if(!d) return '<span class="tag">n/a</span>';
+  const mf = marketFields(d, market);
+  if(!mf) return '<span class="tag">n/a</span>';
+  const priceDisplay = market==='money' ? mf.value.toFixed(2) : String(mf.value);
+  return '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(d.team)+' @ '+priceDisplay+'</div>'+splitBarHTML(mf.handle, mf.bets);
 }
 
 function renderUpcoming(){
-  const games = sortGamesBy(matchingGames().filter(g=>!g.settled), state.upcomingSort);
+  const market = state.filters.market;
+  const games = sortGamesBy(matchingGames().filter(g=>!g.settled), state.upcomingSort, market);
   const body = document.getElementById('upcomingBody');
   document.getElementById('upcomingEmpty').style.display = games.length ? 'none' : 'block';
 
@@ -1184,35 +1218,31 @@ function renderUpcoming(){
   });
 
   body.innerHTML = games.map(g=>{
-    const home = g.sides.home;
-    const spreadCell = (home && home.spread_num!==null) ?
-      '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(g.home_team)+' '+home.spread+'</div>'+splitBarHTML(home.spread_handle, home.spread_bets)
-      : '<span class="tag">n/a</span>';
-    const totalCell = (home && home.total_num!==null) ? '<span class="num">'+home.total+'</span>' : '<span class="tag">n/a</span>';
-    const moneyCell = moneyCellHTML(g);
-    const divCls = divergenceClass(g.maxDivergence);
-    const divLabel = g.maxDivergenceMarket ? (g.maxDivergenceMarket==='spread'?'Spread':'ML')+' · '+g[g.maxDivergenceSide==='home'?'home_team':'away_team'] : '';
+    const pick = pickedSide(g, market);
+    const marketCell = marketCellHTML(g, pick, market);
+    const divCls = divergenceClass(pick.divergence);
+    const pickTeam = g.sides[pick.side] ? g.sides[pick.side].team : '';
+    const divLabel = pickTeam ? MARKET_LABELS[market]+' · '+pickTeam : '';
 
     return '<tr data-key="'+cssEscape(g.key)+'">'+
       '<td class="num">'+fmtDate(g.dateISO)+'</td>'+
       '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span></div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
-      '<td>'+spreadCell+'</td>'+
-      '<td>'+totalCell+'</td>'+
-      '<td>'+moneyCell+'</td>'+
-      '<td><div class="divergence-badge '+divCls+'">'+fmtPP(g.maxDivergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
+      '<td>'+marketCell+'</td>'+
+      '<td><div class="divergence-badge '+divCls+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
     '</tr>';
   }).join('');
 
   body.querySelectorAll('tr').forEach(tr=>{
-    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key, 'upcomingBody', 7));
+    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key, 'upcomingBody', 5));
   });
 
-  if(state.expandedKey) insertDetailRow(state.expandedKey, 'upcomingBody', 7);
+  if(state.expandedKey) insertDetailRow(state.expandedKey, 'upcomingBody', 5);
 }
 
 function renderBacktest(){
-  const games = sortGamesBy(matchingGames().filter(g=>g.settled), state.backtestSort);
+  const market = state.filters.market;
+  const games = sortGamesBy(matchingGames().filter(g=>g.settled), state.backtestSort, market);
   const body = document.getElementById('backtestBody');
   document.getElementById('backtestEmpty').style.display = games.length ? 'none' : 'block';
 
@@ -1221,33 +1251,28 @@ function renderBacktest(){
   });
 
   body.innerHTML = games.map(g=>{
-    const home = g.sides.home;
-    const spreadCell = (home && home.spread_num!==null) ?
-      '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(g.home_team)+' '+home.spread+'</div>'+splitBarHTML(home.spread_handle, home.spread_bets)
-      : '<span class="tag">n/a</span>';
-    const totalCell = (home && home.total_num!==null) ? '<span class="num">'+home.total+'</span>' : '<span class="tag">n/a</span>';
-    const moneyCell = moneyCellHTML(g);
-    const divCls = divergenceClass(g.maxDivergence);
-    const divLabel = g.maxDivergenceMarket ? (g.maxDivergenceMarket==='spread'?'Spread':'ML')+' · '+g[g.maxDivergenceSide==='home'?'home_team':'away_team'] : '';
+    const pick = pickedSide(g, market);
+    const marketCell = marketCellHTML(g, pick, market);
+    const divCls = divergenceClass(pick.divergence);
+    const pickTeam = g.sides[pick.side] ? g.sides[pick.side].team : '';
+    const divLabel = pickTeam ? MARKET_LABELS[market]+' · '+pickTeam : '';
 
     return '<tr data-key="'+cssEscape(g.key)+'">'+
       '<td class="num">'+fmtDate(g.dateISO)+'</td>'+
       '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span></div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
-      '<td>'+spreadCell+'</td>'+
-      '<td>'+totalCell+'</td>'+
-      '<td>'+moneyCell+'</td>'+
-      '<td><div class="divergence-badge '+divCls+'">'+fmtPP(g.maxDivergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
+      '<td>'+marketCell+'</td>'+
+      '<td><div class="divergence-badge '+divCls+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
       '<td>'+resultTag(g)+'</td>'+
-      '<td>'+pnlCellHTML(g)+'</td>'+
+      '<td>'+pnlCellHTML(g, pick)+'</td>'+
     '</tr>';
   }).join('');
 
   body.querySelectorAll('tr').forEach(tr=>{
-    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key, 'backtestBody', 9));
+    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key, 'backtestBody', 7));
   });
 
-  if(state.expandedKey) insertDetailRow(state.expandedKey, 'backtestBody', 9);
+  if(state.expandedKey) insertDetailRow(state.expandedKey, 'backtestBody', 7);
 
   renderCumulativePnlChart();
   renderSportBreakdown();
