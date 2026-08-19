@@ -6,7 +6,7 @@
 <title>Splits Board — Betting Split Results &amp; PnL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
 <style>
   :root{
     --bg: #0F1215;
@@ -368,13 +368,61 @@
     <div class="stat-row" id="statRow"></div>
 
     <div class="tabs">
-      <button class="tab-btn active" data-tab="board">Board</button>
-      <button class="tab-btn" data-tab="signal">Signal</button>
-      <button class="tab-btn" data-tab="performance">Performance</button>
+      <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+      <button class="tab-btn" data-tab="backtest">Backtest</button>
     </div>
 
-    <!-- BOARD TAB -->
-    <div id="tab-board">
+    <!-- UPCOMING TAB — games with no result yet -->
+    <div id="tab-upcoming">
+      <div class="filter-bar">
+        <div class="legend-key" style="margin-bottom:0;">
+          <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
+          <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
+          <span><span class="swatch" style="background:var(--alert)"></span> High divergence</span>
+        </div>
+        <div class="filter-group sort-group">
+          <label>Sort</label>
+          <select id="uSort">
+            <option value="date-asc">Date (oldest first)</option>
+            <option value="date-desc">Date (newest first)</option>
+            <option value="divergence">Biggest divergence</option>
+            <option value="alpha">Matchup A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="upcomingTable">
+          <thead>
+            <tr>
+              <th data-sort="date">Date</th>
+              <th data-sort="matchup">Matchup</th>
+              <th data-sort="sport">Sport</th>
+              <th>Spread split</th>
+              <th>Total</th>
+              <th>Moneyline (pick)</th>
+              <th data-sort="divergence">Signal</th>
+            </tr>
+          </thead>
+          <tbody id="upcomingBody"></tbody>
+        </table>
+        <div class="empty-state" id="upcomingEmpty" style="display:none;">
+          <div class="display">No upcoming games match these filters</div>
+          <div>Try widening the filters above.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKTEST TAB — games with a result -->
+    <div id="tab-backtest" style="display:none;">
+      <p class="movers-note">Backtest of a flat $1 moneyline stake on every team-side matching the filters above — settled games only.</p>
+
+      <div class="chart-card" style="margin-bottom:16px;">
+        <h4>PnL over time</h4>
+        <div class="chart-sub" id="cumPnlSub">Cumulative flat $1 moneyline stake, oldest to newest, on every matching team</div>
+        <div class="canvas-wrap" id="cumPnlWrap"><canvas id="cumPnlChart"></canvas></div>
+      </div>
+
       <div class="filter-bar">
         <div class="legend-key" style="margin-bottom:0;">
           <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
@@ -383,9 +431,10 @@
         </div>
         <div class="filter-group sort-group">
           <label>Sort</label>
-          <select id="fSort">
+          <select id="bSort">
+            <option value="date-desc">Date (newest first)</option>
+            <option value="date-asc">Date (oldest first)</option>
             <option value="divergence">Biggest divergence</option>
-            <option value="date">Game date</option>
             <option value="pnl">Biggest PnL swing</option>
             <option value="alpha">Matchup A–Z</option>
           </select>
@@ -393,7 +442,7 @@
       </div>
 
       <div class="table-wrap">
-        <table id="boardTable">
+        <table id="backtestTable">
           <thead>
             <tr>
               <th data-sort="date">Date</th>
@@ -401,59 +450,21 @@
               <th data-sort="sport">Sport</th>
               <th>Spread split</th>
               <th>Total</th>
-              <th>Moneyline split</th>
+              <th>Moneyline (pick)</th>
               <th data-sort="divergence">Signal</th>
               <th>Result</th>
-              <th data-sort="pnl">ML PnL ($1 stake)</th>
+              <th data-sort="pnl">Picked team PnL ($1 stake)</th>
             </tr>
           </thead>
-          <tbody id="boardBody"></tbody>
+          <tbody id="backtestBody"></tbody>
         </table>
-        <div class="empty-state" id="boardEmpty" style="display:none;">
-          <div class="display">No games match these filters</div>
+        <div class="empty-state" id="backtestEmpty" style="display:none;">
+          <div class="display">No settled games match these filters</div>
           <div>Try widening the filters above.</div>
         </div>
       </div>
-    </div>
 
-    <!-- SIGNAL TAB -->
-    <div id="tab-signal" style="display:none;">
-      <p class="movers-note">Every team-side matching the filters above, for the market chosen in <span class="mono">More filters → Market</span>, ranked by the gap between its share of bet <em>count</em> (bets %) and its share of bet <em>dollars</em> (handle %). Where the game has settled, the result and PnL of a flat $1 moneyline stake on that team are shown alongside it.</p>
-      <div class="table-wrap">
-        <table id="moversTable">
-          <thead>
-            <tr>
-              <th>Team</th>
-              <th>Opponent</th>
-              <th>Sport</th>
-              <th data-sort="handle">Handle %</th>
-              <th data-sort="bets">Bets %</th>
-              <th data-sort="div">Divergence</th>
-              <th data-sort="price">Price</th>
-              <th data-sort="pnl">ML result</th>
-            </tr>
-          </thead>
-          <tbody id="moversBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- PERFORMANCE TAB -->
-    <div id="tab-performance" style="display:none;">
-      <p class="movers-note">Backtest of a flat $1 moneyline stake on every team-side matching the filters above — settled games only.</p>
-      <div class="perf-grid">
-        <div class="chart-card">
-          <h4>Cumulative PnL over time</h4>
-          <div class="chart-sub" id="cumPnlSub">Flat $1 stake on every matching team, settled games only</div>
-          <div class="canvas-wrap" id="cumPnlWrap"><canvas id="cumPnlChart"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <h4>Win rate by divergence bucket</h4>
-          <div class="chart-sub" id="bucketSub">Handle % minus bets %, at settlement</div>
-          <div class="canvas-wrap short" id="bucketWrap"><canvas id="bucketChart"></canvas></div>
-        </div>
-      </div>
-      <div class="table-wrap" id="sportBreakdownWrap">
+      <div class="table-wrap" id="sportBreakdownWrap" style="margin-top:16px;">
         <table id="sportBreakdownTable">
           <thead>
             <tr>
@@ -472,6 +483,7 @@
 
   </div>
 </main>
+
 
 <footer id="pageFooter" style="display:none;"></footer>
 
@@ -629,9 +641,9 @@ let ALL_GAMES = [];
 let ALL_ROWS_COUNT = 0;
 
 const state = {
-  tab:'board',
-  boardSort:'divergence',
-  moversSortKey:'div', moversSortDir:'desc',
+  tab:'upcoming',
+  upcomingSort:'date-asc',
+  backtestSort:'date-desc',
   moreOpen:false,
   expandedKey:null,
   filters:{
@@ -644,8 +656,6 @@ const state = {
     preset:null
   }
 };
-
-const MARKET_LABELS = {money:'Moneyline', spread:'Spread', total:'Total'};
 
 /* ============================== INIT / LOAD ============================== */
 
@@ -740,8 +750,8 @@ function bootFromSources(results){
   populateFilterOptions();
   wireGlobalFilters();
   wireTabs();
-  wireBoardSort();
-  wireSignalSort();
+  wireUpcomingSort();
+  wireBacktestSort();
   renderAll();
   renderFooter(loadedNames, missingNames);
 }
@@ -866,9 +876,8 @@ function activeFilterCount(){
 function renderAll(){
   updateActiveFilterBadge();
   renderStats();
-  renderBoard();
-  renderMovers();
-  renderPerformance();
+  renderUpcoming();
+  renderBacktest();
 }
 
 function updateActiveFilterBadge(){
@@ -1064,49 +1073,76 @@ function wireTabs(){
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       state.tab = btn.dataset.tab;
-      document.getElementById('tab-board').style.display = state.tab==='board' ? 'block':'none';
-      document.getElementById('tab-signal').style.display = state.tab==='signal' ? 'block':'none';
-      document.getElementById('tab-performance').style.display = state.tab==='performance' ? 'block':'none';
+      document.getElementById('tab-upcoming').style.display = state.tab==='upcoming' ? 'block':'none';
+      document.getElementById('tab-backtest').style.display = state.tab==='backtest' ? 'block':'none';
+      /* Chart.js sizes a canvas off its container at creation time — if that container
+         was display:none (as it is until this tab is opened), the canvas gets 0×0 and
+         stays blank forever. Rebuild the chart now that the container is actually visible. */
+      if(state.tab==='backtest') renderCumulativePnlChart();
     });
   });
 }
 
-function wireBoardSort(){
-  document.getElementById('fSort').addEventListener('change', e=>{ state.boardSort=e.target.value; renderBoard(); });
-  document.querySelectorAll('#boardTable thead th[data-sort]').forEach(th=>{
+/* clicking "Date" toggles oldest/newest; other sortable columns just select that key */
+function resolveHeaderSort(col, current){
+  if(col==='date') return current==='date-asc' ? 'date-desc' : 'date-asc';
+  if(col==='matchup') return 'alpha';
+  if(col==='sport') return 'sport';
+  if(col==='pnl') return 'pnl';
+  return 'divergence';
+}
+function sortKeyToColumn(key){
+  if(key==='date-asc' || key==='date-desc') return 'date';
+  if(key==='alpha') return 'matchup';
+  if(key==='sport') return 'sport';
+  if(key==='pnl') return 'pnl';
+  return 'divergence';
+}
+
+function wireUpcomingSort(){
+  document.getElementById('uSort').addEventListener('change', e=>{ state.upcomingSort=e.target.value; renderUpcoming(); });
+  document.querySelectorAll('#upcomingTable thead th[data-sort]').forEach(th=>{
     th.addEventListener('click', ()=>{
-      const map = {date:'date', matchup:'alpha', sport:'sport', divergence:'divergence', pnl:'pnl'};
-      state.boardSort = map[th.dataset.sort] || 'divergence';
-      const sel = document.getElementById('fSort');
-      if(['divergence','date','pnl','alpha'].includes(state.boardSort)) sel.value = state.boardSort;
-      renderBoard();
+      state.upcomingSort = resolveHeaderSort(th.dataset.sort, state.upcomingSort);
+      const sel = document.getElementById('uSort');
+      if(Array.from(sel.options).some(o=>o.value===state.upcomingSort)) sel.value = state.upcomingSort;
+      renderUpcoming();
     });
   });
 }
 
-function wireSignalSort(){
-  document.querySelectorAll('#moversTable thead th[data-sort]').forEach(th=>{
+function wireBacktestSort(){
+  document.getElementById('bSort').addEventListener('change', e=>{ state.backtestSort=e.target.value; renderBacktest(); });
+  document.querySelectorAll('#backtestTable thead th[data-sort]').forEach(th=>{
     th.addEventListener('click', ()=>{
-      const key = th.dataset.sort;
-      if(state.moversSortKey===key) state.moversSortDir = state.moversSortDir==='desc'?'asc':'desc';
-      else { state.moversSortKey = key; state.moversSortDir='desc'; }
-      renderMovers();
+      state.backtestSort = resolveHeaderSort(th.dataset.sort, state.backtestSort);
+      const sel = document.getElementById('bSort');
+      if(Array.from(sel.options).some(o=>o.value===state.backtestSort)) sel.value = state.backtestSort;
+      renderBacktest();
     });
   });
 }
 
-/* ============================== BOARD TAB ============================== */
+/* ============================== GAME TABLES (Upcoming / Backtest) ============================== */
 
-function sortGames(games){
+function sortGamesBy(games, key){
   const arr = games.slice();
-  switch(state.boardSort){
-    case 'date': arr.sort((a,b)=> b.dateISO.localeCompare(a.dateISO)); break;
+  switch(key){
+    case 'date-asc': arr.sort((a,b)=> a.dateISO.localeCompare(b.dateISO)); break;
+    case 'date-desc': arr.sort((a,b)=> b.dateISO.localeCompare(a.dateISO)); break;
     case 'pnl': arr.sort((a,b)=> Math.abs(b.maxAbsPnl||0) - Math.abs(a.maxAbsPnl||0)); break;
     case 'alpha': arr.sort((a,b)=> (a.home_team+a.away_team).localeCompare(b.home_team+b.away_team)); break;
     case 'sport': arr.sort((a,b)=> a.sport.localeCompare(b.sport)); break;
-    default: arr.sort((a,b)=> Math.abs(b.maxDivergence) - Math.abs(a.maxDivergence));
+    default: arr.sort((a,b)=> Math.abs(b.maxDivergence) - Math.abs(a.maxDivergence)); // divergence
   }
   return arr;
+}
+
+/* The "picked" team for a game is whichever side carries the biggest handle-vs-bets
+   divergence (the same side highlighted in the Signal column) — i.e. the side the
+   split data actually flags as interesting. */
+function pickedSide(g){
+  return g.maxDivergenceSide || 'home';
 }
 
 function resultTag(g){
@@ -1123,25 +1159,28 @@ function resultTag(g){
 }
 
 function pnlCellHTML(g){
-  const rows = ['home','away'].map(side=>{
-    const d = g.sides[side];
-    if(!d) return '';
-    const label = d.team.split(' ').slice(-1)[0];
-    if(d.pnl===null) return '<div class="side"><span class="nm">'+escapeHtml(label)+'</span><span class="pnl-val na">pending</span></div>';
-    const cls = d.pnl>0?'pos':(d.pnl<0?'neg':'');
-    return '<div class="side"><span class="nm">'+escapeHtml(label)+'</span><span class="pnl-val '+cls+'">'+fmtPnl(d.pnl)+'</span></div>';
-  }).join('');
-  return '<div class="pnl-line">'+rows+'</div>';
+  const pick = pickedSide(g);
+  const d = g.sides[pick];
+  if(!d) return '<span class="tag">n/a</span>';
+  if(d.pnl===null) return '<div class="pnl-line"><div class="side"><span class="nm">'+escapeHtml(d.team)+'</span><span class="pnl-val na">pending</span></div></div>';
+  const cls = d.pnl>0?'pos':(d.pnl<0?'neg':'');
+  return '<div class="pnl-line"><div class="side"><span class="nm">'+escapeHtml(d.team)+'</span><span class="pnl-val '+cls+'">'+fmtPnl(d.pnl)+'</span></div></div>';
 }
 
-function renderBoard(){
-  const games = sortGames(matchingGames());
-  const body = document.getElementById('boardBody');
-  document.getElementById('boardEmpty').style.display = games.length ? 'none' : 'block';
+function moneyCellHTML(g){
+  const pick = pickedSide(g);
+  const d = g.sides[pick];
+  if(!d) return '';
+  return '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(d.team)+' @ '+d.money.toFixed(2)+'</div>'+splitBarHTML(d.money_handle, d.money_bets);
+}
 
-  document.querySelectorAll('#boardTable thead th[data-sort]').forEach(th=>{
-    const map = {divergence:'divergence', date:'date', pnl:'pnl', alpha:'matchup', sport:'sport'};
-    th.classList.toggle('sorted', map[state.boardSort]===th.dataset.sort);
+function renderUpcoming(){
+  const games = sortGamesBy(matchingGames().filter(g=>!g.settled), state.upcomingSort);
+  const body = document.getElementById('upcomingBody');
+  document.getElementById('upcomingEmpty').style.display = games.length ? 'none' : 'block';
+
+  document.querySelectorAll('#upcomingTable thead th[data-sort]').forEach(th=>{
+    th.classList.toggle('sorted', sortKeyToColumn(state.upcomingSort)===th.dataset.sort);
   });
 
   body.innerHTML = games.map(g=>{
@@ -1150,7 +1189,44 @@ function renderBoard(){
       '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(g.home_team)+' '+home.spread+'</div>'+splitBarHTML(home.spread_handle, home.spread_bets)
       : '<span class="tag">n/a</span>';
     const totalCell = (home && home.total_num!==null) ? '<span class="num">'+home.total+'</span>' : '<span class="tag">n/a</span>';
-    const moneyCell = (home) ? '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(g.home_team)+' @ '+home.money.toFixed(2)+'</div>'+splitBarHTML(home.money_handle, home.money_bets) : '';
+    const moneyCell = moneyCellHTML(g);
+    const divCls = divergenceClass(g.maxDivergence);
+    const divLabel = g.maxDivergenceMarket ? (g.maxDivergenceMarket==='spread'?'Spread':'ML')+' · '+g[g.maxDivergenceSide==='home'?'home_team':'away_team'] : '';
+
+    return '<tr data-key="'+cssEscape(g.key)+'">'+
+      '<td class="num">'+fmtDate(g.dateISO)+'</td>'+
+      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span></div></td>'+
+      '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
+      '<td>'+spreadCell+'</td>'+
+      '<td>'+totalCell+'</td>'+
+      '<td>'+moneyCell+'</td>'+
+      '<td><div class="divergence-badge '+divCls+'">'+fmtPP(g.maxDivergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
+    '</tr>';
+  }).join('');
+
+  body.querySelectorAll('tr').forEach(tr=>{
+    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key, 'upcomingBody', 7));
+  });
+
+  if(state.expandedKey) insertDetailRow(state.expandedKey, 'upcomingBody', 7);
+}
+
+function renderBacktest(){
+  const games = sortGamesBy(matchingGames().filter(g=>g.settled), state.backtestSort);
+  const body = document.getElementById('backtestBody');
+  document.getElementById('backtestEmpty').style.display = games.length ? 'none' : 'block';
+
+  document.querySelectorAll('#backtestTable thead th[data-sort]').forEach(th=>{
+    th.classList.toggle('sorted', sortKeyToColumn(state.backtestSort)===th.dataset.sort);
+  });
+
+  body.innerHTML = games.map(g=>{
+    const home = g.sides.home;
+    const spreadCell = (home && home.spread_num!==null) ?
+      '<div class="mono" style="font-size:11px;color:var(--text-faint);margin-bottom:2px;">'+escapeHtml(g.home_team)+' '+home.spread+'</div>'+splitBarHTML(home.spread_handle, home.spread_bets)
+      : '<span class="tag">n/a</span>';
+    const totalCell = (home && home.total_num!==null) ? '<span class="num">'+home.total+'</span>' : '<span class="tag">n/a</span>';
+    const moneyCell = moneyCellHTML(g);
     const divCls = divergenceClass(g.maxDivergence);
     const divLabel = g.maxDivergenceMarket ? (g.maxDivergenceMarket==='spread'?'Spread':'ML')+' · '+g[g.maxDivergenceSide==='home'?'home_team':'away_team'] : '';
 
@@ -1168,42 +1244,41 @@ function renderBoard(){
   }).join('');
 
   body.querySelectorAll('tr').forEach(tr=>{
-    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key));
+    tr.addEventListener('click', ()=> toggleDetail(tr.dataset.key, 'backtestBody', 9));
   });
 
-  if(state.expandedKey && games.some(g=>g.key===state.expandedKey)){
-    insertDetailRow(state.expandedKey);
-  } else {
-    state.expandedKey=null;
-  }
+  if(state.expandedKey) insertDetailRow(state.expandedKey, 'backtestBody', 9);
+
+  renderCumulativePnlChart();
+  renderSportBreakdown();
 }
 
-function toggleDetail(key){
+function toggleDetail(key, bodyId, colSpan){
   if(state.expandedKey===key){
     state.expandedKey=null;
     const existing = document.querySelector('.detail-row');
     if(existing) existing.remove();
-    document.querySelectorAll('#boardBody tr').forEach(r=>r.classList.remove('expanded'));
+    document.querySelectorAll('#upcomingBody tr, #backtestBody tr').forEach(r=>r.classList.remove('expanded'));
     return;
   }
   const prev = document.querySelector('.detail-row');
   if(prev) prev.remove();
-  document.querySelectorAll('#boardBody tr').forEach(r=>r.classList.remove('expanded'));
+  document.querySelectorAll('#upcomingBody tr, #backtestBody tr').forEach(r=>r.classList.remove('expanded'));
   state.expandedKey = key;
-  insertDetailRow(key);
+  insertDetailRow(key, bodyId, colSpan);
 }
 
-function insertDetailRow(key){
+function insertDetailRow(key, bodyId, colSpan){
   const g = ALL_GAMES.find(g=>g.key===key);
   if(!g) return;
-  const rowEl = document.querySelector('#boardBody tr[data-key="'+cssEscape(key)+'"]');
-  if(!rowEl) return;
+  const rowEl = document.querySelector('#'+bodyId+' tr[data-key="'+cssEscape(key)+'"]');
+  if(!rowEl) return; // this game isn't in this table (e.g. it's shown in the other tab) — no-op
   rowEl.classList.add('expanded');
 
   const tr = document.createElement('tr');
   tr.className = 'detail-row';
   const td = document.createElement('td');
-  td.colSpan = 9;
+  td.colSpan = colSpan;
   td.appendChild(buildDetailPanel(g));
   tr.appendChild(td);
   rowEl.after(tr);
@@ -1243,90 +1318,19 @@ function buildDetailPanel(g){
   return wrap;
 }
 
-/* ============================== SIGNAL TAB ============================== */
+/* ============================== BACKTEST CHART + BREAKDOWN ============================== */
 
-function buildMoversRows(){
-  const market = state.filters.market;
-  const rows = matchingSides().map(s=>{
-    const mf = marketFields(s.data, market);
-    if(!mf) return null;
-    const opp = s.side==='home' ? s.game.away_team : s.game.home_team;
-    const priceDisplay = market==='money' ? mf.value.toFixed(2) : String(mf.value);
-    return {
-      team:s.data.team, opponent:opp, sport:s.game.sport, handle:mf.handle, bets:mf.bets,
-      div:(mf.handle-mf.bets)*100, price:priceDisplay,
-      /* result/pnl are the settled outcome of the moneyline bet on THIS row's team —
-         that's the actual bet for this game, independent of which market (spread/total/
-         moneyline) is currently selected for display/filtering above. */
-      result: s.data.result,
-      pnl: s.data.pnl
-    };
-  }).filter(Boolean);
+let cumChart=null;
 
-  rows.sort((a,b)=>{
-    let av=a[state.moversSortKey], bv=b[state.moversSortKey];
-    if(state.moversSortKey==='div'){ av=Math.abs(av); bv=Math.abs(bv); }
-    if(state.moversSortKey==='pnl'){ av = av===null?-Infinity:av; bv = bv===null?-Infinity:bv; }
-    const dir = state.moversSortDir==='desc' ? -1 : 1;
-    return av>bv ? dir*1 : av<bv ? dir*-1 : 0;
-  });
-  return rows;
-}
-
-function renderMovers(){
-  const rows = buildMoversRows().slice(0,200);
-  document.querySelectorAll('#moversTable thead th[data-sort]').forEach(th=>{
-    th.classList.toggle('sorted', th.dataset.sort===state.moversSortKey);
-    const oldArrow = th.querySelector('.arrow');
-    if(oldArrow) oldArrow.remove();
-    if(th.dataset.sort===state.moversSortKey){
-      const arrow = document.createElement('span');
-      arrow.className='arrow';
-      arrow.textContent = state.moversSortDir==='desc' ? '▼' : '▲';
-      th.appendChild(arrow);
-    }
-  });
-  document.getElementById('moversBody').innerHTML = rows.map(r=>{
-    const resultCell = r.result
-      ? '<span class="pnl-val '+(r.pnl>0?'pos':(r.pnl<0?'neg':''))+'">'+r.result+' '+fmtPnl(r.pnl)+'u</span>'
-      : '<span class="tag pending">Pending</span>';
-    return '<tr>'+
-      '<td>'+escapeHtml(r.team)+'</td>'+
-      '<td style="color:var(--text-muted)">'+escapeHtml(r.opponent)+'</td>'+
-      '<td><span class="tag">'+sportLabel(r.sport)+'</span></td>'+
-      '<td class="num" style="color:var(--handle)">'+fmtPct(r.handle)+'</td>'+
-      '<td class="num" style="color:var(--bets)">'+fmtPct(r.bets)+'</td>'+
-      '<td><span class="divergence-badge '+divergenceClass(r.div)+'">'+fmtPP(r.div)+'</span></td>'+
-      '<td class="num">'+r.price+'</td>'+
-      '<td class="num">'+resultCell+'</td>'+
-    '</tr>';
-  }).join('') || '<tr><td colspan="8" style="padding:24px;text-align:center;color:var(--text-muted);">No rows match the current filters.</td></tr>';
-}
-
-/* ============================== PERFORMANCE TAB ============================== */
-
-let cumChart=null, bucketChart=null;
-
-function divergenceBucket(x){
-  if(x>=20) return 4;
-  if(x>=10) return 3;
-  if(x>=0) return 2;
-  if(x>=-10) return 1;
-  return 0;
-}
-const BUCKET_LABELS = ['< -10pp','-10 to 0pp','0 to +10pp','+10 to +20pp','>= +20pp'];
-
-function renderPerformance(){
+function renderCumulativePnlChart(){
   const settled = settledOnly(matchingSides());
-  const marketLabel = MARKET_LABELS[state.filters.market];
-  document.getElementById('bucketSub').textContent = marketLabel+' handle % minus bets %, at settlement';
 
   const byDate = new Map();
   settled.forEach(s=>{
     const dISO = s.game.dateISO;
     byDate.set(dISO, (byDate.get(dISO)||0) + s.data.pnl);
   });
-  const dates = Array.from(byDate.keys()).sort();
+  const dates = Array.from(byDate.keys()).sort(); // oldest to newest
   let running = 0;
   const cum = dates.map(d=>{ running += byDate.get(d); return running; });
 
@@ -1334,88 +1338,38 @@ function renderPerformance(){
   if(cumChart){ cumChart.destroy(); cumChart=null; }
   if(!dates.length){
     cumWrap.innerHTML = '<div class="chart-empty">No settled bets match the current filters.</div>';
-  } else {
-    if(!document.getElementById('cumPnlChart')){
-      cumWrap.innerHTML = '<canvas id="cumPnlChart"></canvas>';
-    }
-    const canvas = document.getElementById('cumPnlChart');
-    cumChart = new Chart(canvas, {
-      type:'line',
-      data:{
-        labels: dates.map(fmtDate),
-        datasets:[{
-          label:'Cumulative PnL (units)',
-          data: cum,
-          borderColor: cum[cum.length-1]>=0 ? '#3FB68B' : '#E2574C',
-          backgroundColor: 'rgba(63,182,139,0.08)',
-          fill:true, pointRadius:3, pointBackgroundColor:'#3FB68B',
-          borderWidth:2, tension:0.2
-        }]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{legend:{display:false}, tooltip:{titleFont:{size:11}, bodyFont:{size:11}}},
-        scales:{
-          x:{ticks:{color:'#565C64', font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'}},
-          y:{ticks:{color:'#565C64', font:{size:10}, callback:v=>v+'u'}, grid:{color:'rgba(255,255,255,0.05)'}}
-        }
-      }
-    });
+    return;
   }
-
-  const buckets = [0,1,2,3,4].map(()=>({count:0, wins:0, pnl:0}));
-  settled.forEach(s=>{
-    const mf = marketFields(s.data, state.filters.market);
-    if(!mf) return;
-    const dv = (mf.handle - mf.bets)*100;
-    const b = divergenceBucket(dv);
-    buckets[b].count++;
-    if(s.data.result==='Win') buckets[b].wins++;
-    buckets[b].pnl += s.data.pnl;
+  if(!document.getElementById('cumPnlChart')){
+    cumWrap.innerHTML = '<canvas id="cumPnlChart"></canvas>';
+  }
+  const canvas = document.getElementById('cumPnlChart');
+  cumChart = new Chart(canvas, {
+    type:'line',
+    data:{
+      labels: dates.map(fmtDate),
+      datasets:[{
+        label:'Cumulative PnL (units)',
+        data: cum,
+        borderColor: cum[cum.length-1]>=0 ? '#3FB68B' : '#E2574C',
+        backgroundColor: 'rgba(63,182,139,0.08)',
+        fill:true, pointRadius:3, pointBackgroundColor:'#3FB68B',
+        borderWidth:2, tension:0.2
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{titleFont:{size:11}, bodyFont:{size:11}}},
+      scales:{
+        x:{ticks:{color:'#565C64', font:{size:10}}, grid:{color:'rgba(255,255,255,0.05)'}},
+        y:{ticks:{color:'#565C64', font:{size:10}, callback:v=>v+'u'}, grid:{color:'rgba(255,255,255,0.05)'}}
+      }
+    }
   });
-  const bucketWrap = document.getElementById('bucketWrap');
-  if(bucketChart){ bucketChart.destroy(); bucketChart=null; }
-  const anyBucketData = buckets.some(b=>b.count>0);
-  if(!anyBucketData){
-    bucketWrap.innerHTML = '<div class="chart-empty">No settled bets match the current filters.</div>';
-  } else {
-    if(!document.getElementById('bucketChart')){
-      bucketWrap.innerHTML = '<canvas id="bucketChart"></canvas>';
-    }
-    const canvas = document.getElementById('bucketChart');
-    bucketChart = new Chart(canvas, {
-      type:'bar',
-      data:{
-        labels: BUCKET_LABELS,
-        datasets:[{
-          label:'Win rate',
-          data: buckets.map(b=> b.count ? +(b.wins/b.count*100).toFixed(1) : null),
-          backgroundColor: '#3FB68B',
-          borderRadius:2
-        }]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{
-          legend:{display:false},
-          tooltip:{
-            callbacks:{
-              label: function(ctx){
-                const b = buckets[ctx.dataIndex];
-                return ctx.parsed.y+'% win rate · n='+b.count+' · '+fmtPnl(b.pnl)+'u';
-              }
-            },
-            titleFont:{size:11}, bodyFont:{size:11}
-          }
-        },
-        scales:{
-          x:{ticks:{color:'#565C64', font:{size:9.5}}, grid:{display:false}},
-          y:{min:0, max:100, ticks:{color:'#565C64', font:{size:10}, callback:v=>v+'%'}, grid:{color:'rgba(255,255,255,0.05)'}}
-        }
-      }
-    });
-  }
+}
 
+function renderSportBreakdown(){
+  const settled = settledOnly(matchingSides());
   const sportMap = new Map();
   settled.forEach(s=>{
     const sp = s.game.sport;
@@ -1441,6 +1395,7 @@ function renderPerformance(){
     '</tr>'
   ).join('') : '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--text-muted);">No settled bets match the current filters.</td></tr>';
 }
+
 
 init();
 })();
