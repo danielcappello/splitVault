@@ -222,9 +222,6 @@
     font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600;
     padding:3px 8px; border-radius:var(--radius); display:inline-block; white-space:nowrap;
   }
-  .divergence-badge.hi{background:var(--alert-soft); color:var(--alert);}
-  .divergence-badge.mid{background:var(--bets-soft); color:var(--bets);}
-  .divergence-badge.lo{background:var(--hairline-soft); color:var(--ink-faint);}
   .pnl-line{display:flex; flex-direction:column; gap:2px; font-family:'JetBrains Mono',monospace; font-size:11.5px;}
   .pnl-line .side{display:flex; justify-content:space-between; gap:8px; white-space:nowrap;}
   .pnl-line .side .nm{color:var(--ink-muted);}
@@ -723,11 +720,28 @@ function sportLabel(s){
   const map={MLB:'MLB', AFL:'AFL', SOC:'Soccer', BOX:'Boxing', UFC:'UFC/MMA'};
   return map[s]||s;
 }
-function divergenceClass(x){
-  const a = Math.abs(x);
-  if(a>=20) return 'hi';
-  if(a>=10) return 'mid';
-  return 'lo';
+function divergenceColorRGB(x){
+  const RED = [240,70,110];    /* var(--alert) */
+  const AMBER = [245,166,35];  /* var(--bets) */
+  const GREEN = [74,222,128];  /* var(--positive) */
+  const SPAN = 25; /* |pp| at which the color fully saturates to red/green */
+  const t = Math.max(-1, Math.min(1, x/SPAN));
+  const to = t>=0 ? GREEN : RED;
+  const tt = Math.abs(t);
+  return [
+    Math.round(AMBER[0] + (to[0]-AMBER[0])*tt),
+    Math.round(AMBER[1] + (to[1]-AMBER[1])*tt),
+    Math.round(AMBER[2] + (to[2]-AMBER[2])*tt)
+  ];
+}
+/* Positive divergence (handle > bets — "smart money") reads increasingly green the
+   higher it climbs; near zero reads amber; negative divergence (bets > handle —
+   public-heavy) reads increasingly red the lower it drops. */
+function divergenceBadgeStyle(x){
+  const rgb = divergenceColorRGB(x);
+  const solid = 'rgb('+rgb.join(',')+')';
+  const soft = 'rgba('+rgb.join(',')+',0.16)';
+  return 'background:'+soft+'; color:'+solid+';';
 }
 function uniqueSorted(arr){ return Array.from(new Set(arr)).sort(); }
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -1204,7 +1218,7 @@ function renderUpcoming(){
   body.innerHTML = games.map(g=>{
     const pick = pickedSide(g, market);
     const marketCell = marketCellHTML(g, pick, market);
-    const divCls = divergenceClass(pick.divergence);
+    const divStyle = divergenceBadgeStyle(pick.divergence);
     const pickTeam = g.sides[pick.side] ? g.sides[pick.side].team : '';
     const divLabel = pickTeam ? MARKET_LABELS[market]+' · '+pickTeam : '';
 
@@ -1213,7 +1227,7 @@ function renderUpcoming(){
       '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span></div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
       '<td>'+marketCell+'</td>'+
-      '<td><div class="divergence-badge '+divCls+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
+      '<td><div class="divergence-badge" style="'+divStyle+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
     '</tr>';
   }).join('');
 
@@ -1237,7 +1251,7 @@ function renderBacktest(){
   body.innerHTML = games.map(g=>{
     const pick = pickedSide(g, market);
     const marketCell = marketCellHTML(g, pick, market);
-    const divCls = divergenceClass(pick.divergence);
+    const divStyle = divergenceBadgeStyle(pick.divergence);
     const pickTeam = g.sides[pick.side] ? g.sides[pick.side].team : '';
     const divLabel = pickTeam ? MARKET_LABELS[market]+' · '+pickTeam : '';
 
@@ -1246,7 +1260,7 @@ function renderBacktest(){
       '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span></div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
       '<td>'+marketCell+'</td>'+
-      '<td><div class="divergence-badge '+divCls+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
+      '<td><div class="divergence-badge" style="'+divStyle+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
       '<td>'+resultTag(g)+'</td>'+
       '<td>'+pnlCellHTML(g, pick)+'</td>'+
     '</tr>';
