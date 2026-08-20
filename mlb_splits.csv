@@ -3,34 +3,34 @@
 2026-08-15,MLB,Athletics,Texas Rangers,Texas Rangers,-1.5,0.77,0.35,"9.5",0.71,0.42,1.6493506,0.7,0.72,2026-08-16 22:25:08.490,3,5,Texas Rangers,Win,0.649350643157959
 2026-08-15,MLB,Atlanta Braves,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.56,0.64,"9",0.77,0.37,2.23,0.38,0.26,2026-08-16 22:25:08.490,3,10,Arizona Diamondbacks,Win,1.2300000190734863
 2026-08-15,MLB,Atlanta Braves,Arizona Diamondbacks,Atlanta Braves,-1.5,0.44,0.36,"9",0.23,0.63,1.7518797,0.62,0.74,2026-08-16 22:25:08.490,3,10,Arizona Diamondbacks,Loss,-1.0
-2026-08-15,MLB,Chicago Cubs,St. Louis Cardinals,Chicago Cubs,-1.5,0.88,0.77,"9",0.47,0.51,1.5524862,0.79,0.86,2026-08-16 22:25:08.490,4,8,St. Louis Cardinals,Loss,-1.0
 2026-08-15,MLB,Chicago Cubs,St. Louis Cardinals,St. Louis Cardinals,+1.5,0.12,0.23,"9",0.53,0.49,2.68,0.21,0.14,2026-08-16 22:25:08.490,4,8,St. Louis Cardinals,Win,1.6800000667572021
-2026-08-15,MLB,Cincinnati Reds,Miami Marlins,Miami Marlins,-1.5,0.69,0.18,"9",0.94,0.53,1.9803921,0.66,0.49,2026-08-16 22:25:08.490,4,8,Miami Marlins,Win,0.9803920984268188
+2026-08-15,MLB,Chicago Cubs,St. Louis Cardinals,Chicago Cubs,-1.5,0.88,0.77,"9",0.47,0.51,1.5524862,0.79,0.86,2026-08-16 22:25:08.490,4,8,St. Louis Cardinals,Loss,-1.0
 2026-08-15,MLB,Cincinnati Reds,Miami Marlins,Cincinnati Reds,+1.5,0.31,0.82,"9",0.06,0.47,1.9523809,0.34,0.51,2026-08-16 22:25:08.490,4,8,Miami Marlins,Loss,-1.0
+2026-08-15,MLB,Cincinnati Reds,Miami Marlins,Miami Marlins,-1.5,0.69,0.18,"9",0.94,0.53,1.9803921,0.66,0.49,2026-08-16 22:25:08.490,4,8,Miami Marlins,Win,0.9803920984268188
 2026-08-15,MLB,Cleveland Guardians,San Diego Padres,Cleveland Guardians,+1.5,0.31,0.58,"8.5",0.69,0.45,1.925926,0.21,0.44,2026-08-16 22:25:08.490,6,1,Cleveland Guardians,Win,0.9259259700775146
 2026-08-15,MLB,Cleveland Guardians,San Diego Padres,San Diego Padres,-1.5,0.69,0.42,"8.5",0.31,0.55,2.01,0.79,0.56,2026-08-16 22:25:08.490,6,1,Cleveland Guardians,Loss,-1.0
 2026-08-15,MLB,Detroit Tigers,Chicago White Sox,Detroit Tigers,-1.5,0.86,0.47,"8",0.35,0.35,1.7142857,0.61,0.71,2026-08-16 22:25:08.490,3,4,Chicago White Sox,Loss,-1.0
 2026-08-15,MLB,Detroit Tigers,Chicago White Sox,Chicago White Sox,+1.5,0.14,0.53,"8",0.65,0.65,2.3,0.39,0.29,2026-08-16 22:25:08.490,3,4,Chicago White Sox,Win,1.2999999523162842
-2026-08-15,MLB,Houston Astros,Seattle Mariners,Seattle Mariners,+1.5,0.19,0.64,"8.5",0.82,0.59,2.1,0.33,0.28,2026-08-16 22:25:08.490,5,10,Seattle Mariners,Win,1.0999999046325684
 2026-08-15,MLB,Houston Astros,Seattle Mariners,Houston Astros,-1.5,0.81,0.36,"8.5",0.18,0.41,1.8474576,0.67,0.72,2026-08-16 22:25:08.490,5,10,Seattle Mariners,Loss,-1.0
-2026-08-15,MLB,Los Angeles Angels,Kansas City Royals,Kansas City Royals,+1.5,0.63,0.78,"8",0.48,0.49,2.42,0.49,0.38,2026-08-16 22:25:08.490,1,0,Los Angeles Angels,Loss,-1.0
+2026-08-15,MLB,Houston Astros,Seattle Mariners,Seattle Mariners,+1.5,0.19,0.64,"8.5",0.82,0.59,2.1,0.33,0.28,2026-08-16 22:25:08.490,5,10,Seattle Mariners,Win,1.0999999046325684
 2026-08-15,MLB,Los Angeles Angels,Kansas City Royals,Los Angeles Angels,-1.5,0.37,0.22,"8",0.52,0.51,1.6535947,0.51,0.62,2026-08-16 22:25:08.490,1,0,Los Angeles Angels,Win,0.6535947322845459
-2026-08-15,MLB,Los Angeles Dodgers,Milwaukee Brewers,Milwaukee Brewers,-1.5,0.26,0.2,"7.5",0.16,0.4,1.8196721,0.64,0.56,2026-08-16 22:25:08.490,1,4,Milwaukee Brewers,Win,0.8196721076965332
+2026-08-15,MLB,Los Angeles Angels,Kansas City Royals,Kansas City Royals,+1.5,0.63,0.78,"8",0.48,0.49,2.42,0.49,0.38,2026-08-16 22:25:08.490,1,0,Los Angeles Angels,Loss,-1.0
 2026-08-15,MLB,Los Angeles Dodgers,Milwaukee Brewers,Los Angeles Dodgers,+1.5,0.74,0.8,"7.5",0.84,0.6,2.14,0.36,0.44,2026-08-16 22:25:08.490,1,4,Milwaukee Brewers,Loss,-1.0
+2026-08-15,MLB,Los Angeles Dodgers,Milwaukee Brewers,Milwaukee Brewers,-1.5,0.26,0.2,"7.5",0.16,0.4,1.8196721,0.64,0.56,2026-08-16 22:25:08.490,1,4,Milwaukee Brewers,Win,0.8196721076965332
 2026-08-15,MLB,Minnesota Twins,Philadelphia Phillies,Minnesota Twins,+1.5,0.25,0.37,"8",0.05,0.31,2.23,0.23,0.13,2026-08-16 22:25:08.490,1,9,Philadelphia Phillies,Loss,-1.0
 2026-08-15,MLB,Minnesota Twins,Philadelphia Phillies,Philadelphia Phillies,-1.5,0.75,0.63,"8",0.95,0.69,1.7518797,0.77,0.87,2026-08-16 22:25:08.490,1,9,Philadelphia Phillies,Win,0.7518796920776367
 2026-08-15,MLB,New York Mets,Washington Nationals,New York Mets,-1.5,0.9,0.4,"7.5",0.21,0.35,1.7692307,0.83,0.65,2026-08-16 22:25:08.490,5,4,New York Mets,Win,0.7692307233810425
 2026-08-15,MLB,New York Mets,Washington Nationals,Washington Nationals,+1.5,0.1,0.6,"7.5",0.79,0.65,2.21,0.17,0.35,2026-08-16 22:25:08.490,5,4,New York Mets,Loss,-1.0
 2026-08-15,MLB,Pittsburgh Pirates,Boston Red Sox,Pittsburgh Pirates,+1.5,0.17,0.36,"7.5",0.26,0.3,2.11,0.09,0.16,2026-08-16 22:25:08.490,0,4,Boston Red Sox,Loss,-1.0
 2026-08-15,MLB,Pittsburgh Pirates,Boston Red Sox,Boston Red Sox,-1.5,0.83,0.64,"7.5",0.74,0.7,1.8403361,0.91,0.84,2026-08-16 22:25:08.490,0,4,Boston Red Sox,Win,0.8403360843658447
-2026-08-15,MLB,San Francisco Giants,Colorado Rockies,Colorado Rockies,+1.5,0.09,0.37,"7.5",0.84,0.75,2.55,0.26,0.21,2026-08-16 22:25:08.490,7,1,San Francisco Giants,Loss,-1.0
 2026-08-15,MLB,San Francisco Giants,Colorado Rockies,San Francisco Giants,-1.5,0.91,0.63,"7.5",0.16,0.25,1.5988024,0.74,0.79,2026-08-16 22:25:08.490,7,1,San Francisco Giants,Win,0.5988024473190308
+2026-08-15,MLB,San Francisco Giants,Colorado Rockies,Colorado Rockies,+1.5,0.09,0.37,"7.5",0.84,0.75,2.55,0.26,0.21,2026-08-16 22:25:08.490,7,1,San Francisco Giants,Loss,-1.0
 2026-08-15,MLB,Tampa Bay Rays,Baltimore Orioles,Baltimore Orioles,+1.5,0.03,0.39,"7.5",0.45,0.61,2.31,0.2,0.18,2026-08-16 22:25:08.490,3,4,Baltimore Orioles,Win,1.309999942779541
 2026-08-15,MLB,Tampa Bay Rays,Baltimore Orioles,Tampa Bay Rays,-1.5,0.97,0.61,"7.5",0.55,0.39,1.7092198,0.8,0.82,2026-08-16 22:25:08.490,3,4,Baltimore Orioles,Loss,-1.0
-2026-08-15,MLB,Toronto Blue Jays,New York Yankees,Toronto Blue Jays,+1.5,0.15,0.3,"7",0.48,0.51,2.73,0.17,0.17,2026-08-16 22:25:08.490,4,1,Toronto Blue Jays,Win,1.7300000190734863
 2026-08-15,MLB,Toronto Blue Jays,New York Yankees,New York Yankees,-1.5,0.85,0.7,"7",0.52,0.49,1.5376344,0.83,0.83,2026-08-16 22:25:08.490,4,1,Toronto Blue Jays,Loss,-1.0
-2026-08-16,MLB,Athletics,Texas Rangers,Texas Rangers,-1.5,0.2,0.41,"9",0.61,0.47,1.8,0.53,0.72,2026-08-17 22:25:11.225,5,2,Athletics,Loss,-1.0
+2026-08-15,MLB,Toronto Blue Jays,New York Yankees,Toronto Blue Jays,+1.5,0.15,0.3,"7",0.48,0.51,2.73,0.17,0.17,2026-08-16 22:25:08.490,4,1,Toronto Blue Jays,Win,1.7300000190734863
 2026-08-16,MLB,Athletics,Texas Rangers,Athletics,+1.5,0.8,0.59,"9",0.39,0.53,2.16,0.47,0.28,2026-08-17 22:25:11.225,5,2,Athletics,Win,1.1600000858306885
+2026-08-16,MLB,Athletics,Texas Rangers,Texas Rangers,-1.5,0.2,0.41,"9",0.61,0.47,1.8,0.53,0.72,2026-08-17 22:25:11.225,5,2,Athletics,Loss,-1.0
 2026-08-16,MLB,Atlanta Braves,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.4,0.66,"9",0.59,0.53,2.11,0.35,0.34,2026-08-17 22:25:11.225,5,3,Atlanta Braves,Loss,-1.0
 2026-08-16,MLB,Atlanta Braves,Arizona Diamondbacks,Atlanta Braves,-1.5,0.6,0.34,"9",0.41,0.47,1.8403361,0.65,0.66,2026-08-17 22:25:11.225,5,3,Atlanta Braves,Win,0.8403360843658447
 2026-08-16,MLB,Chicago Cubs,St. Louis Cardinals,Chicago Cubs,-1.5,0.61,0.48,"9",0.09,0.48,1.5714285,0.48,0.81,2026-08-17 22:25:11.225,4,11,St. Louis Cardinals,Loss,-1.0
@@ -39,107 +39,125 @@
 2026-08-16,MLB,Cincinnati Reds,Miami Marlins,Cincinnati Reds,+1.5,0.17,0.63,"8.5",0.34,0.45,2.1,0.17,0.35,2026-08-17 22:25:11.225,1,7,Miami Marlins,Loss,-1.0
 2026-08-16,MLB,Cleveland Guardians,San Diego Padres,San Diego Padres,-1.5,0.8,0.41,"8",0.4,0.58,1.9523809,0.91,0.7,2026-08-17 22:25:11.225,0,5,San Diego Padres,Win,0.952380895614624
 2026-08-16,MLB,Cleveland Guardians,San Diego Padres,Cleveland Guardians,+1.5,0.2,0.59,"8",0.6,0.42,1.9708738,0.09,0.3,2026-08-17 22:25:11.225,0,5,San Diego Padres,Loss,-1.0
-2026-08-16,MLB,Detroit Tigers,Chicago White Sox,Detroit Tigers,+1.5,0.35,0.66,"8",0.67,0.42,1.8849558,0.67,0.41,2026-08-17 22:25:11.225,5,7,Chicago White Sox,Loss,-1.0
 2026-08-16,MLB,Detroit Tigers,Chicago White Sox,Chicago White Sox,-1.5,0.65,0.34,"8",0.33,0.58,2.05,0.33,0.59,2026-08-17 22:25:11.225,5,7,Chicago White Sox,Win,1.0499999523162842
-2026-08-16,MLB,Houston Astros,Seattle Mariners,Seattle Mariners,+1.5,0.24,0.56,"8",0.63,0.64,2.12,0.26,0.3,2026-08-17 22:25:11.225,2,3,Seattle Mariners,Win,1.119999885559082
+2026-08-16,MLB,Detroit Tigers,Chicago White Sox,Detroit Tigers,+1.5,0.35,0.66,"8",0.67,0.42,1.8849558,0.67,0.41,2026-08-17 22:25:11.225,5,7,Chicago White Sox,Loss,-1.0
 2026-08-16,MLB,Houston Astros,Seattle Mariners,Houston Astros,-1.5,0.76,0.44,"8",0.37,0.36,1.8333334,0.74,0.7,2026-08-17 22:25:11.225,2,3,Seattle Mariners,Loss,-1.0
+2026-08-16,MLB,Houston Astros,Seattle Mariners,Seattle Mariners,+1.5,0.24,0.56,"8",0.63,0.64,2.12,0.26,0.3,2026-08-17 22:25:11.225,2,3,Seattle Mariners,Win,1.119999885559082
 2026-08-16,MLB,Los Angeles Angels,Kansas City Royals,Kansas City Royals,-1.5,0.79,0.34,"8.5",0.63,0.49,1.8849558,0.92,0.71,2026-08-17 22:25:11.225,0,3,Kansas City Royals,Win,0.8849557638168335
 2026-08-16,MLB,Los Angeles Angels,Kansas City Royals,Los Angeles Angels,+1.5,0.21,0.66,"8.5",0.37,0.51,2.05,0.08,0.29,2026-08-17 22:25:11.225,0,3,Kansas City Royals,Loss,-1.0
 2026-08-16,MLB,Los Angeles Dodgers,Milwaukee Brewers,Milwaukee Brewers,+1.5,0.19,0.47,"7.5",0.27,0.46,2.69,0.43,0.21,2026-08-17 22:25:11.225,2,6,Milwaukee Brewers,Win,1.690000057220459
 2026-08-16,MLB,Los Angeles Dodgers,Milwaukee Brewers,Los Angeles Dodgers,-1.5,0.81,0.53,"7.5",0.73,0.54,1.5494505,0.57,0.79,2026-08-17 22:25:11.225,2,6,Milwaukee Brewers,Loss,-1.0
 2026-08-16,MLB,Minnesota Twins,Philadelphia Phillies,Minnesota Twins,+1.5,0.36,0.47,"9.5",0.12,0.46,2.01,0.55,0.27,2026-08-17 22:25:11.225,5,7,Philadelphia Phillies,Loss,-1.0
 2026-08-16,MLB,Minnesota Twins,Philadelphia Phillies,Philadelphia Phillies,-1.5,0.64,0.53,"9.5",0.88,0.54,1.925926,0.45,0.73,2026-08-17 22:25:11.225,5,7,Philadelphia Phillies,Win,0.9259259700775146
-2026-08-16,MLB,New York Mets,Washington Nationals,New York Mets,-1.5,0.99,0.53,"8.5",0.22,0.38,1.625,0.79,0.74,2026-08-17 22:25:11.225,4,3,New York Mets,Win,0.625
 2026-08-16,MLB,New York Mets,Washington Nationals,Washington Nationals,+1.5,0.01,0.47,"8.5",0.78,0.62,2.48,0.21,0.26,2026-08-17 22:25:11.225,4,3,New York Mets,Loss,-1.0
+2026-08-16,MLB,New York Mets,Washington Nationals,New York Mets,-1.5,0.99,0.53,"8.5",0.22,0.38,1.625,0.79,0.74,2026-08-17 22:25:11.225,4,3,New York Mets,Win,0.625
 2026-08-16,MLB,Pittsburgh Pirates,Boston Red Sox,Pittsburgh Pirates,+1.5,0.19,0.41,"8",0.04,0.33,1.9803921,0.14,0.26,2026-08-17 22:25:11.225,8,3,Pittsburgh Pirates,Win,0.9803920984268188
 2026-08-16,MLB,Pittsburgh Pirates,Boston Red Sox,Boston Red Sox,-1.5,0.81,0.59,"8",0.96,0.67,1.9523809,0.86,0.74,2026-08-17 22:25:11.225,8,3,Pittsburgh Pirates,Loss,-1.0
 2026-08-16,MLB,San Francisco Giants,Colorado Rockies,Colorado Rockies,+1.5,0.1,0.47,"8",0.58,0.59,2.16,0.21,0.26,2026-08-17 22:25:11.225,7,13,Colorado Rockies,Win,1.1600000858306885
 2026-08-16,MLB,San Francisco Giants,Colorado Rockies,San Francisco Giants,-1.5,0.9,0.53,"8",0.42,0.41,1.8064516,0.79,0.74,2026-08-17 22:25:11.225,7,13,Colorado Rockies,Loss,-1.0
-2026-08-16,MLB,Tampa Bay Rays,Baltimore Orioles,Baltimore Orioles,+1.5,0.14,0.47,"7",0.8,0.74,2.26,0.33,0.28,2026-08-17 22:25:11.225,2,10,Baltimore Orioles,Win,1.2599999904632568
 2026-08-16,MLB,Tampa Bay Rays,Baltimore Orioles,Tampa Bay Rays,-1.5,0.86,0.53,"7",0.2,0.26,1.7352941,0.67,0.72,2026-08-17 22:25:11.225,2,10,Baltimore Orioles,Loss,-1.0
-2026-08-16,MLB,Toronto Blue Jays,New York Yankees,Toronto Blue Jays,-1.5,0.6,0.34,"6.5",0.51,0.41,1.8474576,0.36,0.51,2026-08-17 22:25:11.225,3,4,New York Yankees,Loss,-1.0
+2026-08-16,MLB,Tampa Bay Rays,Baltimore Orioles,Baltimore Orioles,+1.5,0.14,0.47,"7",0.8,0.74,2.26,0.33,0.28,2026-08-17 22:25:11.225,2,10,Baltimore Orioles,Win,1.2599999904632568
 2026-08-16,MLB,Toronto Blue Jays,New York Yankees,New York Yankees,+1.5,0.4,0.66,"6.5",0.49,0.59,2.1,0.64,0.49,2026-08-17 22:25:11.225,3,4,New York Yankees,Win,1.0999999046325684
+2026-08-16,MLB,Toronto Blue Jays,New York Yankees,Toronto Blue Jays,-1.5,0.6,0.34,"6.5",0.51,0.41,1.8474576,0.36,0.51,2026-08-17 22:25:11.225,3,4,New York Yankees,Loss,-1.0
 2026-08-17,MLB,Boston Red Sox,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.44,0.55,"9",0.59,0.51,2.2,0.36,0.37,2026-08-18 22:25:04.296,11,1,Boston Red Sox,Loss,-1.0
 2026-08-17,MLB,Boston Red Sox,Arizona Diamondbacks,Boston Red Sox,-1.5,0.56,0.45,"9",0.41,0.49,1.7751938,0.64,0.63,2026-08-18 22:25:04.296,11,1,Boston Red Sox,Win,0.7751938104629517
-2026-08-17,MLB,Chicago Cubs,Chicago White Sox,Chicago White Sox,+1.5,0.4,0.48,"8",0.89,0.72,2.45,0.6,0.29,2026-08-18 22:25:04.296,7,5,Chicago Cubs,Loss,-1.0
 2026-08-17,MLB,Chicago Cubs,Chicago White Sox,Chicago Cubs,-1.5,0.6,0.52,"8",0.11,0.28,1.6451613,0.4,0.71,2026-08-18 22:25:04.296,7,5,Chicago Cubs,Win,0.6451612710952759
+2026-08-17,MLB,Chicago Cubs,Chicago White Sox,Chicago White Sox,+1.5,0.4,0.48,"8",0.89,0.72,2.45,0.6,0.29,2026-08-18 22:25:04.296,7,5,Chicago Cubs,Loss,-1.0
 2026-08-17,MLB,Cincinnati Reds,ST Louis Cardinals G2,Cincinnati Reds,+1.5,0.33,0.5,"9",0.28,0.52,2.04,0.13,0.31,2026-08-18 22:25:04.296,,,,,
 2026-08-17,MLB,Cincinnati Reds,ST Louis Cardinals G2,ST Louis Cardinals G2,-1.5,0.67,0.5,"9",0.72,0.48,1.8928572,0.87,0.69,2026-08-18 22:25:04.296,,,,,
-2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.93,0.56,"9.5",0.7,0.53,1.9174312,0.35,0.66,2026-08-18 22:25:04.296,6,5,Cincinnati Reds,Loss,-1.0
-2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.93,0.56,"9.5",0.7,0.53,1.9174312,0.35,0.66,2026-08-18 22:25:04.296,1,2,St. Louis Cardinals,Win,0.9174312353134155
 2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.07,0.44,"9.5",0.3,0.47,2.01,0.65,0.34,2026-08-18 22:25:04.296,6,5,Cincinnati Reds,Win,1.0099999904632568
 2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.07,0.44,"9.5",0.3,0.47,2.01,0.65,0.34,2026-08-18 22:25:04.296,1,2,St. Louis Cardinals,Loss,-1.0
-2026-08-17,MLB,Colorado Rockies,Los Angeles Dodgers,Los Angeles Dodgers,-1.5,0.9,0.74,"11",0.81,0.47,1.3891051,0.74,0.85,2026-08-18 22:25:04.296,5,11,Los Angeles Dodgers,Win,0.38910508155822754
+2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.93,0.56,"9.5",0.7,0.53,1.9174312,0.35,0.66,2026-08-18 22:25:04.296,6,5,Cincinnati Reds,Loss,-1.0
+2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.93,0.56,"9.5",0.7,0.53,1.9174312,0.35,0.66,2026-08-18 22:25:04.296,1,2,St. Louis Cardinals,Win,0.9174312353134155
 2026-08-17,MLB,Colorado Rockies,Los Angeles Dodgers,Colorado Rockies,+1.5,0.1,0.26,"11",0.19,0.53,3.37,0.26,0.15,2026-08-18 22:25:04.296,5,11,Los Angeles Dodgers,Loss,-1.0
+2026-08-17,MLB,Colorado Rockies,Los Angeles Dodgers,Los Angeles Dodgers,-1.5,0.9,0.74,"11",0.81,0.47,1.3891051,0.74,0.85,2026-08-18 22:25:04.296,5,11,Los Angeles Dodgers,Win,0.38910508155822754
 2026-08-17,MLB,Kansas City Royals,Athletics,Kansas City Royals,-1.5,0.6,0.6,"9",0.27,0.53,1.5524862,0.7,0.79,2026-08-18 22:25:04.296,9,5,Kansas City Royals,Win,0.5524861812591553
 2026-08-17,MLB,Kansas City Royals,Athletics,Athletics,+1.5,0.4,0.4,"9",0.73,0.47,2.68,0.3,0.21,2026-08-18 22:25:04.296,9,5,Kansas City Royals,Loss,-1.0
-2026-08-17,MLB,Minnesota Twins,Atlanta Braves,Atlanta Braves,-1.5,0.85,0.62,"9",0.83,0.59,1.7633588,0.8,0.8,2026-08-18 22:25:04.296,4,2,Minnesota Twins,Loss,-1.0
 2026-08-17,MLB,Minnesota Twins,Atlanta Braves,Minnesota Twins,+1.5,0.15,0.38,"9",0.17,0.41,2.22,0.2,0.2,2026-08-18 22:25:04.296,4,2,Minnesota Twins,Win,1.2200000286102295
-2026-08-17,MLB,New York Mets,San Diego Padres,New York Mets,-1.5,0.72,0.42,"7.5",0.9,0.53,1.862069,0.68,0.54,2026-08-18 22:25:04.296,2,1,New York Mets,Win,0.8620690107345581
+2026-08-17,MLB,Minnesota Twins,Atlanta Braves,Atlanta Braves,-1.5,0.85,0.62,"9",0.83,0.59,1.7633588,0.8,0.8,2026-08-18 22:25:04.296,4,2,Minnesota Twins,Loss,-1.0
 2026-08-17,MLB,New York Mets,San Diego Padres,San Diego Padres,+1.5,0.28,0.58,"7.5",0.1,0.47,2.08,0.32,0.46,2026-08-18 22:25:04.296,2,1,New York Mets,Loss,-1.0
+2026-08-17,MLB,New York Mets,San Diego Padres,New York Mets,-1.5,0.72,0.42,"7.5",0.9,0.53,1.862069,0.68,0.54,2026-08-18 22:25:04.296,2,1,New York Mets,Win,0.8620690107345581
 2026-08-17,MLB,Philadelphia Phillies,Miami Marlins,Miami Marlins,+1.5,0.06,0.19,"8.5",0.45,0.52,3.32,0.27,0.15,2026-08-18 22:25:04.296,6,5,Philadelphia Phillies,Loss,-1.0
 2026-08-17,MLB,Philadelphia Phillies,Miami Marlins,Philadelphia Phillies,-1.5,0.94,0.81,"8.5",0.55,0.48,1.3968254,0.73,0.85,2026-08-18 22:25:04.296,6,5,Philadelphia Phillies,Win,0.3968254327774048
 2026-08-17,MLB,Pittsburgh Pirates,Detroit Tigers,Pittsburgh Pirates,+1.5,0.61,0.62,"8.5",0.16,0.37,1.9708738,0.41,0.43,2026-08-18 22:25:04.296,5,8,Detroit Tigers,Loss,-1.0
 2026-08-17,MLB,Pittsburgh Pirates,Detroit Tigers,Detroit Tigers,-1.5,0.39,0.38,"8.5",0.84,0.63,1.9523809,0.59,0.57,2026-08-18 22:25:04.296,5,8,Detroit Tigers,Win,0.952380895614624
-2026-08-17,MLB,Tampa Bay Rays,Baltimore Orioles,Baltimore Orioles,+1.5,0.19,0.46,"7.5",0.34,0.66,2.52,0.2,0.28,2026-08-18 22:25:04.296,7,6,Tampa Bay Rays,Loss,-1.0
 2026-08-17,MLB,Tampa Bay Rays,Baltimore Orioles,Tampa Bay Rays,-1.5,0.81,0.54,"7.5",0.66,0.34,1.6134969,0.8,0.72,2026-08-18 22:25:04.296,7,6,Tampa Bay Rays,Win,0.6134968996047974
-2026-08-18,MLB,Baltimore Orioles,New York Yankees,Baltimore Orioles,+1.5,0.52,0.48,"8.5",0.4,0.46,1.990099,0.32,0.25,2026-08-19 21:25:06.164,1,3,New York Yankees,Loss,-1.0
-2026-08-18,MLB,Baltimore Orioles,New York Yankees,New York Yankees,-1.5,0.48,0.52,"8.5",0.6,0.54,1.9433962,0.68,0.75,2026-08-19 21:25:06.164,1,3,New York Yankees,Win,0.9433962106704712
-2026-08-18,MLB,Boston Red Sox,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.08,0.3,"7.5",0.91,0.78,2.48,0.08,0.15,2026-08-19 21:25:06.164,9,4,Boston Red Sox,Loss,-1.0
-2026-08-18,MLB,Boston Red Sox,Arizona Diamondbacks,Boston Red Sox,-1.5,0.92,0.7,"7.5",0.09,0.22,1.6289308,0.92,0.85,2026-08-19 21:25:06.164,9,4,Boston Red Sox,Win,0.6289308071136475
-2026-08-18,MLB,Chicago Cubs,Chicago White Sox,Chicago Cubs,-1.5,0.64,0.51,"9.5",0.81,0.36,1.5882353,0.48,0.75,2026-08-19 21:25:06.164,4,3,Chicago Cubs,Win,0.5882352590560913
-2026-08-18,MLB,Chicago Cubs,Chicago White Sox,Chicago White Sox,+1.5,0.36,0.49,"9.5",0.19,0.64,2.58,0.52,0.25,2026-08-19 21:25:06.164,4,3,Chicago Cubs,Loss,-1.0
-2026-08-18,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.81,0.42,"9",0.68,0.53,1.8695652,0.87,0.68,2026-08-19 21:25:06.164,0,3,St. Louis Cardinals,Win,0.8695652484893799
-2026-08-18,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.19,0.58,"9",0.32,0.47,2.07,0.13,0.32,2026-08-19 21:25:06.164,0,3,St. Louis Cardinals,Loss,-1.0
-2026-08-18,MLB,Cleveland Guardians,San Francisco Giants,San Francisco Giants,+1.5,0.04,0.3,"8",0.92,0.62,2.7,0.07,0.16,2026-08-19 21:25:06.164,8,1,Cleveland Guardians,Loss,-1.0
-2026-08-18,MLB,Cleveland Guardians,San Francisco Giants,Cleveland Guardians,-1.5,0.96,0.7,"8",0.08,0.38,1.5494505,0.93,0.84,2026-08-19 21:25:06.164,8,1,Cleveland Guardians,Win,0.5494505167007446
-2026-08-18,MLB,Colorado Rockies,Los Angeles Dodgers,Los Angeles Dodgers,-1.5,0.95,0.78,"11.5",0.94,0.7,1.5181347,0.87,0.92,2026-08-19 21:25:06.164,6,7,Los Angeles Dodgers,Win,0.5181347131729126
-2026-08-18,MLB,Colorado Rockies,Los Angeles Dodgers,Colorado Rockies,+1.5,0.05,0.22,"11.5",0.06,0.3,2.79,0.13,0.08,2026-08-19 21:25:06.164,6,7,Los Angeles Dodgers,Loss,-1.0
-2026-08-18,MLB,Houston Astros,Los Angeles Angels,Houston Astros,-1.5,0.84,0.65,"9",0.32,0.39,1.6134969,0.54,0.88,2026-08-19 21:25:06.164,1,3,Los Angeles Angels,Loss,-1.0
-2026-08-18,MLB,Houston Astros,Los Angeles Angels,Los Angeles Angels,+1.5,0.16,0.35,"9",0.68,0.61,2.52,0.46,0.12,2026-08-19 21:25:06.164,1,3,Los Angeles Angels,Win,1.5199999809265137
-2026-08-18,MLB,Kansas City Royals,Athletics,Athletics,+1.5,0.03,0.44,"9",0.93,0.66,2.44,0.11,0.19,2026-08-19 21:25:06.164,4,3,Kansas City Royals,Loss,-1.0
-2026-08-18,MLB,Kansas City Royals,Athletics,Kansas City Royals,-1.5,0.97,0.56,"9",0.07,0.34,1.6451613,0.89,0.81,2026-08-19 21:25:06.164,4,3,Kansas City Royals,Win,0.6451612710952759
-2026-08-18,MLB,Milwaukee Brewers,Seattle Mariners,Milwaukee Brewers,-1.5,0.95,0.68,"7.5",0.44,0.38,1.6060606,0.85,0.88,2026-08-19 21:25:06.164,22,0,Milwaukee Brewers,Win,0.6060606241226196
-2026-08-18,MLB,Milwaukee Brewers,Seattle Mariners,Seattle Mariners,+1.5,0.05,0.32,"7.5",0.56,0.62,2.53,0.15,0.12,2026-08-19 21:25:06.164,22,0,Milwaukee Brewers,Loss,-1.0
-2026-08-18,MLB,Minnesota Twins,Atlanta Braves,Minnesota Twins,+1.5,0.1,0.41,"9",0.28,0.36,2.37,0.25,0.23,2026-08-19 21:25:06.164,4,1,Minnesota Twins,Win,1.369999885559082
-2026-08-18,MLB,Minnesota Twins,Atlanta Braves,Atlanta Braves,-1.5,0.9,0.59,"9",0.72,0.64,1.6802721,0.75,0.77,2026-08-19 21:25:06.164,4,1,Minnesota Twins,Loss,-1.0
-2026-08-18,MLB,New York Mets,San Diego Padres,San Diego Padres,-1.5,0.79,0.34,"8.5",0.6,0.48,1.862069,0.49,0.54,2026-08-19 21:25:06.164,2,5,San Diego Padres,Win,0.8620690107345581
-2026-08-18,MLB,New York Mets,San Diego Padres,New York Mets,+1.5,0.21,0.66,"8.5",0.4,0.52,2.08,0.51,0.46,2026-08-19 21:25:06.164,2,5,San Diego Padres,Loss,-1.0
-2026-08-18,MLB,Philadelphia Phillies,Miami Marlins,Philadelphia Phillies,-1.5,0.58,0.74,"8.5",0.58,0.32,1.4739337,0.81,0.88,2026-08-19 21:25:06.164,6,4,Philadelphia Phillies,Win,0.47393369674682617
-2026-08-18,MLB,Philadelphia Phillies,Miami Marlins,Miami Marlins,+1.5,0.42,0.26,"8.5",0.42,0.68,2.95,0.19,0.12,2026-08-19 21:25:06.164,6,4,Philadelphia Phillies,Loss,-1.0
-2026-08-18,MLB,Pittsburgh Pirates,Detroit Tigers,Pittsburgh Pirates,-1.5,0.73,0.36,"8",0.44,0.33,1.6535947,0.7,0.6,2026-08-19 21:25:06.164,4,1,Pittsburgh Pirates,Win,0.6535947322845459
-2026-08-18,MLB,Pittsburgh Pirates,Detroit Tigers,Detroit Tigers,+1.5,0.27,0.64,"8",0.56,0.67,2.42,0.3,0.4,2026-08-19 21:25:06.164,4,1,Pittsburgh Pirates,Loss,-1.0
-2026-08-18,MLB,Tampa Bay Rays,Toronto Blue Jays,Tampa Bay Rays,-1.5,0.86,0.48,"7.5",0.52,0.44,1.78125,0.5,0.71,2026-08-19 21:25:06.164,5,10,Toronto Blue Jays,Loss,-1.0
-2026-08-18,MLB,Tampa Bay Rays,Toronto Blue Jays,Toronto Blue Jays,+1.5,0.14,0.52,"7.5",0.48,0.56,2.19,0.5,0.29,2026-08-19 21:25:06.164,5,10,Toronto Blue Jays,Win,1.190000057220459
-2026-08-18,MLB,Texas Rangers,Washington Nationals,Washington Nationals,+1.5,0.32,0.64,"7.5",0.21,0.65,2.27,0.64,0.3,2026-08-19 21:25:06.164,5,0,Texas Rangers,Loss,-1.0
-2026-08-18,MLB,Texas Rangers,Washington Nationals,Texas Rangers,-1.5,0.68,0.36,"7.5",0.79,0.35,1.7352941,0.36,0.7,2026-08-19 21:25:06.164,5,0,Texas Rangers,Win,0.7352941036224365
-2026-08-19,MLB,Baltimore Orioles,New York Yankees,Baltimore Orioles,+1.5,0.16,0.45,"9",0.1,0.64,2.1,0.21,0.27,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Baltimore Orioles,New York Yankees,New York Yankees,-1.5,0.84,0.55,"9",0.9,0.36,1.8474576,0.79,0.73,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Boston Red Sox,Arizona Diamondbacks,Boston Red Sox,-1.5,0.97,0.67,"8",0.87,0.48,1.7142857,0.83,0.75,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Boston Red Sox,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.03,0.33,"8",0.13,0.52,2.31,0.17,0.25,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Chicago Cubs,Chicago White Sox,Chicago Cubs,-1.5,0.95,0.65,"8",0.12,0.37,1.7142857,0.63,0.73,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Chicago Cubs,Chicago White Sox,Chicago White Sox,+1.5,0.05,0.35,"8",0.88,0.63,2.3,0.37,0.27,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,+1.5,0.24,0.45,"8.5",0.92,0.28,2.31,0.09,0.33,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,-1.5,0.76,0.55,"8.5",0.08,0.72,1.7142857,0.91,0.67,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Cleveland Guardians,San Francisco Giants,San Francisco Giants,+1.5,0.0,0.17,"7",0.72,0.7,2.63,0.04,0.13,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Cleveland Guardians,San Francisco Giants,Cleveland Guardians,-1.5,1.0,0.83,"7",0.28,0.3,1.5681819,0.96,0.87,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Colorado Rockies,Los Angeles Dodgers,Colorado Rockies,+1.5,0.11,0.48,"11.5",0.94,0.51,2.61,0.18,0.12,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Colorado Rockies,Los Angeles Dodgers,Los Angeles Dodgers,-1.5,0.89,0.52,"11.5",0.06,0.49,1.5076143,0.82,0.88,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Houston Astros,Los Angeles Angels,Los Angeles Angels,+1.5,0.1,0.51,"8.5",0.36,0.45,2.37,0.56,0.31,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Houston Astros,Los Angeles Angels,Houston Astros,-1.5,0.9,0.49,"8.5",0.64,0.55,1.5988024,0.44,0.69,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Kansas City Royals,Athletics,Kansas City Royals,-1.5,0.83,0.43,"8.5",0.04,0.25,1.78125,0.28,0.79,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Kansas City Royals,Athletics,Athletics,+1.5,0.17,0.58,"8.5",0.96,0.75,2.2,0.72,0.21,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Milwaukee Brewers,Seattle Mariners,Milwaukee Brewers,-1.5,0.49,0.64,"7",0.45,0.3,1.8474576,0.81,0.76,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Milwaukee Brewers,Seattle Mariners,Seattle Mariners,+1.5,0.51,0.36,"7",0.55,0.7,2.1,0.19,0.24,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Minnesota Twins,Atlanta Braves,Minnesota Twins,+1.5,0.25,0.48,"8.5",0.39,0.44,2.03,0.26,0.4,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Minnesota Twins,Atlanta Braves,Atlanta Braves,-1.5,0.75,0.52,"8.5",0.61,0.56,1.900901,0.74,0.6,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,New York Mets,San Diego Padres,New York Mets,+1.5,0.03,0.44,"8.5",0.21,0.54,2.2,0.19,0.3,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,New York Mets,San Diego Padres,San Diego Padres,-1.5,0.97,0.56,"8.5",0.79,0.46,1.7751938,0.81,0.7,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Philadelphia Phillies,Miami Marlins,Philadelphia Phillies,-1.5,0.52,0.45,"8.5",0.7,0.49,1.8130082,0.54,0.66,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Philadelphia Phillies,Miami Marlins,Miami Marlins,+1.5,0.48,0.55,"8.5",0.3,0.51,2.14,0.46,0.34,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Pittsburgh Pirates,Detroit Tigers,Pittsburgh Pirates,-1.5,0.97,0.59,"8",0.69,0.44,1.6493506,0.8,0.74,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Pittsburgh Pirates,Detroit Tigers,Detroit Tigers,+1.5,0.03,0.41,"8",0.31,0.56,2.43,0.2,0.26,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Tampa Bay Rays,Toronto Blue Jays,Tampa Bay Rays,-1.5,0.99,0.66,"7.5",0.76,0.37,1.4901961,0.85,0.75,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Tampa Bay Rays,Toronto Blue Jays,Toronto Blue Jays,+1.5,0.01,0.34,"7.5",0.24,0.63,2.89,0.15,0.25,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Texas Rangers,Washington Nationals,Texas Rangers,-1.5,0.08,0.35,"7.5",0.36,0.43,1.7042253,0.1,0.56,2026-08-19 21:25:06.164,,,,,
-2026-08-19,MLB,Texas Rangers,Washington Nationals,Washington Nationals,+1.5,0.92,0.65,"7.5",0.64,0.57,2.18,0.9,0.44,2026-08-19 21:25:06.164,,,,,
+2026-08-17,MLB,Tampa Bay Rays,Baltimore Orioles,Baltimore Orioles,+1.5,0.19,0.46,"7.5",0.34,0.66,2.52,0.2,0.28,2026-08-18 22:25:04.296,7,6,Tampa Bay Rays,Loss,-1.0
+2026-08-18,MLB,Baltimore Orioles,New York Yankees,New York Yankees,-1.5,0.48,0.52,"8.5",0.6,0.54,1.9433962,0.68,0.75,2026-08-19 22:25:06.636,1,3,New York Yankees,Win,0.9433962106704712
+2026-08-18,MLB,Baltimore Orioles,New York Yankees,Baltimore Orioles,+1.5,0.52,0.48,"8.5",0.4,0.46,1.990099,0.32,0.25,2026-08-19 22:25:06.636,1,3,New York Yankees,Loss,-1.0
+2026-08-18,MLB,Boston Red Sox,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.08,0.3,"7.5",0.91,0.78,2.48,0.08,0.15,2026-08-19 22:25:06.636,9,4,Boston Red Sox,Loss,-1.0
+2026-08-18,MLB,Boston Red Sox,Arizona Diamondbacks,Boston Red Sox,-1.5,0.92,0.7,"7.5",0.09,0.22,1.6289308,0.92,0.85,2026-08-19 22:25:06.636,9,4,Boston Red Sox,Win,0.6289308071136475
+2026-08-18,MLB,Chicago Cubs,Chicago White Sox,Chicago White Sox,+1.5,0.36,0.49,"9.5",0.19,0.64,2.58,0.52,0.25,2026-08-19 22:25:06.636,4,3,Chicago Cubs,Loss,-1.0
+2026-08-18,MLB,Chicago Cubs,Chicago White Sox,Chicago Cubs,-1.5,0.64,0.51,"9.5",0.81,0.36,1.5882353,0.48,0.75,2026-08-19 22:25:06.636,4,3,Chicago Cubs,Win,0.5882352590560913
+2026-08-18,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.81,0.42,"9",0.68,0.53,1.8695652,0.87,0.68,2026-08-19 22:25:06.636,0,3,St. Louis Cardinals,Win,0.8695652484893799
+2026-08-18,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.19,0.58,"9",0.32,0.47,2.07,0.13,0.32,2026-08-19 22:25:06.636,0,3,St. Louis Cardinals,Loss,-1.0
+2026-08-18,MLB,Cleveland Guardians,San Francisco Giants,San Francisco Giants,+1.5,0.04,0.3,"8",0.92,0.62,2.7,0.07,0.16,2026-08-19 22:25:06.636,8,1,Cleveland Guardians,Loss,-1.0
+2026-08-18,MLB,Cleveland Guardians,San Francisco Giants,Cleveland Guardians,-1.5,0.96,0.7,"8",0.08,0.38,1.5494505,0.93,0.84,2026-08-19 22:25:06.636,8,1,Cleveland Guardians,Win,0.5494505167007446
+2026-08-18,MLB,Colorado Rockies,Los Angeles Dodgers,Los Angeles Dodgers,-1.5,0.95,0.78,"11.5",0.94,0.7,1.5181347,0.87,0.92,2026-08-19 22:25:06.636,6,7,Los Angeles Dodgers,Win,0.5181347131729126
+2026-08-18,MLB,Colorado Rockies,Los Angeles Dodgers,Colorado Rockies,+1.5,0.05,0.22,"11.5",0.06,0.3,2.79,0.13,0.08,2026-08-19 22:25:06.636,6,7,Los Angeles Dodgers,Loss,-1.0
+2026-08-18,MLB,Houston Astros,Los Angeles Angels,Houston Astros,-1.5,0.84,0.65,"9",0.32,0.39,1.6134969,0.54,0.88,2026-08-19 22:25:06.636,1,3,Los Angeles Angels,Loss,-1.0
+2026-08-18,MLB,Houston Astros,Los Angeles Angels,Los Angeles Angels,+1.5,0.16,0.35,"9",0.68,0.61,2.52,0.46,0.12,2026-08-19 22:25:06.636,1,3,Los Angeles Angels,Win,1.5199999809265137
+2026-08-18,MLB,Kansas City Royals,Athletics,Kansas City Royals,-1.5,0.97,0.56,"9",0.07,0.34,1.6451613,0.89,0.81,2026-08-19 22:25:06.636,4,3,Kansas City Royals,Win,0.6451612710952759
+2026-08-18,MLB,Kansas City Royals,Athletics,Athletics,+1.5,0.03,0.44,"9",0.93,0.66,2.44,0.11,0.19,2026-08-19 22:25:06.636,4,3,Kansas City Royals,Loss,-1.0
+2026-08-18,MLB,Milwaukee Brewers,Seattle Mariners,Seattle Mariners,+1.5,0.05,0.32,"7.5",0.56,0.62,2.53,0.15,0.12,2026-08-19 22:25:06.636,22,0,Milwaukee Brewers,Loss,-1.0
+2026-08-18,MLB,Milwaukee Brewers,Seattle Mariners,Milwaukee Brewers,-1.5,0.95,0.68,"7.5",0.44,0.38,1.6060606,0.85,0.88,2026-08-19 22:25:06.636,22,0,Milwaukee Brewers,Win,0.6060606241226196
+2026-08-18,MLB,Minnesota Twins,Atlanta Braves,Minnesota Twins,+1.5,0.1,0.41,"9",0.28,0.36,2.37,0.25,0.23,2026-08-19 22:25:06.636,4,1,Minnesota Twins,Win,1.369999885559082
+2026-08-18,MLB,Minnesota Twins,Atlanta Braves,Atlanta Braves,-1.5,0.9,0.59,"9",0.72,0.64,1.6802721,0.75,0.77,2026-08-19 22:25:06.636,4,1,Minnesota Twins,Loss,-1.0
+2026-08-18,MLB,New York Mets,San Diego Padres,San Diego Padres,-1.5,0.79,0.34,"8.5",0.6,0.48,1.862069,0.49,0.54,2026-08-19 22:25:06.636,2,5,San Diego Padres,Win,0.8620690107345581
+2026-08-18,MLB,New York Mets,San Diego Padres,New York Mets,+1.5,0.21,0.66,"8.5",0.4,0.52,2.08,0.51,0.46,2026-08-19 22:25:06.636,2,5,San Diego Padres,Loss,-1.0
+2026-08-18,MLB,Philadelphia Phillies,Miami Marlins,Philadelphia Phillies,-1.5,0.58,0.74,"8.5",0.58,0.32,1.4739337,0.81,0.88,2026-08-19 22:25:06.636,6,4,Philadelphia Phillies,Win,0.47393369674682617
+2026-08-18,MLB,Philadelphia Phillies,Miami Marlins,Miami Marlins,+1.5,0.42,0.26,"8.5",0.42,0.68,2.95,0.19,0.12,2026-08-19 22:25:06.636,6,4,Philadelphia Phillies,Loss,-1.0
+2026-08-18,MLB,Pittsburgh Pirates,Detroit Tigers,Detroit Tigers,+1.5,0.27,0.64,"8",0.56,0.67,2.42,0.3,0.4,2026-08-19 22:25:06.636,4,1,Pittsburgh Pirates,Loss,-1.0
+2026-08-18,MLB,Pittsburgh Pirates,Detroit Tigers,Pittsburgh Pirates,-1.5,0.73,0.36,"8",0.44,0.33,1.6535947,0.7,0.6,2026-08-19 22:25:06.636,4,1,Pittsburgh Pirates,Win,0.6535947322845459
+2026-08-18,MLB,Tampa Bay Rays,Toronto Blue Jays,Tampa Bay Rays,-1.5,0.86,0.48,"7.5",0.52,0.44,1.78125,0.5,0.71,2026-08-19 22:25:06.636,5,10,Toronto Blue Jays,Loss,-1.0
+2026-08-18,MLB,Tampa Bay Rays,Toronto Blue Jays,Toronto Blue Jays,+1.5,0.14,0.52,"7.5",0.48,0.56,2.19,0.5,0.29,2026-08-19 22:25:06.636,5,10,Toronto Blue Jays,Win,1.190000057220459
+2026-08-18,MLB,Texas Rangers,Washington Nationals,Texas Rangers,-1.5,0.68,0.36,"7.5",0.79,0.35,1.7352941,0.36,0.7,2026-08-19 22:25:06.636,5,0,Texas Rangers,Win,0.7352941036224365
+2026-08-18,MLB,Texas Rangers,Washington Nationals,Washington Nationals,+1.5,0.32,0.64,"7.5",0.21,0.65,2.27,0.64,0.3,2026-08-19 22:25:06.636,5,0,Texas Rangers,Loss,-1.0
+2026-08-19,MLB,Baltimore Orioles,New York Yankees,Baltimore Orioles,+1.5,0.11,0.51,"9",0.3,0.52,1.9803921,0.26,0.25,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Baltimore Orioles,New York Yankees,New York Yankees,-1.5,0.89,0.49,"9",0.7,0.48,1.9523809,0.74,0.75,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Boston Red Sox,Arizona Diamondbacks,Boston Red Sox,-1.5,0.73,0.64,"8.5",0.66,0.45,1.625,0.77,0.78,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Boston Red Sox,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.27,0.36,"8.5",0.34,0.55,2.49,0.23,0.22,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Chicago Cubs,Chicago White Sox,Chicago Cubs,-1.5,0.7,0.51,"7.5",0.3,0.3,1.6896552,0.66,0.76,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Chicago Cubs,Chicago White Sox,Chicago White Sox,+1.5,0.3,0.49,"7.5",0.7,0.7,2.35,0.34,0.24,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,+1.5,0.12,0.5,"8.5",0.78,0.3,2.2,0.12,0.26,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,-1.5,0.88,0.5,"8.5",0.22,0.7,1.78125,0.88,0.74,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Cleveland Guardians,San Francisco Giants,San Francisco Giants,+1.5,0.09,0.21,"7.5",0.56,0.54,3.06,0.1,0.1,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Cleveland Guardians,San Francisco Giants,Cleveland Guardians,-1.5,0.91,0.79,"7.5",0.44,0.46,1.4484305,0.9,0.9,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Colorado Rockies,Los Angeles Dodgers,Colorado Rockies,+1.5,0.07,0.25,"11.5",0.46,0.43,2.79,0.18,0.07,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Colorado Rockies,Los Angeles Dodgers,Los Angeles Dodgers,-1.5,0.93,0.75,"11.5",0.54,0.57,1.5181347,0.82,0.93,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Houston Astros,Los Angeles Angels,Los Angeles Angels,+1.5,0.26,0.48,"8.5",0.77,0.48,2.37,0.38,0.26,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Houston Astros,Los Angeles Angels,Houston Astros,-1.5,0.74,0.52,"8.5",0.23,0.52,1.6802721,0.62,0.74,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Kansas City Royals,Athletics,Kansas City Royals,-1.5,0.89,0.57,"8.5",0.09,0.27,1.5524862,0.76,0.81,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Kansas City Royals,Athletics,Athletics,+1.5,0.11,0.43,"8.5",0.91,0.73,2.68,0.24,0.19,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Milwaukee Brewers,Seattle Mariners,Seattle Mariners,-1.5,0.6,0.38,"7.5",0.51,0.64,2.08,0.43,0.22,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Milwaukee Brewers,Seattle Mariners,Milwaukee Brewers,+1.5,0.4,0.62,"7.5",0.49,0.36,1.862069,0.57,0.78,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Minnesota Twins,Atlanta Braves,Atlanta Braves,-1.5,0.62,0.43,"9",0.92,0.59,1.925926,0.9,0.63,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Minnesota Twins,Atlanta Braves,Minnesota Twins,+1.5,0.38,0.57,"9",0.08,0.41,2.0,0.1,0.37,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,New York Mets,San Diego Padres,San Diego Padres,-1.5,0.82,0.57,"8.5",0.97,0.58,1.7352941,0.7,0.72,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,New York Mets,San Diego Padres,New York Mets,+1.5,0.18,0.43,"8.5",0.03,0.42,2.26,0.3,0.28,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Philadelphia Phillies,Miami Marlins,Philadelphia Phillies,-1.5,0.61,0.36,"9",0.44,0.58,1.7092198,0.38,0.66,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Philadelphia Phillies,Miami Marlins,Miami Marlins,+1.5,0.39,0.64,"9",0.56,0.42,2.31,0.62,0.34,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Pittsburgh Pirates,Detroit Tigers,Pittsburgh Pirates,-1.5,0.97,0.58,"8.5",0.43,0.39,1.6493506,0.76,0.76,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Pittsburgh Pirates,Detroit Tigers,Detroit Tigers,+1.5,0.03,0.42,"8.5",0.57,0.61,2.43,0.24,0.24,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Tampa Bay Rays,Toronto Blue Jays,Tampa Bay Rays,-1.5,0.91,0.67,"7",0.32,0.33,1.5181347,0.9,0.8,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Tampa Bay Rays,Toronto Blue Jays,Toronto Blue Jays,+1.5,0.09,0.33,"7",0.68,0.67,2.79,0.1,0.2,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Texas Rangers,Washington Nationals,Texas Rangers,-1.5,0.34,0.22,"7.5",0.15,0.29,1.8403361,0.26,0.49,2026-08-20 15:25:12.489,,,,,
+2026-08-19,MLB,Texas Rangers,Washington Nationals,Washington Nationals,+1.5,0.66,0.78,"7.5",0.85,0.71,2.11,0.74,0.51,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Baltimore Orioles,New York Yankees,Baltimore Orioles,+1.5,0.06,0.43,"8",0.95,0.65,2.05,0.05,0.25,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Baltimore Orioles,New York Yankees,New York Yankees,-1.5,0.94,0.57,"8",0.05,0.35,1.7874016,0.95,0.75,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Chicago White Sox,Atlanta Braves,Atlanta Braves,-1.5,0.81,0.31,"8.5",0.23,0.65,1.8849558,0.7,0.61,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Chicago White Sox,Atlanta Braves,Chicago White Sox,+1.5,0.19,0.69,"8.5",0.77,0.35,1.9345795,0.3,0.39,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.74,0.38,"9",0.94,0.42,1.8928572,0.74,0.59,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.26,0.62,"9",0.06,0.58,2.04,0.26,0.41,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Cleveland Guardians,San Francisco Giants,Cleveland Guardians,-1.5,0.75,0.6,"7.5",0.94,0.45,1.5555556,0.87,0.79,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Cleveland Guardians,San Francisco Giants,San Francisco Giants,+1.5,0.25,0.4,"7.5",0.06,0.55,2.67,0.13,0.21,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Houston Astros,Los Angeles Angels,Houston Astros,-1.5,0.97,0.69,"8.5",0.09,0.61,1.5181347,0.71,0.77,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Houston Astros,Los Angeles Angels,Los Angeles Angels,+1.5,0.03,0.31,"8.5",0.91,0.39,2.58,0.29,0.23,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Kansas City Royals,Athletics,Kansas City Royals,-1.5,0.95,0.42,"8.5",0.16,0.34,1.7042253,0.54,0.64,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Kansas City Royals,Athletics,Athletics,+1.5,0.05,0.58,"8.5",0.84,0.66,2.18,0.46,0.36,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Milwaukee Brewers,Seattle Mariners,Milwaukee Brewers,-1.5,0.83,0.44,"8",0.16,0.31,1.7407408,0.91,0.71,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Milwaukee Brewers,Seattle Mariners,Seattle Mariners,+1.5,0.17,0.56,"8",0.84,0.69,2.12,0.09,0.29,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Tampa Bay Rays,Toronto Blue Jays,Tampa Bay Rays,-1.5,0.86,0.43,"7.5",0.24,0.21,1.625,0.6,0.65,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Tampa Bay Rays,Toronto Blue Jays,Toronto Blue Jays,+1.5,0.14,0.58,"7.5",0.76,0.79,2.49,0.4,0.35,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Texas Rangers,Washington Nationals,Texas Rangers,-1.5,0.85,0.55,"7.5",0.11,0.29,1.5952381,0.91,0.72,2026-08-20 15:25:12.489,,,,,
+2026-08-20,MLB,Texas Rangers,Washington Nationals,Washington Nationals,+1.5,0.15,0.45,"7.5",0.89,0.71,2.39,0.09,0.28,2026-08-20 15:25:12.489,,,,,
