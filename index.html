@@ -188,6 +188,10 @@
     background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
     overflow-x:auto;
   }
+  .table-caption{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12.5px;
+    padding:12px 14px 0;
+  }
   table{width:100%; border-collapse:collapse; min-width:900px;}
   thead th{
     text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
@@ -295,7 +299,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="wordmark">SPLITS<span class="dot">·</span>BOARD <small>results &amp; pnl</small></div>
+    <div class="wordmark">SPLITS<span class="dot">·</span>BOARD <small>Results &amp; PnL</small></div>
     <div class="filter-spacer"></div>
     <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText">loading…</span></div>
   </div>
@@ -303,8 +307,8 @@
 
 <main>
   <div id="loadState">
-    <div class="display">Reading mlb_splits.csv &amp; soc_splits.csv…</div>
-    <div class="sub">Looking for <span class="mono">mlb_splits.csv</span> and <span class="mono">soc_splits.csv</span> in the same directory as this page.</div>
+    <div class="display">Loading match data…</div>
+    <div class="sub">Fetching the latest spread, total and moneyline splits.</div>
   </div>
 
   <div id="app" style="display:none;">
@@ -427,6 +431,23 @@
         <div class="canvas-wrap" id="cumPnlWrap"><canvas id="cumPnlChart"></canvas></div>
       </div>
 
+      <div class="table-wrap" id="sportBreakdownWrap" style="margin-bottom:16px;">
+        <div class="table-caption">Performance by sport</div>
+        <table id="sportBreakdownTable">
+          <thead>
+            <tr>
+              <th>Sport</th>
+              <th>Settled bets</th>
+              <th>Wins</th>
+              <th>Win rate</th>
+              <th>Total PnL</th>
+              <th>ROI</th>
+            </tr>
+          </thead>
+          <tbody id="sportBreakdownBody"></tbody>
+        </table>
+      </div>
+
       <div class="subtabs" data-scope="backtest">
         <button class="subtab-btn" data-market="spread">Spread</button>
         <button class="subtab-btn" data-market="total">Total</button>
@@ -469,22 +490,6 @@
           <div class="display">No settled games match these filters</div>
           <div>Try widening the filters above.</div>
         </div>
-      </div>
-
-      <div class="table-wrap" id="sportBreakdownWrap" style="margin-top:16px;">
-        <table id="sportBreakdownTable">
-          <thead>
-            <tr>
-              <th>Sport</th>
-              <th>Settled bets</th>
-              <th>Wins</th>
-              <th>Win rate</th>
-              <th>Total PnL</th>
-              <th>ROI</th>
-            </tr>
-          </thead>
-          <tbody id="sportBreakdownBody"></tbody>
-        </table>
       </div>
     </div>
 
@@ -671,13 +676,12 @@ function inferFallbackSport(filename){
 }
 
 function showFallback(){
-  const names = CSV_SOURCES.map(s=>s.path.replace('./',''));
   const el = document.getElementById('loadState');
   el.innerHTML =
-    '<div class="display">Couldn\'t load '+names.join(' / ')+' automatically</div>' +
-    '<div class="sub">This page expects '+names.map(n=>'<span class="mono">'+n+'</span>').join(' and ')+' to sit next to it (e.g. served over http/https from the same folder — browsers block local file:// fetches). You can also drop the file(s) in manually below — one, or both at once.</div>' +
+    '<div class="display">Match data unavailable</div>' +
+    '<div class="sub">We couldn\'t load the match data automatically — this can happen when the page is opened directly from disk rather than served over the web. You can select the data file(s) manually below.</div>' +
     '<label class="drop-zone" id="dropZone">' +
-      '<div>Click to choose one or more CSV files, or drag them here</div>' +
+      '<div>Click to select file(s), or drag them here</div>' +
       '<input type="file" id="fileInput" accept=".csv" multiple>' +
     '</label>';
   const dz = document.getElementById('dropZone');
@@ -729,8 +733,8 @@ function bootFromSources(results){
   document.getElementById('app').style.display='block';
   document.getElementById('pageFooter').style.display='block';
   document.getElementById('statusDot').classList.toggle('warn', missingNames.length>0);
-  let statusMsg = ALL_GAMES.length + ' games · ' + rows.length + ' rows · ' + loadedNames.join(' + ');
-  if(missingNames.length) statusMsg += ' (missing '+missingNames.join(', ')+')';
+  let statusMsg = ALL_GAMES.length + ' matches loaded';
+  if(missingNames.length) statusMsg += ' — some data unavailable';
   document.getElementById('statusText').textContent = statusMsg;
   populateFilterOptions();
   wireGlobalFilters();
@@ -739,7 +743,7 @@ function bootFromSources(results){
   wireUpcomingSort();
   wireBacktestSort();
   renderAll();
-  renderFooter(loadedNames, missingNames);
+  renderFooter(missingNames.length>0);
 }
 
 /* ============================== HELPERS ============================== */
@@ -905,11 +909,10 @@ function renderStats(){
     '</div>').join('');
 }
 
-function renderFooter(loadedNames, missingNames){
-  const names = (loadedNames && loadedNames.length) ? loadedNames : CSV_SOURCES.map(s=>s.path.replace('./',''));
-  let txt = 'Reads '+names.map(n=>'<span class="mono">'+n+'</span>').join(' + ')+' client-side · '+ALL_ROWS_COUNT.toLocaleString()+' rows parsed · handle = share of dollars wagered, bets = share of ticket count, pnl = return on a flat $1 moneyline stake.';
-  if(missingNames && missingNames.length){
-    txt += ' <span style="color:var(--alert)">· '+missingNames.join(', ')+' not found — showing available data only.</span>';
+function renderFooter(hasMissingData){
+  let txt = 'Handle = share of dollars wagered · Bets = share of ticket count · PnL = return on a flat $1 moneyline stake.';
+  if(hasMissingData){
+    txt += ' <span style="color:var(--alert)">Some match data could not be loaded — figures reflect only what is currently available.</span>';
   }
   document.getElementById('pageFooter').innerHTML = txt;
 }
