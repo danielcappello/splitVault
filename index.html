@@ -3,364 +3,340 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Splits Board — Betting Split Results &amp; PnL</title>
+<title>SplitVault — Match Results &amp; PnL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
 <style>
   :root{
-    --bg: #0F1215;
-    --panel: #171B1F;
-    --panel-raised: #1D2227;
-    --hairline: #2A2F35;
-    --hairline-soft: #21262B;
-    --text: #ECEFF2;
-    --text-muted: #8A9099;
-    --text-faint: #565C64;
-    --handle: #3FB68B;
-    --handle-soft: rgba(63,182,139,0.16);
-    --bets: #E8A33D;
-    --bets-soft: rgba(232,163,61,0.16);
-    --alert: #E2574C;
-    --alert-soft: rgba(226,87,76,0.14);
-    --link: #4C8DFF;
-    --radius: 3px;
+    --bg: #0A0D18;
+    --panel: #12162A;
+    --panel-raised: #191F38;
+    --hairline: #262C4C;
+    --hairline-soft: #1D2340;
+    --ink: #EBEDFB;
+    --ink-muted: #9099C2;
+    --ink-faint: #5C6390;
+    --text-muted: #9099C2;
+    --text-faint: #5C6390;
+    --handle: #8B5CF6;
+    --handle-soft: rgba(139,92,246,0.16);
+    --bets: #F5A623;
+    --bets-soft: rgba(245,166,35,0.14);
+    --alert: #F0466E;
+    --alert-soft: rgba(240,70,110,0.14);
+    --link: #38BDF8;
+    --positive: #4ADE80;
+    --radius: 10px;
+    --sidebar-w: 272px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    font-size:14px;
-    line-height:1.5;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(139,92,246,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(56,189,248,0.09), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif; font-size:14px; line-height:1.5;
     min-height:100vh;
   }
-  ::selection{background:var(--handle-soft);color:var(--text);}
-  .mono{font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
-  .display{font-family:'Space Grotesk',sans-serif;}
+  ::selection{background:var(--handle-soft); color:var(--ink);}
+  .mono{font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums;}
+  .display{font-family:'Sora',sans-serif; font-weight:700;}
   a{color:var(--link);}
 
-  header.topbar{
-    position:sticky; top:0; z-index:30;
-    background:rgba(15,18,21,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--hairline);
-    padding:0 20px;
+  .shell{display:flex; min-height:100vh; align-items:flex-start;}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:var(--sidebar-w); flex:none; min-height:100vh;
+    background:var(--panel); border-right:1px solid var(--hairline);
+    padding:26px 22px 40px; position:sticky; top:0;
   }
-  .topbar-inner{
-    max-width:1400px; margin:0 auto;
-    display:flex; align-items:center; gap:24px;
-    height:56px;
+  .brand{
+    font-family:'Sora',sans-serif; font-weight:700; font-size:21px;
+    color:var(--ink); margin-bottom:2px; letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:10px;
   }
-  .wordmark{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700; font-size:18px; letter-spacing:0.02em;
-    display:flex; align-items:baseline; gap:8px; white-space:nowrap;
+  .brand-glyph{
+    width:30px; height:30px; border-radius:9px; flex:none;
+    background:linear-gradient(135deg, var(--handle), var(--link));
+    display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#0A0D18;
   }
-  .wordmark .dot{color:var(--handle);}
-  .wordmark small{
-    font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:10.5px;
-    color:var(--text-faint); letter-spacing:0.08em; text-transform:uppercase;
+  .brand-text{display:flex; flex-direction:column;}
+  .brand small{
+    display:block; font-family:'JetBrains Mono',monospace; font-weight:400; font-size:10.5px;
+    color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px;
   }
-  .status-pill{
-    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-muted);
-    border:1px solid var(--hairline); border-radius:20px; padding:4px 10px;
-    display:flex; align-items:center; gap:6px; white-space:nowrap;
+  .side-status{
+    display:flex; align-items:center; gap:7px; margin:22px 0 26px;
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-muted);
+    padding-bottom:20px; border-bottom:1px solid var(--hairline-soft);
   }
   .status-dot{width:6px;height:6px;border-radius:50%;background:var(--handle);flex:none;}
   .status-dot.warn{background:var(--alert);}
 
-  main{max-width:1400px; margin:0 auto; padding:24px 20px 80px;}
-
-  /* ---------- Global filter panel ---------- */
-  .filter-panel{
-    background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
-    padding:12px 12px 4px; margin-bottom:16px;
+  .side-section{margin-bottom:24px;}
+  .side-label{
+    font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase;
+    letter-spacing:0.1em; color:var(--ink-faint); margin-bottom:10px; display:flex;
+    align-items:center; gap:8px;
   }
-  .filter-panel-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
-  .filter-panel-head .display{font-size:13px; font-weight:600;}
-  .filter-panel-head .sub{font-size:11px; color:var(--text-faint);}
-  .filter-bar{
-    display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px;
-    margin-bottom:10px;
+  .active-filter-count{
+    font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--handle);
+    background:var(--handle-soft); border-radius:20px; padding:2px 7px;
   }
-  .filter-group{display:flex; align-items:center; gap:6px;}
-  .filter-group label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); white-space:nowrap;}
+  .field{margin-bottom:9px;}
+  .field label{
+    display:block; font-size:10.5px; color:var(--ink-faint); margin-bottom:3px;
+    text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .field-row{display:flex; gap:8px;}
+  .field-row .field{flex:1;}
   select, input[type=text], input[type=number]{
-    background:var(--panel-raised); color:var(--text); border:1px solid var(--hairline);
-    border-radius:var(--radius); padding:6px 8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+    width:100%; background:var(--panel-raised); color:var(--ink); border:1px solid var(--hairline);
+    border-radius:var(--radius); padding:7px 8px; font-family:'Inter',sans-serif; font-size:12.5px;
     outline:none;
   }
+  input[type=number]{font-family:'JetBrains Mono',monospace;}
   select:focus, input:focus{border-color:var(--link);}
-  input[type=text]{width:160px;}
-  input[type=number]{width:64px;}
-  .filter-spacer{flex:1;}
-  .reset-btn, .toggle-btn{
-    background:none; border:1px solid var(--hairline); color:var(--text-muted);
-    border-radius:var(--radius); padding:6px 10px; font-size:12px; cursor:pointer;
-    font-family:'IBM Plex Mono',monospace; white-space:nowrap;
-  }
-  .reset-btn:hover, .toggle-btn:hover{color:var(--text); border-color:var(--text-muted);}
-  .toggle-btn.open{color:var(--text); border-color:var(--link);}
-  .more-filters{display:none; border-top:1px solid var(--hairline-soft); padding-top:10px; margin-top:2px;}
-  .more-filters.open{display:flex;}
-  .active-filter-count{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--handle);
-    background:var(--handle-soft); border-radius:20px; padding:2px 8px;
-  }
-  .strategy-presets{display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:10px 0 12px; border-top:1px solid var(--hairline-soft);}
-  .strategy-presets-label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); margin-right:2px;}
-  .preset-btn{
-    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--text-muted);
-    border-radius:20px; padding:6px 12px; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif;
-  }
-  .preset-btn:hover{color:var(--text); border-color:var(--text-muted);}
-  .preset-btn.active{color:var(--bg); background:var(--handle); border-color:var(--handle); font-weight:600;}
+  .num-row{display:flex; gap:6px; margin-bottom:8px;}
+  .num-row .field{flex:1; margin-bottom:0;}
 
-  /* ---------- Stat row ---------- */
-  .stat-row{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:1px;
-    background:var(--hairline);
-    border:1px solid var(--hairline);
-    border-radius:var(--radius);
-    overflow:hidden;
-    margin-bottom:20px;
+  .toggle-btn, .reset-btn{
+    background:none; border:1px solid var(--hairline); color:var(--ink-muted);
+    border-radius:var(--radius); padding:7px 10px; font-size:12px; cursor:pointer;
+    font-family:'Inter',sans-serif; width:100%; margin-top:4px; text-align:left;
   }
-  .stat-cell{
-    background:var(--panel);
-    padding:14px 16px;
-  }
-  .stat-cell .label{
-    font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em;
-    color:var(--text-faint); margin-bottom:6px;
-  }
-  .stat-cell .value{
-    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;
-  }
-  .stat-cell .value.pos{color:var(--handle);}
-  .stat-cell .value.neg{color:var(--alert);}
-  .stat-cell .sub{font-size:11px; color:var(--text-muted); margin-top:2px;}
+  .toggle-btn:hover, .reset-btn:hover{color:var(--ink); border-color:var(--ink-muted);}
+  .toggle-btn.open{color:var(--link); border-color:var(--link);}
+  .more-filters{display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--hairline-soft);}
+  .more-filters.open{display:block;}
 
-  .tabs{display:flex; gap:2px; margin-bottom:16px; border-bottom:1px solid var(--hairline);}
-  .tab-btn{
-    background:none; border:none; color:var(--text-muted);
-    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
-    padding:10px 4px; margin-right:22px; cursor:pointer;
-    border-bottom:2px solid transparent; position:relative; top:1px;
-  }
-  .tab-btn.active{color:var(--text); border-bottom-color:var(--handle);}
-  .tab-btn:hover{color:var(--text);}
-
-  .subtabs{display:flex; gap:6px; margin-bottom:14px;}
+  .subtabs{display:flex; flex-direction:column; gap:6px;}
   .subtab-btn{
-    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--text-muted);
-    padding:6px 16px; border-radius:20px; font-size:12.5px; cursor:pointer;
-    font-family:'Space Grotesk',sans-serif; font-weight:600;
+    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--ink-muted);
+    padding:8px 12px; border-radius:var(--radius); font-size:12.5px; cursor:pointer;
+    font-family:'Inter',sans-serif; font-weight:600; text-align:left;
   }
-  .subtab-btn:hover{color:var(--text); border-color:var(--text-muted);}
-  .subtab-btn.active{background:var(--handle); color:var(--bg); border-color:var(--handle);}
+  .subtab-btn:hover{color:var(--ink); border-color:var(--ink-muted);}
+  .subtab-btn.active{background:linear-gradient(135deg, var(--handle), var(--link)); color:#0A0D18; border-color:transparent;}
 
-  .legend-key{
-    display:flex; gap:16px; flex-wrap:wrap; font-size:11.5px; color:var(--text-muted);
-    margin-bottom:14px;
+  .strategy-presets{display:flex; flex-direction:column; gap:6px;}
+  .preset-btn{
+    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--ink-muted);
+    border-radius:var(--radius); padding:7px 11px; font-size:12px; cursor:pointer;
+    font-family:'Inter',sans-serif; text-align:left;
   }
+  .preset-btn:hover{color:var(--ink); border-color:var(--ink-muted);}
+  .preset-btn.active{color:var(--handle); border-color:var(--handle); background:var(--handle-soft); font-weight:600;}
+
+  /* ---------- Main content ---------- */
+  .content{flex:1; min-width:0; padding:34px 40px 80px; max-width:1180px;}
+
+  #loadState{padding:100px 20px; text-align:center;}
+  #loadState .display{font-size:20px; margin-bottom:8px;}
+  #loadState .sub{color:var(--ink-muted); font-size:13px; max-width:440px; margin:0 auto 22px;}
+  .drop-zone{
+    max-width:400px; margin:0 auto; border:1px dashed var(--hairline); border-radius:var(--radius);
+    padding:22px; color:var(--ink-muted); font-size:12.5px; cursor:pointer; background:var(--panel);
+  }
+  .drop-zone:hover{border-color:var(--link); color:var(--ink);}
+  .drop-zone input{display:none;}
+
+  .stat-row{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
+    background:var(--hairline); border:1px solid var(--hairline); border-radius:var(--radius);
+    overflow:hidden; margin-bottom:28px;
+  }
+  .stat-cell{background:var(--panel); padding:18px 18px 16px; position:relative; overflow:hidden;}
+  .stat-cell::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--handle), var(--link));
+  }
+  .stat-cell .label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.07em; color:var(--ink-faint); margin-bottom:8px;}
+  .stat-cell .value{font-family:'Sora',sans-serif; font-weight:600; font-size:28px; color:var(--ink);}
+  .stat-cell .value.pos{color:var(--positive);}
+  .stat-cell .value.neg{color:var(--alert);}
+  .stat-cell .sub{font-size:11px; color:var(--ink-muted); margin-top:3px;}
+
+  .tabs{display:flex; gap:28px; margin-bottom:22px; border-bottom:1px solid var(--hairline);}
+  .tab-btn{
+    background:none; border:none; color:var(--ink-faint);
+    font-family:'Sora',sans-serif; font-weight:600; font-size:17px;
+    padding:0 0 12px; cursor:pointer; border-bottom:2px solid transparent; position:relative; top:1px;
+  }
+  .tab-btn.active{color:var(--ink); border-bottom-color:var(--handle);}
+  .tab-btn:hover{color:var(--ink);}
+
+  .movers-note{color:var(--ink-muted); font-size:13px; margin-bottom:18px; max-width:680px; font-style:italic;}
+
+  .legend-key{display:flex; gap:18px; flex-wrap:wrap; font-size:11.5px; color:var(--ink-muted); margin-bottom:14px;}
   .legend-key span{display:flex; align-items:center; gap:5px;}
   .swatch{width:9px;height:9px;border-radius:2px;display:inline-block;}
 
+  .filter-bar{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:16px;}
+  .sort-group{margin-left:auto; display:flex; align-items:center; gap:8px;}
+  .sort-group label{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-faint);}
+  .sort-group select{width:auto; min-width:170px;}
+
   .splitbar-wrap{width:100%; min-width:100px;}
-  .splitbar{
-    position:relative; height:6px; border-radius:3px; background:var(--hairline-soft);
-    overflow:hidden;
-  }
-  .splitbar .seg-bets{
-    position:absolute; top:0; bottom:0; left:0; background:var(--bets); opacity:0.85;
-  }
-  .splitbar .marker-handle{
-    position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--handle);
-    box-shadow:0 0 0 1px var(--bg);
-  }
-  .splitbar-foot{font-size:9.5px; color:var(--text-faint); margin-top:2px; font-family:'IBM Plex Mono',monospace;}
+  .splitbar{position:relative; height:6px; border-radius:3px; background:var(--hairline-soft); overflow:hidden;}
+  .splitbar .seg-bets{position:absolute; top:0; bottom:0; left:0; background:var(--bets); opacity:0.9;}
+  .splitbar .marker-handle{position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--handle); box-shadow:0 0 0 1px var(--panel);}
+  .splitbar-foot{font-size:9.5px; color:var(--ink-faint); margin-top:2px; font-family:'JetBrains Mono',monospace;}
 
   .table-wrap{
     background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
-    overflow-x:auto;
+    overflow-x:auto; box-shadow:0 1px 3px rgba(0,0,0,0.25);
   }
-  .table-caption{
-    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12.5px;
-    padding:12px 14px 0;
-  }
-  table{width:100%; border-collapse:collapse; min-width:900px;}
+  .table-caption{font-family:'Sora',sans-serif; font-weight:600; font-size:14px; padding:16px 18px 0;}
+  table{width:100%; border-collapse:collapse; min-width:820px;}
   thead th{
     text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
-    color:var(--text-faint); font-weight:600; padding:10px 12px;
-    border-bottom:1px solid var(--hairline); white-space:nowrap;
-    cursor:pointer; user-select:none;
+    color:var(--ink-faint); font-weight:600; padding:12px 16px;
+    border-bottom:1px solid var(--hairline); white-space:nowrap; cursor:pointer; user-select:none;
   }
-  thead th:hover{color:var(--text-muted);}
-  thead th.sorted{color:var(--text);}
+  thead th:hover{color:var(--ink-muted);}
+  thead th.sorted{color:var(--ink);}
   thead th .arrow{margin-left:3px; opacity:0.6; font-size:9px;}
   tbody tr{border-bottom:1px solid var(--hairline-soft); cursor:pointer;}
   tbody tr:hover{background:var(--panel-raised);}
   tbody tr.expanded{background:var(--panel-raised);}
-  tbody td{padding:10px 12px; vertical-align:middle;}
+  tbody td{padding:12px 16px; vertical-align:middle;}
   .matchup{display:flex; flex-direction:column; gap:1px;}
-  .matchup .teams{font-weight:600; font-size:13px;}
+  .matchup .teams{font-weight:600; font-size:13.5px; font-family:'Sora',sans-serif;}
   .tag{
-    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10px;
-    padding:2px 6px; border-radius:20px; border:1px solid var(--hairline); color:var(--text-muted);
-    white-space:nowrap;
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10px;
+    padding:2px 7px; border-radius:20px; border:1px solid var(--hairline); color:var(--ink-muted); white-space:nowrap;
   }
   .tag.pending{border-color:var(--bets); color:var(--bets);}
-  .num{font-family:'IBM Plex Mono',monospace; font-size:12.5px;}
+  .num{font-family:'JetBrains Mono',monospace; font-size:12.5px;}
   .divergence-badge{
-    font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
-    padding:3px 7px; border-radius:var(--radius); display:inline-block; white-space:nowrap;
+    font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600;
+    padding:3px 8px; border-radius:var(--radius); display:inline-block; white-space:nowrap;
   }
   .divergence-badge.hi{background:var(--alert-soft); color:var(--alert);}
   .divergence-badge.mid{background:var(--bets-soft); color:var(--bets);}
-  .divergence-badge.lo{background:var(--hairline-soft); color:var(--text-faint);}
-  .pnl-line{display:flex; flex-direction:column; gap:2px; font-family:'IBM Plex Mono',monospace; font-size:11.5px;}
+  .divergence-badge.lo{background:var(--hairline-soft); color:var(--ink-faint);}
+  .pnl-line{display:flex; flex-direction:column; gap:2px; font-family:'JetBrains Mono',monospace; font-size:11.5px;}
   .pnl-line .side{display:flex; justify-content:space-between; gap:8px; white-space:nowrap;}
-  .pnl-line .side .nm{color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; max-width:110px;}
+  .pnl-line .side .nm{color:var(--ink-muted);}
   .pnl-val{font-weight:600;}
-  .pnl-val.pos{color:var(--handle);}
+  .pnl-val.pos{color:var(--positive);}
   .pnl-val.neg{color:var(--alert);}
-  .pnl-val.na{color:var(--text-faint); font-weight:400;}
-  .score-line{font-family:'IBM Plex Mono',monospace; font-size:12px;}
-  .score-line .win{color:var(--text); font-weight:600;}
-  .score-line .lose{color:var(--text-faint);}
-  .empty-state{padding:48px 20px; text-align:center; color:var(--text-muted);}
-  .empty-state .display{font-size:16px; color:var(--text); margin-bottom:6px;}
+  .pnl-val.na{color:var(--ink-faint); font-weight:400;}
+  .score-line{font-family:'JetBrains Mono',monospace; font-size:12px;}
+  .score-line .win{color:var(--ink); font-weight:600;}
+  .score-line .lose{color:var(--ink-faint);}
+  .empty-state{padding:56px 20px; text-align:center; color:var(--ink-muted);}
+  .empty-state .display{font-size:17px; color:var(--ink); margin-bottom:6px;}
 
   .detail-row td{padding:0; border-bottom:1px solid var(--hairline);}
-  .detail-panel{padding:18px 20px 24px; background:#12161A;}
-  .detail-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:14px; flex-wrap:wrap;}
-  .detail-head h3{margin:0 0 3px; font-family:'Space Grotesk',sans-serif; font-size:17px;}
-  .detail-head .sub{color:var(--text-muted); font-size:12px; font-family:'IBM Plex Mono',monospace;}
-  .close-detail{background:none; border:1px solid var(--hairline); color:var(--text-muted); border-radius:var(--radius); padding:5px 10px; cursor:pointer; font-size:12px;}
-  .close-detail:hover{color:var(--text);}
+  .detail-panel{padding:20px 22px 26px; background:var(--panel-raised);}
+  .detail-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px; flex-wrap:wrap;}
+  .detail-head h3{margin:0 0 3px; font-family:'Sora',sans-serif; font-size:19px;}
+  .detail-head .sub{color:var(--ink-muted); font-size:12px; font-family:'JetBrains Mono',monospace;}
+  .close-detail{background:none; border:1px solid var(--hairline); color:var(--ink-muted); border-radius:var(--radius); padding:6px 11px; cursor:pointer; font-size:12px;}
+  .close-detail:hover{color:var(--ink);}
 
-  .side-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .side-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   @media (max-width:640px){.side-grid{grid-template-columns:1fr;}}
-  .side-card{background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius); padding:14px 16px;}
-  .side-card .side-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
-  .side-card .side-head .nm{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px;}
-  .side-card .side-head .role{font-size:10.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace;}
-  .market-row{margin-bottom:12px;}
-  .market-row .mk-label{display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-bottom:4px;}
-  .market-row .mk-label .price{font-family:'IBM Plex Mono',monospace; color:var(--text);}
-  .result-row{
-    display:flex; justify-content:space-between; align-items:center;
-    margin-top:12px; padding-top:12px; border-top:1px solid var(--hairline-soft);
-    font-family:'IBM Plex Mono',monospace; font-size:12.5px;
-  }
+  .side-card{background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius); padding:16px 18px;}
+  .side-card .side-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;}
+  .side-card .side-head .nm{font-family:'Sora',sans-serif; font-weight:600; font-size:15.5px;}
+  .side-card .side-head .role{font-size:10.5px; color:var(--ink-faint); font-family:'JetBrains Mono',monospace;}
+  .market-row{margin-bottom:13px;}
+  .market-row .mk-label{display:flex; justify-content:space-between; font-size:11px; color:var(--ink-muted); margin-bottom:4px;}
+  .market-row .mk-label .price{font-family:'JetBrains Mono',monospace; color:var(--ink);}
+  .result-row{display:flex; justify-content:space-between; align-items:center; margin-top:13px; padding-top:13px; border-top:1px solid var(--hairline-soft); font-family:'JetBrains Mono',monospace; font-size:12.5px;}
 
-  .movers-note{color:var(--text-muted); font-size:12.5px; margin-bottom:14px; max-width:720px;}
-
-  .filter-group.sort-group{margin-left:auto;}
-
-  .perf-grid{display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-bottom:16px;}
-  @media (max-width:900px){.perf-grid{grid-template-columns:1fr;}}
-  .chart-card{background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius); padding:14px 16px 8px;}
-  .chart-card h4{
-    margin:0 0 2px; font-size:12.5px; font-family:'Space Grotesk',sans-serif; font-weight:600;
-  }
-  .chart-card .chart-sub{font-size:11px; color:var(--text-faint); margin-bottom:10px;}
-  .chart-card .canvas-wrap{position:relative; height:240px;}
-  .chart-card .canvas-wrap.short{height:200px;}
-  .chart-empty{color:var(--text-faint); font-size:12px; padding:40px 0; text-align:center;}
-
-  #loadState{padding:80px 20px; text-align:center;}
-  #loadState .display{font-size:18px; margin-bottom:8px;}
-  #loadState .sub{color:var(--text-muted); font-size:13px; max-width:480px; margin:0 auto 20px;}
-  .drop-zone{
-    max-width:420px; margin:0 auto; border:1px dashed var(--hairline); border-radius:var(--radius);
-    padding:22px; color:var(--text-muted); font-size:12.5px; cursor:pointer;
-  }
-  .drop-zone:hover{border-color:var(--link); color:var(--text);}
-  .drop-zone input{display:none;}
+  .chart-card{background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius); padding:18px 20px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.25);}
+  .chart-card h4{margin:0 0 2px; font-size:14px; font-family:'Sora',sans-serif; font-weight:600;}
+  .chart-card .chart-sub{font-size:11.5px; color:var(--ink-faint); margin-bottom:12px;}
+  .canvas-wrap{position:relative; height:240px;}
+  .chart-empty{color:var(--ink-faint); font-size:12px; padding:40px 0; text-align:center;}
 
   footer{
-    max-width:1400px; margin:0 auto; padding:20px 20px 60px; color:var(--text-faint); font-size:11px;
-    font-family:'IBM Plex Mono',monospace; border-top:1px solid var(--hairline); margin-top:24px;
+    max-width:1180px; margin:0 auto; padding:20px 0 60px; color:var(--ink-faint); font-size:11px;
+    font-family:'JetBrains Mono',monospace;
   }
 
-  @media (max-width:640px){
-    .topbar-inner{gap:12px;}
-    .status-pill{display:none;}
-    .stat-cell .value{font-size:18px;}
+  @media (max-width:900px){
+    .shell{flex-direction:column;}
+    .sidebar{width:100%; position:relative; min-height:auto; border-right:none; border-bottom:1px solid var(--hairline);}
+    .content{padding:26px 20px 60px; max-width:100%;}
   }
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="wordmark">SPLITS<span class="dot">·</span>BOARD <small>Results &amp; PnL</small></div>
-    <div class="filter-spacer"></div>
-    <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusText">loading…</span></div>
-  </div>
-</header>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-glyph">SV</span><span class="brand-text">SplitVault<small>Match Results &amp; PnL Analysis</small></span></div>
 
-<main>
-  <div id="loadState">
-    <div class="display">Loading match data…</div>
-    <div class="sub">Fetching the latest spread, total and moneyline splits.</div>
-  </div>
+    <div class="side-status"><span class="status-dot" id="statusDot"></span><span id="statusText">Loading…</span></div>
 
-  <div id="app" style="display:none;">
-
-    <!-- ============ GLOBAL FILTER PANEL — applies to every tab ============ -->
-    <div class="filter-panel">
-      <div class="filter-panel-head">
-        <span class="display">Filters</span>
-        <span class="sub">apply across Upcoming &amp; Backtest</span>
-        <span class="active-filter-count" id="activeFilterCount" style="display:none;"></span>
+    <div class="side-section">
+      <div class="side-label">Filters <span class="active-filter-count" id="activeFilterCount" style="display:none;"></span></div>
+      <div class="field"><label>Sport</label><select id="gSport"></select></div>
+      <div class="field-row">
+        <div class="field"><label>From</label><select id="gDateFrom"></select></div>
+        <div class="field"><label>To</label><select id="gDateTo"></select></div>
       </div>
-
-      <div class="filter-bar">
-        <div class="filter-group"><label>Sport</label><select id="gSport"></select></div>
-        <div class="filter-group"><label>From</label><select id="gDateFrom"></select></div>
-        <div class="filter-group"><label>To</label><select id="gDateTo"></select></div>
-        <div class="filter-group"><input type="text" id="gTeam" placeholder="Search team…"></div>
-        <div class="filter-group">
-          <label>Result</label>
-          <select id="gResult">
-            <option value="all">Any</option>
-            <option value="win">Win</option>
-            <option value="loss">Loss</option>
-            <option value="pending">Pending</option>
-          </select>
+      <div class="field"><input type="text" id="gTeam" placeholder="Search team…"></div>
+      <div class="field">
+        <label>Result</label>
+        <select id="gResult">
+          <option value="all">Any</option>
+          <option value="win">Win</option>
+          <option value="loss">Loss</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Team role</label>
+        <select id="gRole">
+          <option value="all">Home &amp; away</option>
+          <option value="home">Home only</option>
+          <option value="away">Away only</option>
+        </select>
+      </div>
+      <button class="toggle-btn" id="moreToggle">More filters ▾</button>
+      <div class="more-filters" id="moreFilters">
+        <div class="num-row">
+          <div class="field"><label id="gValueMinLabel">Price min</label><input type="number" id="gValueMin" step="0.01"></div>
+          <div class="field"><label id="gValueMaxLabel">max</label><input type="number" id="gValueMax" step="0.01"></div>
         </div>
-        <div class="filter-group">
-          <label>Team role</label>
-          <select id="gRole">
-            <option value="all">Home &amp; away</option>
-            <option value="home">Home only</option>
-            <option value="away">Away only</option>
-          </select>
+        <div class="num-row">
+          <div class="field"><label>Handle % min</label><input type="number" id="gHandleMin" step="1"></div>
+          <div class="field"><label>max</label><input type="number" id="gHandleMax" step="1"></div>
         </div>
-        <div class="filter-spacer"></div>
-        <button class="toggle-btn" id="moreToggle">More filters ▾</button>
-        <button class="reset-btn" id="globalReset">Reset all</button>
+        <div class="num-row">
+          <div class="field"><label>Bets % min</label><input type="number" id="gBetsMin" step="1"></div>
+          <div class="field"><label>max</label><input type="number" id="gBetsMax" step="1"></div>
+        </div>
+        <div class="num-row">
+          <div class="field"><label>Divergence min</label><input type="number" id="gDivMin" step="1"></div>
+          <div class="field"><label>max</label><input type="number" id="gDivMax" step="1"></div>
+        </div>
       </div>
+      <button class="reset-btn" id="globalReset">Reset all filters</button>
+    </div>
 
-      <div class="filter-bar more-filters" id="moreFilters">
-        <div class="filter-group"><label id="gValueMinLabel">Price min</label><input type="number" id="gValueMin" step="0.01"></div>
-        <div class="filter-group"><label id="gValueMaxLabel">max</label><input type="number" id="gValueMax" step="0.01"></div>
-        <div class="filter-group"><label>Handle % min</label><input type="number" id="gHandleMin" step="1"></div>
-        <div class="filter-group"><label>max</label><input type="number" id="gHandleMax" step="1"></div>
-        <div class="filter-group"><label>Bets % min</label><input type="number" id="gBetsMin" step="1"></div>
-        <div class="filter-group"><label>max</label><input type="number" id="gBetsMax" step="1"></div>
-        <div class="filter-group"><label>Divergence min</label><input type="number" id="gDivMin" step="1"></div>
-        <div class="filter-group"><label>max</label><input type="number" id="gDivMax" step="1"></div>
+    <div class="side-section">
+      <div class="side-label">Market</div>
+      <div class="subtabs">
+        <button class="subtab-btn" data-market="spread">Spread</button>
+        <button class="subtab-btn" data-market="total">Total</button>
+        <button class="subtab-btn" data-market="money">Moneyline</button>
       </div>
+    </div>
 
+    <div class="side-section">
+      <div class="side-label">Strategies</div>
       <div class="strategy-presets" id="strategyPresets">
-        <span class="strategy-presets-label">Presets</span>
         <button class="preset-btn" data-preset="money">Follow the money</button>
         <button class="preset-btn" data-preset="public">Fade the public</button>
         <button class="preset-btn" data-preset="dogs">Underdogs only</button>
@@ -369,135 +345,122 @@
         <button class="preset-btn" data-preset="away">Away teams only</button>
       </div>
     </div>
+  </aside>
 
-    <div class="stat-row" id="statRow"></div>
-
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
-      <button class="tab-btn" data-tab="backtest">Backtest</button>
+  <main class="content">
+    <div id="loadState">
+      <div class="display">Loading match data…</div>
+      <div class="sub">Fetching the latest spread, total and moneyline splits.</div>
     </div>
 
-    <!-- UPCOMING TAB — games with no result yet -->
-    <div id="tab-upcoming">
-      <div class="subtabs" data-scope="upcoming">
-        <button class="subtab-btn" data-market="spread">Spread</button>
-        <button class="subtab-btn" data-market="total">Total</button>
-        <button class="subtab-btn" data-market="money">Moneyline</button>
+    <div id="app" style="display:none;">
+      <div class="stat-row" id="statRow"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+        <button class="tab-btn" data-tab="backtest">Backtest</button>
       </div>
-      <div class="filter-bar">
-        <div class="legend-key" style="margin-bottom:0;">
-          <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
-          <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
-          <span><span class="swatch" style="background:var(--alert)"></span> High divergence</span>
+
+      <div id="tab-upcoming">
+        <div class="filter-bar">
+          <div class="legend-key" style="margin-bottom:0;">
+            <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
+            <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
+            <span><span class="swatch" style="background:var(--alert)"></span> High divergence</span>
+          </div>
+          <div class="sort-group">
+            <label>Sort</label>
+            <select id="uSort">
+              <option value="date-asc">Date (oldest first)</option>
+              <option value="date-desc">Date (newest first)</option>
+              <option value="divergence">Biggest divergence</option>
+              <option value="alpha">Matchup A–Z</option>
+            </select>
+          </div>
         </div>
-        <div class="filter-group sort-group">
-          <label>Sort</label>
-          <select id="uSort">
-            <option value="date-asc">Date (oldest first)</option>
-            <option value="date-desc">Date (newest first)</option>
-            <option value="divergence">Biggest divergence</option>
-            <option value="alpha">Matchup A–Z</option>
-          </select>
+        <div class="table-wrap">
+          <table id="upcomingTable">
+            <thead>
+              <tr>
+                <th data-sort="date">Date</th>
+                <th data-sort="matchup">Matchup</th>
+                <th data-sort="sport">Sport</th>
+                <th id="uMarketColHeader">Moneyline (pick)</th>
+                <th data-sort="divergence">Signal</th>
+              </tr>
+            </thead>
+            <tbody id="upcomingBody"></tbody>
+          </table>
+          <div class="empty-state" id="upcomingEmpty" style="display:none;">
+            <div class="display">No upcoming matches</div>
+            <div>Try widening the filters.</div>
+          </div>
         </div>
       </div>
 
-      <div class="table-wrap">
-        <table id="upcomingTable">
-          <thead>
-            <tr>
-              <th data-sort="date">Date</th>
-              <th data-sort="matchup">Matchup</th>
-              <th data-sort="sport">Sport</th>
-              <th id="uMarketColHeader">Moneyline (pick)</th>
-              <th data-sort="divergence">Signal</th>
-            </tr>
-          </thead>
-          <tbody id="upcomingBody"></tbody>
-        </table>
-        <div class="empty-state" id="upcomingEmpty" style="display:none;">
-          <div class="display">No upcoming games match these filters</div>
-          <div>Try widening the filters above.</div>
+      <div id="tab-backtest" style="display:none;">
+        <p class="movers-note">A backtest of a flat $1 moneyline stake on every team-side matching the filters — settled matches only.</p>
+
+        <div class="chart-card" style="margin-bottom:18px;">
+          <h4>PnL over time</h4>
+          <div class="chart-sub" id="cumPnlSub">Cumulative flat $1 moneyline stake, oldest to newest</div>
+          <div class="canvas-wrap" id="cumPnlWrap"><canvas id="cumPnlChart"></canvas></div>
+        </div>
+
+        <div class="table-wrap" id="sportBreakdownWrap" style="margin-bottom:18px;">
+          <div class="table-caption">Performance by sport</div>
+          <table id="sportBreakdownTable">
+            <thead>
+              <tr><th>Sport</th><th>Settled bets</th><th>Wins</th><th>Win rate</th><th>Total PnL</th><th>ROI</th></tr>
+            </thead>
+            <tbody id="sportBreakdownBody"></tbody>
+          </table>
+        </div>
+
+        <div class="filter-bar">
+          <div class="legend-key" style="margin-bottom:0;">
+            <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
+            <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
+            <span><span class="swatch" style="background:var(--alert)"></span> High divergence / loss</span>
+          </div>
+          <div class="sort-group">
+            <label>Sort</label>
+            <select id="bSort">
+              <option value="date-desc">Date (newest first)</option>
+              <option value="date-asc">Date (oldest first)</option>
+              <option value="divergence">Biggest divergence</option>
+              <option value="pnl">Biggest PnL swing</option>
+              <option value="alpha">Matchup A–Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="backtestTable">
+            <thead>
+              <tr>
+                <th data-sort="date">Date</th>
+                <th data-sort="matchup">Matchup</th>
+                <th data-sort="sport">Sport</th>
+                <th id="bMarketColHeader">Moneyline (pick)</th>
+                <th data-sort="divergence">Signal</th>
+                <th>Result</th>
+                <th data-sort="pnl">Picked team PnL ($1 stake)</th>
+              </tr>
+            </thead>
+            <tbody id="backtestBody"></tbody>
+          </table>
+          <div class="empty-state" id="backtestEmpty" style="display:none;">
+            <div class="display">No settled matches</div>
+            <div>Try widening the filters.</div>
+          </div>
         </div>
       </div>
+
     </div>
 
-    <!-- BACKTEST TAB — games with a result -->
-    <div id="tab-backtest" style="display:none;">
-      <p class="movers-note">Backtest of a flat $1 moneyline stake on every team-side matching the filters above — settled games only.</p>
-
-      <div class="chart-card" style="margin-bottom:16px;">
-        <h4>PnL over time</h4>
-        <div class="chart-sub" id="cumPnlSub">Cumulative flat $1 moneyline stake, oldest to newest, on every matching team</div>
-        <div class="canvas-wrap" id="cumPnlWrap"><canvas id="cumPnlChart"></canvas></div>
-      </div>
-
-      <div class="table-wrap" id="sportBreakdownWrap" style="margin-bottom:16px;">
-        <div class="table-caption">Performance by sport</div>
-        <table id="sportBreakdownTable">
-          <thead>
-            <tr>
-              <th>Sport</th>
-              <th>Settled bets</th>
-              <th>Wins</th>
-              <th>Win rate</th>
-              <th>Total PnL</th>
-              <th>ROI</th>
-            </tr>
-          </thead>
-          <tbody id="sportBreakdownBody"></tbody>
-        </table>
-      </div>
-
-      <div class="subtabs" data-scope="backtest">
-        <button class="subtab-btn" data-market="spread">Spread</button>
-        <button class="subtab-btn" data-market="total">Total</button>
-        <button class="subtab-btn" data-market="money">Moneyline</button>
-      </div>
-      <div class="filter-bar">
-        <div class="legend-key" style="margin-bottom:0;">
-          <span><span class="swatch" style="background:var(--bets)"></span> Bets % (ticket count)</span>
-          <span><span class="swatch" style="background:var(--handle)"></span> Handle % (dollars) — marker</span>
-          <span><span class="swatch" style="background:var(--alert)"></span> High divergence / loss</span>
-        </div>
-        <div class="filter-group sort-group">
-          <label>Sort</label>
-          <select id="bSort">
-            <option value="date-desc">Date (newest first)</option>
-            <option value="date-asc">Date (oldest first)</option>
-            <option value="divergence">Biggest divergence</option>
-            <option value="pnl">Biggest PnL swing</option>
-            <option value="alpha">Matchup A–Z</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table id="backtestTable">
-          <thead>
-            <tr>
-              <th data-sort="date">Date</th>
-              <th data-sort="matchup">Matchup</th>
-              <th data-sort="sport">Sport</th>
-              <th id="bMarketColHeader">Moneyline (pick)</th>
-              <th data-sort="divergence">Signal</th>
-              <th>Result</th>
-              <th data-sort="pnl">Picked team PnL ($1 stake)</th>
-            </tr>
-          </thead>
-          <tbody id="backtestBody"></tbody>
-        </table>
-        <div class="empty-state" id="backtestEmpty" style="display:none;">
-          <div class="display">No settled games match these filters</div>
-          <div>Try widening the filters above.</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</main>
-
-
-<footer id="pageFooter" style="display:none;"></footer>
+    <footer id="pageFooter" style="display:none;"></footer>
+  </main>
+</div>
 
 <script>
 (function(){
@@ -1428,5 +1391,4 @@ function renderSportBreakdown(){
 init();
 })();
 </script>
-</body>
-</html>
+</body></html>
