@@ -1131,18 +1131,31 @@ function sortGamesBy(games, key, market){
 /* The "picked" side for a game, scoped to one market, is whichever team carries the
    biggest handle-vs-bets divergence in THAT market — the same side highlighted in
    the Signal column for the currently active Spread / Total / Moneyline sub-tab. */
+/* The "picked" side for a game, scoped to one market, is whichever team the current
+   filters actually flag as the signal. When both sides have equal-magnitude
+   divergence in opposite directions (handle/bets across the two sides of a game
+   sum to ~100%, so this is common), a plain "biggest |divergence|" comparison ties
+   and — depending on iteration order — can end up highlighting the side that
+   DOESN'T satisfy an active filter (e.g. showing the -40pp side under a
+   "divergence >= +10" filter, just because home was checked first). Preferring
+   whichever side actually matches the current filters resolves that. */
 function pickedSide(g, market){
   market = market || state.filters.market;
-  let bestSide=null, bestAbs=-1, bestDiv=0;
+  const candidates = [];
   ['home','away'].forEach(side=>{
     const d = g.sides[side];
     if(!d) return;
     const mf = marketFields(d, market);
     if(!mf) return;
     const dv = (mf.handle - mf.bets)*100;
-    if(Math.abs(dv) > bestAbs){ bestAbs = Math.abs(dv); bestSide = side; bestDiv = dv; }
+    candidates.push({side, dv, matches: matchesFilters(g, side, d)});
   });
-  return {side: bestSide || 'home', divergence: bestSide ? bestDiv : 0};
+  if(!candidates.length) return {side:'home', divergence:0};
+
+  const matchingOnes = candidates.filter(c=>c.matches);
+  const pool = matchingOnes.length ? matchingOnes : candidates;
+  pool.sort((a,b)=> Math.abs(b.dv) - Math.abs(a.dv));
+  return {side:pool[0].side, divergence:pool[0].dv};
 }
 
 function resultTag(g){
