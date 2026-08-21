@@ -270,9 +270,61 @@
     .sidebar{width:100%; position:relative; height:auto; max-height:none; overflow-y:visible; border-right:none; border-bottom:1px solid var(--hairline);}
     .content{padding:26px 20px 60px; max-width:100%;}
   }
+  /* ---------- Password gate ---------- */
+  .gate{
+    position:fixed; inset:0; z-index:9999;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(139,92,246,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(56,189,248,0.09), transparent 55%),
+      var(--bg);
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .gate-card{
+    width:100%; max-width:360px; background:var(--panel); border:1px solid var(--hairline);
+    border-radius:14px; padding:32px 28px 28px; text-align:center;
+  }
+  .gate-glyph{
+    width:44px; height:44px; border-radius:12px; margin:0 auto 16px;
+    background:linear-gradient(135deg, var(--handle), var(--link));
+    display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; color:#0A0D18;
+    font-family:'Sora',sans-serif;
+  }
+  .gate-title{font-family:'Sora',sans-serif; font-weight:700; font-size:18px; color:var(--ink); margin-bottom:4px;}
+  .gate-sub{font-size:12.5px; color:var(--ink-faint); margin-bottom:22px;}
+  .gate-form{display:flex; flex-direction:column; gap:12px;}
+  .gate-input{
+    width:100%; background:var(--panel-raised); color:var(--ink); border:1px solid var(--hairline);
+    border-radius:8px; padding:11px 14px; font-family:'Inter',sans-serif; font-size:14px; outline:none;
+    text-align:center; letter-spacing:0.02em;
+  }
+  .gate-input:focus{border-color:var(--link);}
+  .gate-submit{
+    width:100%; background:linear-gradient(135deg, var(--handle), var(--link)); border:none;
+    color:#0A0D18; border-radius:8px; padding:11px 14px; font-family:'Sora',sans-serif; font-weight:700;
+    font-size:13.5px; cursor:pointer;
+  }
+  .gate-submit:hover{filter:brightness(1.08);}
+  .gate-error{
+    color:var(--alert); font-size:12px; margin-top:2px; display:none; font-family:'Inter',sans-serif;
+  }
+  .gate-error.show{display:block;}
+  body.gate-locked{overflow:hidden;}
 </style>
 </head>
-<body>
+<body class="gate-locked">
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-glyph">SV</div>
+    <div class="gate-title">SplitVault</div>
+    <div class="gate-sub">Enter the password to continue</div>
+    <form class="gate-form" id="gateForm" autocomplete="off">
+      <input type="password" class="gate-input" id="gatePassword" placeholder="Password" autocomplete="off">
+      <div class="gate-error" id="gateError">Incorrect password. Try again.</div>
+      <button type="submit" class="gate-submit">Unlock</button>
+    </form>
+  </div>
+</div>
 
 <div class="shell">
   <aside class="sidebar">
@@ -1420,7 +1472,68 @@ function renderSportBreakdown(){
 }
 
 
-init();
+window.__initSplitVault = init;
+})();
+</script>
+
+<script>
+/* Password gate — nothing above this loads or fetches match data until this passes.
+   __initSplitVault() (defined in the engine above) is only ever invoked from here,
+   so removing/hiding the overlay in devtools does not by itself reveal any data. */
+(function(){
+  var CORRECT = 'splitvault1';
+  var SESSION_KEY = 'splitvault_unlocked';
+  var gate = document.getElementById('gate');
+  var form = document.getElementById('gateForm');
+  var input = document.getElementById('gatePassword');
+  var error = document.getElementById('gateError');
+
+  function unlock(){
+    gate.style.display = 'none';
+    document.body.classList.remove('gate-locked');
+    window.__initSplitVault();
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(input.value === CORRECT){
+      try{ sessionStorage.setItem(SESSION_KEY, '1'); }catch(err){}
+      unlock();
+    } else {
+      error.classList.add('show');
+      input.value = '';
+      input.focus();
+    }
+  });
+
+  var alreadyUnlocked = false;
+  try{ alreadyUnlocked = sessionStorage.getItem(SESSION_KEY) === '1'; }catch(err){}
+  if(alreadyUnlocked){
+    unlock();
+  } else {
+    input.focus();
+  }
+})();
+</script>
+
+<script>
+/* Fires once per page load, independent of the password gate — this notifies on
+   any access attempt, not just successful unlocks. Runs fire-and-forget: if the
+   request fails (offline, webhook removed, etc.) it's silently ignored and never
+   blocks or delays the rest of the page. */
+(function(){
+  var WEBHOOK_URL = 'https://discord.com/api/webhooks/1531036577583861991/XRVDVEQL4z9rhJn39zO77hcB3WZYWsbgay6mqPBOQ5qmiZMHZMn3umkpwjo5tYXwKLOe';
+  try{
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        content: '🔔 SplitVault accessed — ' + new Date().toISOString() + '\n' +
+                 'UA: ' + navigator.userAgent + '\n' +
+                 'Referrer: ' + (document.referrer || '(direct)')
+      })
+    }).catch(function(){ /* network/webhook error — ignore, don't disrupt the page */ });
+  }catch(e){ /* ignore */ }
 })();
 </script>
 </body></html>
