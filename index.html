@@ -399,6 +399,15 @@
         <button class="preset-btn" data-preset="away">Away teams only</button>
       </div>
     </div>
+
+    <div class="side-section">
+      <div class="side-label">Signal patterns</div>
+      <div class="strategy-presets" id="signalPresets">
+        <button class="preset-btn" data-preset="favTrap">🔵 Favorite trap</button>
+        <button class="preset-btn" data-preset="sharpDog">🟢 Sharp underdog</button>
+        <button class="preset-btn" data-preset="contested">🔴 Contested match</button>
+      </div>
+    </div>
   </aside>
 
   <main class="content">
@@ -1004,7 +1013,16 @@ const STRATEGY_PRESETS = {
   dogs:  {market:'money', valueMin:2.0, valueMax:null, role:'all', divMin:null, divMax:null},
   favs:  {market:'money', valueMin:null, valueMax:1.999, role:'all', divMin:null, divMax:null},
   home:  {role:'home'},
-  away:  {role:'away'}
+  away:  {role:'away'},
+  /* The next three mirror the "Sharp / Bookie Liability / -EV favourite" callouts
+     bettors like to circle by hand on split screenshots — same idea, just applied
+     as a live filter instead of a manual highlight. Thresholds were reverse-engineered
+     from real examples (a heavy favourite backed near-unanimously by both tickets
+     and dollars in lockstep vs. a live underdog getting meaningfully more of the
+     money than its ticket share vs. a genuinely split, no-consensus matchup). */
+  favTrap:   {market:'money', handleMin:85, handleMax:null, divMin:-10, divMax:10, valueMin:null, valueMax:null},
+  sharpDog:  {market:'money', valueMin:2.0, valueMax:null, divMin:20, divMax:null},
+  contested: {market:'money', handleMin:13, handleMax:87, divMin:-19, divMax:19, valueMin:null, valueMax:null}
 };
 
 function blankFilters(){
