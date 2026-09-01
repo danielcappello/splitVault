@@ -212,6 +212,7 @@
   tbody td{padding:12px 16px; vertical-align:middle;}
   .matchup{display:flex; flex-direction:column; gap:1px;}
   .matchup .teams{font-weight:600; font-size:13.5px; font-family:'Sora',sans-serif;}
+  .matchup .meta{font-size:10.5px; color:var(--ink-faint); font-family:'JetBrains Mono',monospace; margin-top:2px;}
   .tag{
     display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10px;
     padding:2px 7px; border-radius:20px; border:1px solid var(--hairline); color:var(--ink-muted); white-space:nowrap;
@@ -252,6 +253,31 @@
   .market-row{margin-bottom:13px;}
   .market-row .mk-label{display:flex; justify-content:space-between; font-size:11px; color:var(--ink-muted); margin-bottom:4px;}
   .market-row .mk-label .price{font-family:'JetBrains Mono',monospace; color:var(--ink);}
+  .form-block, .h2h-block{margin-bottom:13px;}
+  .h2h-block{
+    background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:16px 18px; margin-top:14px;
+  }
+  .h2h-block .mk-label{display:flex; justify-content:space-between; font-size:11px; color:var(--ink-muted); margin-bottom:4px;}
+  .h2h-block .mk-label .price{font-family:'JetBrains Mono',monospace; color:var(--ink); font-weight:600;}
+  .form-block .mk-label{display:flex; justify-content:space-between; font-size:11px; color:var(--ink-muted); margin-bottom:4px;}
+  .form-block .mk-label .price{font-family:'JetBrains Mono',monospace; color:var(--ink); font-weight:600;}
+  .form-list{display:flex; flex-direction:column; gap:1px; margin-top:6px;}
+  .form-row{
+    display:grid; grid-template-columns:26px 1fr auto auto; gap:8px; align-items:center;
+    padding:5px 8px; border-radius:6px; font-size:11.5px;
+  }
+  .form-row:nth-child(odd){background:var(--panel-raised);}
+  .form-result{
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:10.5px; text-align:center;
+    border-radius:5px; padding:2px 0; width:22px;
+  }
+  .form-result.W{background:rgba(74,222,128,0.16); color:var(--positive);}
+  .form-result.D{background:rgba(245,166,35,0.16); color:var(--bets);}
+  .form-result.L{background:rgba(240,70,110,0.14); color:var(--alert);}
+  .form-opp{color:var(--ink-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .form-score{font-family:'JetBrains Mono',monospace; color:var(--ink); font-weight:600;}
+  .form-date{font-family:'JetBrains Mono',monospace; color:var(--ink-faint); font-size:10.5px; white-space:nowrap;}
   .result-row{display:flex; justify-content:space-between; align-items:center; margin-top:13px; padding-top:13px; border-top:1px solid var(--hairline-soft); font-family:'JetBrains Mono',monospace; font-size:12.5px;}
 
   .chart-card{background:var(--panel); border:1px solid var(--hairline); border-radius:var(--radius); padding:18px 20px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.25);}
@@ -374,6 +400,14 @@
         <div class="num-row">
           <div class="field"><label>Divergence min</label><input type="number" id="gDivMin" step="1"></div>
           <div class="field"><label>max</label><input type="number" id="gDivMax" step="1"></div>
+        </div>
+        <div class="num-row">
+          <div class="field"><label>Form: last N</label><input type="number" id="gFormCount" step="1" min="1"></div>
+          <div class="field"><label>Min wins</label><input type="number" id="gFormWinsMin" step="1" min="0"></div>
+        </div>
+        <div class="num-row">
+          <div class="field"><label>H2H: last N</label><input type="number" id="gH2HCount" step="1" min="1"></div>
+          <div class="field"><label>Min wins</label><input type="number" id="gH2HWinsMin" step="1" min="0"></div>
         </div>
       </div>
       <button class="reset-btn" id="globalReset">Reset all filters</button>
@@ -533,8 +567,10 @@
    we tag every row from that file with the fallback sport below. Add more entries
    here to pull in additional sports files from the same directory. */
 const CSV_SOURCES = [
-  { path:'./mlb_splits.csv', fallbackSport:null },
-  { path:'./soc_splits.csv', fallbackSport:'SOC' }
+  { path:'./mlb_splits.csv', fallbackSport:null, type:'splits' },
+  { path:'./soc_splits.csv', fallbackSport:'SOC', type:'splits' },
+  { path:'./soc_h2h.csv', fallbackSport:null, type:'h2h' },
+  { path:'./mlb_h2h.csv', fallbackSport:null, type:'h2h' }
 ];
 
 /* ============================== CSV PARSING ============================== */
@@ -649,10 +685,77 @@ function buildGames(rows){
   return games;
 }
 
+/* ============================== RECENT FORM & HEAD-TO-HEAD ============================== */
+
+/* soc_h2h.csv / mlb_h2h.csv are plain historical results feeds (date, home, away,
+   scores) — completely separate from the splits data. We index them once into a
+   per-team chronological match list, then answer "last N matches" / "last N
+   head-to-heads" queries against it on demand. A team with no rows in either feed
+   simply returns empty results everywhere below — treated as "no data", never an
+   error. */
+function buildTeamHistory(h2hRows){
+  const map = new Map();
+  const add = (team, opponent, ownScore, oppScore, dateISO, venue) => {
+    if(!team || !opponent) return;
+    if(!map.has(team)) map.set(team, []);
+    const result = ownScore>oppScore ? 'W' : (ownScore<oppScore ? 'L' : 'D');
+    map.get(team).push({dateISO, opponent, ownScore, oppScore, result, venue});
+  };
+  h2hRows.forEach(r=>{
+    /* Different h2h feeds use different column names — soc_h2h.csv has plain `home`/
+       `away`, mlb_h2h.csv has `home_team`/`away_team` plus a `status` column. Accept
+       either shape and skip anything not finished yet if a status column is present. */
+    if(r.status && r.status!=='Final') return;
+    const homeTeam = r.home || r.home_team;
+    const awayTeam = r.away || r.away_team;
+    const dateISO = normalizeDate(r.usa_match_date);
+    const hs = toNumOrNull(r.home_team_score), as = toNumOrNull(r.away_team_score);
+    if(!dateISO || hs===null || as===null || !homeTeam || !awayTeam) return;
+    add(homeTeam, awayTeam, hs, as, dateISO, 'home');
+    add(awayTeam, homeTeam, as, hs, dateISO, 'away');
+  });
+  map.forEach(arr=> arr.sort((a,b)=> a.dateISO.localeCompare(b.dateISO) || 0));
+  return map;
+}
+
+/* Most recent N matches for `team`, strictly before `beforeDateISO`, newest first. */
+function recentForm(team, beforeDateISO, n){
+  const arr = TEAM_HISTORY.get(team);
+  if(!arr) return [];
+  const cutoff = arr.filter(m=> !beforeDateISO || m.dateISO < beforeDateISO);
+  return cutoff.slice(-n).reverse();
+}
+function formRecord(team, beforeDateISO, n){
+  const matches = recentForm(team, beforeDateISO, n);
+  const rec = {w:0, d:0, l:0, n:matches.length};
+  matches.forEach(m=>{ if(m.result==='W') rec.w++; else if(m.result==='D') rec.d++; else rec.l++; });
+  return rec;
+}
+
+/* Most recent N meetings between `team` and `opponent`, strictly before `beforeDateISO`,
+   newest first, from `team`'s perspective (ownScore/oppScore/result relative to `team`). */
+function recentH2H(team, opponent, beforeDateISO, n){
+  const arr = TEAM_HISTORY.get(team);
+  if(!arr) return [];
+  const meetings = arr.filter(m=> m.opponent===opponent && (!beforeDateISO || m.dateISO < beforeDateISO));
+  return meetings.slice(-n).reverse();
+}
+function h2hRecord(team, opponent, beforeDateISO, n){
+  const matches = recentH2H(team, opponent, beforeDateISO, n);
+  const rec = {w:0, d:0, l:0, n:matches.length};
+  matches.forEach(m=>{ if(m.result==='W') rec.w++; else if(m.result==='D') rec.d++; else rec.l++; });
+  return rec;
+}
+function fmtRecord(rec){
+  if(rec.n===0) return 'No data';
+  return rec.w+'W-'+rec.d+'D-'+rec.l+'L';
+}
+
 /* ============================== STATE ============================== */
 
 let ALL_GAMES = [];
 let ALL_ROWS_COUNT = 0;
+let TEAM_HISTORY = new Map(); // team name -> chronological array of {dateISO, opponent, ownScore, oppScore, result, venue}
 
 const MARKET_LABELS = {money:'Moneyline', spread:'Spread', total:'Total'};
 
@@ -669,6 +772,7 @@ const state = {
     handleMin:null, handleMax:null,
     betsMin:null, betsMax:null,
     divMin:null, divMax:null,
+    formCount:5, formWinsMin:null, h2hCount:5, h2hWinsMin:null,
     preset:null
   }
 };
@@ -680,9 +784,9 @@ async function fetchSource(src){
     const res = await fetch(src.path, {cache:'no-store'});
     if(!res.ok) throw new Error('HTTP '+res.status);
     const text = await res.text();
-    return {ok:true, path:src.path, fallbackSport:src.fallbackSport, text};
+    return {ok:true, path:src.path, fallbackSport:src.fallbackSport, type:src.type, text};
   }catch(e){
-    return {ok:false, path:src.path, fallbackSport:src.fallbackSport};
+    return {ok:false, path:src.path, fallbackSport:src.fallbackSport, type:src.type};
   }
 }
 
@@ -696,9 +800,9 @@ async function init(){
   }
 }
 
-function inferFallbackSport(filename){
+function inferSourceMeta(filename){
   const match = CSV_SOURCES.find(s=>s.path.replace('./','')===filename);
-  return match ? match.fallbackSport : null; // unknown file: leave sport as whatever the CSV itself has
+  return match ? {fallbackSport:match.fallbackSport, type:match.type} : {fallbackSport:null, type:'splits'};
 }
 
 function showFallback(){
@@ -730,7 +834,8 @@ function readFiles(fileList){
   files.forEach(file=>{
     const reader = new FileReader();
     reader.onload = ev=>{
-      collected.push({ok:true, path:'./'+file.name, fallbackSport:inferFallbackSport(file.name), text:ev.target.result});
+      const meta = inferSourceMeta(file.name);
+      collected.push({ok:true, path:'./'+file.name, fallbackSport:meta.fallbackSport, type:meta.type, text:ev.target.result});
       remaining--;
       if(remaining===0) bootFromSources(collected);
     };
@@ -740,21 +845,28 @@ function readFiles(fileList){
 
 function bootFromSources(results){
   let rows = [];
+  let h2hRows = [];
   const loadedNames = [];
   const missingNames = [];
+  let h2hMissing = false;
   results.forEach(r=>{
     const name = r.path.replace('./','');
     if(r.ok){
       const parsed = parseCSV(r.text);
-      parsed.forEach(row=>{ if(!row.sport && r.fallbackSport) row.sport = r.fallbackSport; });
-      rows = rows.concat(parsed);
+      if(r.type==='h2h'){
+        h2hRows = h2hRows.concat(parsed);
+      } else {
+        parsed.forEach(row=>{ if(!row.sport && r.fallbackSport) row.sport = r.fallbackSport; });
+        rows = rows.concat(parsed);
+      }
       loadedNames.push(name);
     } else {
-      missingNames.push(name);
+      if(r.type==='h2h'){ h2hMissing = true; } else { missingNames.push(name); }
     }
   });
   ALL_ROWS_COUNT = rows.length;
   ALL_GAMES = buildGames(rows);
+  TEAM_HISTORY = buildTeamHistory(h2hRows);
   document.getElementById('loadState').style.display='none';
   document.getElementById('app').style.display='block';
   document.getElementById('pageFooter').style.display='block';
@@ -769,7 +881,7 @@ function bootFromSources(results){
   wireUpcomingSort();
   wireBacktestSort();
   renderAll();
-  renderFooter(missingNames.length>0);
+  renderFooter(missingNames.length>0, h2hMissing);
 }
 
 /* ============================== HELPERS ============================== */
@@ -857,6 +969,18 @@ function matchesFilters(game, side, data){
   const dv = (mf.handle - mf.bets)*100;
   if(f.divMin!==null && dv < f.divMin) return false;
   if(f.divMax!==null && dv > f.divMax) return false;
+
+  if(f.formWinsMin!==null){
+    const team = side==='home' ? game.home_team : game.away_team;
+    const rec = formRecord(team, game.dateISO, f.formCount || 5);
+    if(rec.n===0 || rec.w < f.formWinsMin) return false;
+  }
+  if(f.h2hWinsMin!==null){
+    const team = side==='home' ? game.home_team : game.away_team;
+    const opp = side==='home' ? game.away_team : game.home_team;
+    const rec = h2hRecord(team, opp, game.dateISO, f.h2hCount || 5);
+    if(rec.n===0 || rec.w < f.h2hWinsMin) return false;
+  }
 
   return true;
 }
@@ -952,10 +1076,13 @@ function renderStats(){
     '</div>').join('');
 }
 
-function renderFooter(hasMissingData){
+function renderFooter(hasMissingData, h2hMissing){
   let txt = 'Handle = share of dollars wagered · Bets = share of ticket count · PnL = return on a flat $1 moneyline stake.';
   if(hasMissingData){
     txt += ' <span style="color:var(--alert)">Some match data could not be loaded — figures reflect only what is currently available.</span>';
+  }
+  if(h2hMissing){
+    txt += ' <span style="color:var(--text-faint)">Recent-form and head-to-head history is unavailable.</span>';
   }
   document.getElementById('pageFooter').innerHTML = txt;
 }
@@ -1029,7 +1156,9 @@ function blankFilters(){
   return {
     sport:'all', dateFrom:'all', dateTo:'all', team:'', result:'all', role:'all',
     market:'money', valueMin:null, valueMax:null, handleMin:null, handleMax:null,
-    betsMin:null, betsMax:null, divMin:null, divMax:null, preset:null
+    betsMin:null, betsMax:null, divMin:null, divMax:null,
+    formCount:5, formWinsMin:null, h2hCount:5, h2hWinsMin:null,
+    preset:null
   };
 }
 
@@ -1058,6 +1187,10 @@ function applyFiltersToControls(){
   document.getElementById('gBetsMax').value = f.betsMax===null ? '' : f.betsMax;
   document.getElementById('gDivMin').value = f.divMin===null ? '' : f.divMin;
   document.getElementById('gDivMax').value = f.divMax===null ? '' : f.divMax;
+  document.getElementById('gFormCount').value = f.formCount===null ? '' : f.formCount;
+  document.getElementById('gFormWinsMin').value = f.formWinsMin===null ? '' : f.formWinsMin;
+  document.getElementById('gH2HCount').value = f.h2hCount===null ? '' : f.h2hCount;
+  document.getElementById('gH2HWinsMin').value = f.h2hWinsMin===null ? '' : f.h2hWinsMin;
   updateMarketUI();
   document.querySelectorAll('.preset-btn').forEach(b=> b.classList.toggle('active', b.dataset.preset===f.preset));
 }
@@ -1103,6 +1236,10 @@ function wireGlobalFilters(){
   bindNumber('gBetsMax','betsMax');
   bindNumber('gDivMin','divMin');
   bindNumber('gDivMax','divMax');
+  bindNumber('gFormCount','formCount');
+  bindNumber('gFormWinsMin','formWinsMin');
+  bindNumber('gH2HCount','h2hCount');
+  bindNumber('gH2HWinsMin','h2hWinsMin');
 
   document.getElementById('moreToggle').addEventListener('click', ()=>{
     state.moreOpen = !state.moreOpen;
@@ -1294,7 +1431,7 @@ function renderUpcoming(){
 
     return '<tr data-key="'+cssEscape(g.key)+'">'+
       '<td class="num">'+fmtDate(g.dateISO)+'</td>'+
-      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span></div></td>'+
+      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span>'+matchupMetaHTML(g)+'</div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
       '<td>'+marketCell+'</td>'+
       '<td><div class="divergence-badge" style="'+divStyle+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
@@ -1327,7 +1464,7 @@ function renderBacktest(){
 
     return '<tr data-key="'+cssEscape(g.key)+'">'+
       '<td class="num">'+fmtDate(g.dateISO)+'</td>'+
-      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span></div></td>'+
+      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span>'+matchupMetaHTML(g)+'</div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
       '<td>'+marketCell+'</td>'+
       '<td><div class="divergence-badge" style="'+divStyle+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
@@ -1377,6 +1514,55 @@ function insertDetailRow(key, bodyId, colSpan){
   rowEl.after(tr);
 }
 
+function formBlockHTML(team, beforeDateISO){
+  const n = state.filters.formCount || 5;
+  const rec = formRecord(team, beforeDateISO, n);
+  if(rec.n===0){
+    return '<div class="form-block"><div class="mk-label"><span>Recent form (last '+n+')</span><span class="price">No data</span></div></div>';
+  }
+  const matches = recentForm(team, beforeDateISO, n);
+  const rows = matches.map(m=>
+    '<div class="form-row"><span class="form-result '+m.result+'">'+m.result+'</span>'+
+    '<span class="form-opp">'+(m.venue==='home'?'vs ':'@ ')+escapeHtml(m.opponent)+'</span>'+
+    '<span class="form-score num">'+m.ownScore+'–'+m.oppScore+'</span>'+
+    '<span class="form-date">'+fmtDate(m.dateISO)+'</span></div>'
+  ).join('');
+  return '<div class="form-block"><div class="mk-label"><span>Recent form (last '+n+')</span><span class="price">'+fmtRecord(rec)+'</span></div><div class="form-list">'+rows+'</div></div>';
+}
+
+function h2hBlockHTML(g){
+  const n = state.filters.h2hCount || 5;
+  const rec = h2hRecord(g.home_team, g.away_team, g.dateISO, n);
+  if(rec.n===0){
+    return '<div class="h2h-block"><div class="mk-label"><span>Head-to-head (last '+n+')</span><span class="price">No data</span></div></div>';
+  }
+  const matches = recentH2H(g.home_team, g.away_team, g.dateISO, n);
+  const rows = matches.map(m=>{
+    const pastHomeTeam = m.venue==='home' ? g.home_team : g.away_team;
+    const pastAwayTeam = m.venue==='home' ? g.away_team : g.home_team;
+    const pastHomeScore = m.venue==='home' ? m.ownScore : m.oppScore;
+    const pastAwayScore = m.venue==='home' ? m.oppScore : m.ownScore;
+    return '<div class="form-row"><span class="form-result '+m.result+'">'+m.result+'</span>'+
+      '<span class="form-opp">'+escapeHtml(pastHomeTeam)+' vs '+escapeHtml(pastAwayTeam)+'</span>'+
+      '<span class="form-score num">'+pastHomeScore+'–'+pastAwayScore+'</span>'+
+      '<span class="form-date">'+fmtDate(m.dateISO)+'</span></div>';
+  }).join('');
+  return '<div class="h2h-block"><div class="mk-label"><span>Head-to-head (last '+n+' meetings — '+escapeHtml(g.home_team)+'\u2019s record)</span><span class="price">'+fmtRecord(rec)+'</span></div><div class="form-list">'+rows+'</div></div>';
+}
+
+/* Compact one-line summary of both teams' recent form and their head-to-head record,
+   shown directly under the matchup in the table — the full match-by-match scorelines
+   behind these numbers are one click away in the row's drilldown detail. */
+function matchupMetaHTML(g){
+  const n = state.filters.formCount || 5;
+  const hn = state.filters.h2hCount || 5;
+  const awayRec = formRecord(g.away_team, g.dateISO, n);
+  const homeRec = formRecord(g.home_team, g.dateISO, n);
+  const h2h = h2hRecord(g.home_team, g.away_team, g.dateISO, hn);
+  if(awayRec.n===0 && homeRec.n===0 && h2h.n===0) return '';
+  return '<span class="meta">Form A '+fmtRecord(awayRec)+' · H '+fmtRecord(homeRec)+' &nbsp;|&nbsp; H2H '+fmtRecord(h2h)+'</span>';
+}
+
 function sideCardHTML(g, side){
   const d = g.sides[side];
   const roleLabel = side==='home' ? 'Home' : 'Away';
@@ -1393,7 +1579,7 @@ function sideCardHTML(g, side){
     '<div class="result-row"><span style="color:'+(d.result==='Win'?'var(--handle)':'var(--alert)')+';font-weight:600;">'+d.result+'</span><span class="pnl-val '+(d.pnl>0?'pos':(d.pnl<0?'neg':''))+'">'+fmtPnl(d.pnl)+'u on $1</span></div>' :
     '<div class="result-row"><span class="tag pending">Not settled</span></div>';
 
-  return '<div class="side-card"><div class="side-head"><span class="nm">'+escapeHtml(d.team)+'</span><span class="role">'+roleLabel+'</span></div>'+spreadBlock+totalBlock+moneyBlock+resultBlock+'</div>';
+  return '<div class="side-card"><div class="side-head"><span class="nm">'+escapeHtml(d.team)+'</span><span class="role">'+roleLabel+'</span></div>'+spreadBlock+totalBlock+moneyBlock+formBlockHTML(d.team, g.dateISO)+resultBlock+'</div>';
 }
 
 function buildDetailPanel(g){
@@ -1403,7 +1589,8 @@ function buildDetailPanel(g){
     '<div class="detail-head"><div><h3>'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</h3>'+
     '<div class="sub">'+fmtDate(g.dateISO)+' · '+sportLabel(g.sport)+(g.settled && g.home_score!==null ? ' · final '+g.away_score+'–'+g.home_score : ' · not yet settled')+'</div></div>'+
     '<button class="close-detail">Close</button></div>'+
-    '<div class="side-grid">'+sideCardHTML(g,'away')+sideCardHTML(g,'home')+'</div>';
+    '<div class="side-grid">'+sideCardHTML(g,'away')+sideCardHTML(g,'home')+'</div>'+
+    h2hBlockHTML(g);
   wrap.querySelector('.close-detail').addEventListener('click', (e)=>{
     e.stopPropagation();
     toggleDetail(g.key);
