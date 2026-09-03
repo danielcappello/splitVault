@@ -11325,3 +11325,18 @@ usa_match_date,utc_start_time,status,home_team_id,home_team,away_team_id,away_te
 2026-09-01,2026-09-02T01:38Z,Final,3,Los Angeles Angels,10,New York Yankees,3,7
 2026-09-01,2026-09-02T01:40Z,Final,29,Arizona Diamondbacks,22,Philadelphia Phillies,1,7
 2026-09-01,2026-09-02T02:10Z,Final,19,Los Angeles Dodgers,24,St. Louis Cardinals,8,13
+2026-09-02,2026-09-02T16:40Z,Final,17,Cincinnati Reds,25,San Diego Padres,7,3
+2026-09-02,2026-09-02T17:05Z,Final,20,Washington Nationals,15,Atlanta Braves,0,9
+2026-09-02,2026-09-02T18:35Z,Final,13,Texas Rangers,11,Athletics,2,9
+2026-09-02,2026-09-02T19:10Z,Final,27,Colorado Rockies,1,Baltimore Orioles,6,5
+2026-09-02,2026-09-02T19:40Z,Final,29,Arizona Diamondbacks,22,Philadelphia Phillies,1,0
+2026-09-02,2026-09-02T20:10Z,Final,2,Boston Red Sox,12,Seattle Mariners,3,8
+2026-09-02,2026-09-02T22:40Z,Final,30,Tampa Bay Rays,21,New York Mets,4,10
+2026-09-02,2026-09-02T22:40Z,Final,23,Pittsburgh Pirates,26,San Francisco Giants,4,5
+2026-09-02,2026-09-02T22:40Z,Final,5,Cleveland Guardians,14,Toronto Blue Jays,0,11
+2026-09-02,2026-09-02T23:40Z,Final,9,Minnesota Twins,6,Detroit Tigers,6,11
+2026-09-02,2026-09-02T23:40Z,Final,7,Kansas City Royals,28,Miami Marlins,6,9
+2026-09-02,2026-09-02T23:40Z,Final,16,Chicago Cubs,8,Milwaukee Brewers,5,9
+2026-09-02,2026-09-03T00:10Z,Final,18,Houston Astros,4,Chicago White Sox,2,0
+2026-09-02,2026-09-03T01:38Z,Final,3,Los Angeles Angels,10,New York Yankees,3,6
+2026-09-02,2026-09-03T02:10Z,Final,19,Los Angeles Dodgers,24,St. Louis Cardinals,6,8
