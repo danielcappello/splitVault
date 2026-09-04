@@ -11073,6 +11073,7 @@ usa_match_date,utc_start_time,status,home_team_id,home_team,away_team_id,away_te
 2026-08-14,2026-08-14T23:10Z,Final,30,Tampa Bay Rays,1,Baltimore Orioles,5,6
 2026-08-14,2026-08-14T23:10Z,Final,5,Cleveland Guardians,25,San Diego Padres,5,7
 2026-08-14,2026-08-14T23:10Z,Final,21,New York Mets,20,Washington Nationals,4,1
+2026-09-03,2026-09-03T23:40Z,Final,7,Kansas City Royals,28,Miami Marlins,7,3
 2026-08-14,2026-08-14T23:15Z,Final,15,Atlanta Braves,29,Arizona Diamondbacks,0,2
 2026-08-14,2026-08-14T23:15Z,Final,14,Toronto Blue Jays,10,New York Yankees,3,1
 2026-08-14,2026-08-15T00:10Z,Final,18,Houston Astros,12,Seattle Mariners,10,7
@@ -11243,6 +11244,7 @@ usa_match_date,utc_start_time,status,home_team_id,home_team,away_team_id,away_te
 2026-08-26,2026-08-26T23:10Z,Final,21,New York Mets,8,Milwaukee Brewers,1,8
 2026-08-26,2026-08-26T23:15Z,Final,15,Atlanta Braves,19,Los Angeles Dodgers,6,5
 2026-08-26,2026-08-26T23:40Z,Final,4,Chicago White Sox,13,Texas Rangers,10,4
+2026-09-03,2026-09-04T00:05Z,Final,13,Texas Rangers,30,Tampa Bay Rays,6,0
 2026-08-26,2026-08-26T23:45Z,Final,24,St. Louis Cardinals,1,Baltimore Orioles,7,8
 2026-08-26,2026-08-27T01:05Z,Final,11,Athletics,9,Minnesota Twins,7,4
 2026-08-27,2026-08-27T17:05Z,Final,20,Washington Nationals,27,Colorado Rockies,7,1
@@ -11340,3 +11342,10 @@ usa_match_date,utc_start_time,status,home_team_id,home_team,away_team_id,away_te
 2026-09-02,2026-09-03T00:10Z,Final,18,Houston Astros,4,Chicago White Sox,2,0
 2026-09-02,2026-09-03T01:38Z,Final,3,Los Angeles Angels,10,New York Yankees,3,6
 2026-09-02,2026-09-03T02:10Z,Final,19,Los Angeles Dodgers,24,St. Louis Cardinals,6,8
+2026-09-03,2026-09-03T16:35Z,Final,23,Pittsburgh Pirates,26,San Francisco Giants,5,2
+2026-09-03,2026-09-03T17:10Z,Final,5,Cleveland Guardians,14,Toronto Blue Jays,3,6
+2026-09-03,2026-09-03T18:10Z,Final,18,Houston Astros,4,Chicago White Sox,6,2
+2026-09-03,2026-09-03T23:15Z,Final,1,Baltimore Orioles,2,Boston Red Sox,5,6
+2026-09-03,2026-09-03T23:15Z,Final,16,Chicago Cubs,8,Milwaukee Brewers,2,1
+2026-09-03,2026-09-04T01:40Z,Final,12,Seattle Mariners,11,Athletics,4,7
+2026-09-03,2026-09-04T02:10Z,Final,19,Los Angeles Dodgers,24,St. Louis Cardinals,3,2
