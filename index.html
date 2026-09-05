@@ -941,14 +941,31 @@ function matchesFilters(game, side, data){
   return true;
 }
 
-/* every side (team-row) across all games that passes the current filters */
+/* every side (team-row) across all games that passes the current filters — but when
+   fadePick is active (e.g. "Favorite trap"), each match is redirected to its OPPOSITE
+   side before being returned. This is the single source of truth behind matchingGames(),
+   the top stat row, the PnL chart, and the sport breakdown — patching the inversion in
+   here (rather than separately in each of those) guarantees every one of them stays
+   consistent with what the table actually displays as "the pick", instead of silently
+   summing stats for the flagged side while the UI shows the faded side. Safe from
+   double-counting: a filter like handleMin>=85 can only ever be true for one side of
+   a game at a time (handle_home + handle_away ≈ 100%), so at most one push happens
+   per game either way. */
 function matchingSides(){
   const out=[];
+  const fade = state.filters.fadePick;
   ALL_GAMES.forEach(g=>{
     ['home','away'].forEach(side=>{
       const d = g.sides[side];
       if(!d) return;
-      if(matchesFilters(g, side, d)) out.push({game:g, side, data:d});
+      if(!matchesFilters(g, side, d)) return;
+      if(fade){
+        const oppSide = side==='home' ? 'away' : 'home';
+        const oppData = g.sides[oppSide];
+        if(oppData) out.push({game:g, side:oppSide, data:oppData});
+      } else {
+        out.push({game:g, side, data:d});
+      }
     });
   });
   return out;
