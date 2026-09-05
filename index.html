@@ -1121,7 +1121,7 @@ const STRATEGY_PRESETS = {
      from real examples (a heavy favourite backed near-unanimously by both tickets
      and dollars in lockstep vs. a live underdog getting meaningfully more of the
      money than its ticket share vs. a genuinely split, no-consensus matchup). */
-  favTrap:   {market:'money', handleMin:85, handleMax:null, divMin:-10, divMax:10, valueMin:null, valueMax:null, fadePick:true},
+  favTrap:   {market:'money', handleMin:85, handleMax:99, divMin:-10, divMax:10, valueMin:null, valueMax:null, fadePick:true},
   sharpDog:  {market:'money', valueMin:2.0, valueMax:null, divMin:20, divMax:null},
   contested: {market:'money', handleMin:13, handleMax:87, divMin:-19, divMax:19, valueMin:null, valueMax:null},
   soccerMethod1: {
@@ -1136,7 +1136,7 @@ const STRATEGY_PRESETS = {
      odds). Inherits fadePick — the actual recommended bet is still the other team. */
   soccerMethod2: {
     sport:'SOC', market:'money',
-    handleMin:85, handleMax:null,
+    handleMin:85, handleMax:99,
     divMin:-10, divMax:10,
     valueMin:2, valueMax:null,
     fadePick:true
