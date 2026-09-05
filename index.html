@@ -390,6 +390,13 @@
         <button class="preset-btn" data-preset="contested">🔴 Contested match</button>
       </div>
     </div>
+
+    <div class="side-section">
+      <div class="side-label">My methods</div>
+      <div class="strategy-presets" id="methodPresets">
+        <button class="preset-btn" data-preset="soccerMethod1">Soccer Method #1</button>
+      </div>
+    </div>
   </aside>
 
   <main class="content">
@@ -1097,7 +1104,14 @@ const STRATEGY_PRESETS = {
      money than its ticket share vs. a genuinely split, no-consensus matchup). */
   favTrap:   {market:'money', handleMin:85, handleMax:null, divMin:-10, divMax:10, valueMin:null, valueMax:null},
   sharpDog:  {market:'money', valueMin:2.0, valueMax:null, divMin:20, divMax:null},
-  contested: {market:'money', handleMin:13, handleMax:87, divMin:-19, divMax:19, valueMin:null, valueMax:null}
+  contested: {market:'money', handleMin:13, handleMax:87, divMin:-19, divMax:19, valueMin:null, valueMax:null},
+  soccerMethod1: {
+    sport:'SOC', market:'money',
+    valueMin:null, valueMax:3,
+    betsMin:50, betsMax:null,
+    formCount:5, formWinsMin:2,
+    h2hCount:2, h2hWinsMin:2
+  }
 };
 
 function blankFilters(){
@@ -1202,15 +1216,22 @@ function wireGlobalFilters(){
     renderAll();
   });
 
+  /* Sport before a preset was activated — most presets don't touch sport at all, but
+     one (Soccer Method #1) deliberately overrides it. Remembering the pre-activation
+     value (rather than just reading state.filters.sport fresh each click, which after
+     activation already reflects the preset's own override) lets toggling a preset back
+     off correctly restore whatever sport was selected beforehand, not just whatever
+     the preset happened to set it to. */
+  let presetPriorSport = state.filters.sport;
   document.querySelectorAll('.preset-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const key = btn.dataset.preset;
       const wasActive = state.filters.preset===key;
-      const sport = state.filters.sport; // keep sport choice across presets
       if(wasActive){
-        setFilters(Object.assign(blankFilters(), {sport}));
+        setFilters(Object.assign(blankFilters(), {sport: presetPriorSport}));
       } else {
-        setFilters(Object.assign(blankFilters(), {sport}, STRATEGY_PRESETS[key], {preset:key}));
+        presetPriorSport = state.filters.sport;
+        setFilters(Object.assign(blankFilters(), {sport: presetPriorSport}, STRATEGY_PRESETS[key], {preset:key}));
       }
       applyFiltersToControls();
       renderAll();
@@ -1379,7 +1400,7 @@ function renderUpcoming(){
 
     return '<tr data-key="'+cssEscape(g.key)+'">'+
       '<td class="num">'+fmtDate(g.dateISO)+'</td>'+
-      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span>'+matchupMetaHTML(g)+'</div></td>'+
+      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span>'+matchupMetaHTML(g, pick)+'</div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
       '<td>'+marketCell+'</td>'+
       '<td><div class="divergence-badge" style="'+divStyle+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
@@ -1412,7 +1433,7 @@ function renderBacktest(){
 
     return '<tr data-key="'+cssEscape(g.key)+'">'+
       '<td class="num">'+fmtDate(g.dateISO)+'</td>'+
-      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span>'+matchupMetaHTML(g)+'</div></td>'+
+      '<td><div class="matchup"><span class="teams">'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</span>'+matchupMetaHTML(g, pick)+'</div></td>'+
       '<td><span class="tag">'+sportLabel(g.sport)+'</span></td>'+
       '<td>'+marketCell+'</td>'+
       '<td><div class="divergence-badge" style="'+divStyle+'">'+fmtPP(pick.divergence)+'</div><div style="font-size:10px;color:var(--text-faint);margin-top:3px;">'+divLabel+'</div></td>'+
@@ -1478,16 +1499,16 @@ function formBlockHTML(team, beforeDateISO){
   return '<div class="form-block"><div class="mk-label"><span>Recent form (last '+n+')</span><span class="price">'+fmtRecord(rec)+'</span></div><div class="form-list">'+rows+'</div></div>';
 }
 
-function h2hBlockHTML(g){
+function h2hBlockHTML(g, refTeam, oppTeam){
   const n = state.filters.h2hCount || 5;
-  const rec = h2hRecord(g.home_team, g.away_team, g.dateISO, n);
+  const rec = h2hRecord(refTeam, oppTeam, g.dateISO, n);
   if(rec.n===0){
     return '<div class="h2h-block"><div class="mk-label"><span>Head-to-head (last '+n+')</span><span class="price">No data</span></div></div>';
   }
-  const matches = recentH2H(g.home_team, g.away_team, g.dateISO, n);
+  const matches = recentH2H(refTeam, oppTeam, g.dateISO, n);
   const rows = matches.map(m=>{
-    const pastHomeTeam = m.venue==='home' ? g.home_team : g.away_team;
-    const pastAwayTeam = m.venue==='home' ? g.away_team : g.home_team;
+    const pastHomeTeam = m.venue==='home' ? refTeam : oppTeam;
+    const pastAwayTeam = m.venue==='home' ? oppTeam : refTeam;
     const pastHomeScore = m.venue==='home' ? m.ownScore : m.oppScore;
     const pastAwayScore = m.venue==='home' ? m.oppScore : m.ownScore;
     return '<div class="form-row"><span class="form-result '+m.result+'">'+m.result+'</span>'+
@@ -1495,20 +1516,23 @@ function h2hBlockHTML(g){
       '<span class="form-score num">'+pastHomeScore+'–'+pastAwayScore+'</span>'+
       '<span class="form-date">'+fmtDate(m.dateISO)+'</span></div>';
   }).join('');
-  return '<div class="h2h-block"><div class="mk-label"><span>Head-to-head (last '+n+' meetings — '+escapeHtml(g.home_team)+'\u2019s record)</span><span class="price">'+fmtRecord(rec)+'</span></div><div class="form-list">'+rows+'</div></div>';
+  return '<div class="h2h-block"><div class="mk-label"><span>Head-to-head (last '+n+' meetings — '+escapeHtml(refTeam)+'\u2019s record)</span><span class="price">'+fmtRecord(rec)+'</span></div><div class="form-list">'+rows+'</div></div>';
 }
 
 /* Compact one-line summary of both teams' recent form and their head-to-head record,
    shown directly under the matchup in the table — the full match-by-match scorelines
    behind these numbers are one click away in the row's drilldown detail. */
-function matchupMetaHTML(g){
+function matchupMetaHTML(g, pick){
   const n = state.filters.formCount || 5;
   const hn = state.filters.h2hCount || 5;
   const awayRec = formRecord(g.away_team, g.dateISO, n);
   const homeRec = formRecord(g.home_team, g.dateISO, n);
-  const h2h = h2hRecord(g.home_team, g.away_team, g.dateISO, hn);
+  const refTeam = pick.side==='home' ? g.home_team : g.away_team;
+  const oppTeam = pick.side==='home' ? g.away_team : g.home_team;
+  const h2h = h2hRecord(refTeam, oppTeam, g.dateISO, hn);
   if(awayRec.n===0 && homeRec.n===0 && h2h.n===0) return '';
-  return '<span class="meta">Form A '+fmtRecord(awayRec)+' · H '+fmtRecord(homeRec)+' &nbsp;|&nbsp; H2H '+fmtRecord(h2h)+'</span>';
+  const h2hLabel = pick.side==='home' ? 'H2H (H)' : 'H2H (A)';
+  return '<span class="meta">Form A '+fmtRecord(awayRec)+' · H '+fmtRecord(homeRec)+' &nbsp;|&nbsp; '+h2hLabel+' '+fmtRecord(h2h)+'</span>';
 }
 
 function sideCardHTML(g, side){
@@ -1533,12 +1557,18 @@ function sideCardHTML(g, side){
 function buildDetailPanel(g){
   const wrap = document.createElement('div');
   wrap.className = 'detail-panel';
+  /* H2H should reflect whichever side the current market's signal actually picked
+     (the "betting team"), not always the home team — an away-side pick should show
+     the away team's own head-to-head record against the home team, and vice versa. */
+  const pick = pickedSide(g, state.filters.market);
+  const refTeam = pick.side==='home' ? g.home_team : g.away_team;
+  const oppTeam = pick.side==='home' ? g.away_team : g.home_team;
   wrap.innerHTML =
     '<div class="detail-head"><div><h3>'+escapeHtml(g.away_team)+' @ '+escapeHtml(g.home_team)+'</h3>'+
     '<div class="sub">'+fmtDate(g.dateISO)+' · '+sportLabel(g.sport)+(g.settled && g.home_score!==null ? ' · final '+g.away_score+'–'+g.home_score : ' · not yet settled')+'</div></div>'+
     '<button class="close-detail">Close</button></div>'+
     '<div class="side-grid">'+sideCardHTML(g,'away')+sideCardHTML(g,'home')+'</div>'+
-    h2hBlockHTML(g);
+    h2hBlockHTML(g, refTeam, oppTeam);
   wrap.querySelector('.close-detail').addEventListener('click', (e)=>{
     e.stopPropagation();
     toggleDetail(g.key);
