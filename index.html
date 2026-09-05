@@ -395,6 +395,7 @@
       <div class="side-label">My methods</div>
       <div class="strategy-presets" id="methodPresets">
         <button class="preset-btn" data-preset="soccerMethod1">Soccer Method #1</button>
+        <button class="preset-btn" data-preset="soccerMethod2">Soccer Method #2</button>
       </div>
     </div>
   </aside>
@@ -1129,6 +1130,16 @@ const STRATEGY_PRESETS = {
     betsMin:50, betsMax:null,
     formCount:5, formWinsMin:2,
     h2hCount:2, h2hWinsMin:2
+  },
+  /* Favorite trap's exact criteria, scoped to soccer only, with a price floor on the
+     trapped-favorite side so only moderately-priced traps qualify (not very short
+     odds). Inherits fadePick — the actual recommended bet is still the other team. */
+  soccerMethod2: {
+    sport:'SOC', market:'money',
+    handleMin:85, handleMax:null,
+    divMin:-10, divMax:10,
+    valueMin:2, valueMax:null,
+    fadePick:true
   }
 };
 
