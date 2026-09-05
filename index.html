@@ -728,6 +728,7 @@ const state = {
     betsMin:null, betsMax:null,
     divMin:null, divMax:null,
     formCount:5, formWinsMin:null, h2hCount:5, h2hWinsMin:null,
+    fadePick:false,
     preset:null
   }
 };
@@ -1102,7 +1103,7 @@ const STRATEGY_PRESETS = {
      from real examples (a heavy favourite backed near-unanimously by both tickets
      and dollars in lockstep vs. a live underdog getting meaningfully more of the
      money than its ticket share vs. a genuinely split, no-consensus matchup). */
-  favTrap:   {market:'money', handleMin:85, handleMax:null, divMin:-10, divMax:10, valueMin:null, valueMax:null},
+  favTrap:   {market:'money', handleMin:85, handleMax:null, divMin:-10, divMax:10, valueMin:null, valueMax:null, fadePick:true},
   sharpDog:  {market:'money', valueMin:2.0, valueMax:null, divMin:20, divMax:null},
   contested: {market:'money', handleMin:13, handleMax:87, divMin:-19, divMax:19, valueMin:null, valueMax:null},
   soccerMethod1: {
@@ -1120,6 +1121,7 @@ function blankFilters(){
     market:'money', valueMin:null, valueMax:null, handleMin:null, handleMax:null,
     betsMin:null, betsMax:null, divMin:null, divMax:null,
     formCount:5, formWinsMin:null, h2hCount:5, h2hWinsMin:null,
+    fadePick:false,
     preset:null
   };
 }
@@ -1351,7 +1353,16 @@ function pickedSide(g, market){
      back — the actual recommended play is the OTHER team, not the trapped favourite
      itself. Everything else about the game (which side triggered the filter) stays
      the same; only which side gets shown/priced/PnL'd as "the pick" flips. */
-  if(state.filters.preset==='favTrap'){
+  /* Fading a trapped favourite is controlled by an explicit, persistent filter field
+     (fadePick) rather than checking which preset button is currently highlighted —
+     `preset` is just a UI-active-state flag that gets cleared by lots of unrelated
+     actions (switching the market sub-tab, tweaking any other filter field, etc.)
+     while the actual filter criteria that define "this is a trap" keep working fine.
+     Tying the inversion to that same fragile flag caused it to silently stop working
+     — filters still narrowed to trapped favourites, but the pick flipped back to the
+     favourite — the moment anything cleared `preset` without the user touching this
+     setting directly. fadePick survives exactly the same things handleMin/divMin do. */
+  if(state.filters.fadePick){
     const oppositeSide = best.side==='home' ? 'away' : 'home';
     const oppData = g.sides[oppositeSide];
     const oppMf = oppData ? marketFields(oppData, market) : null;
