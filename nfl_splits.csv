@@ -1,0 +1,35 @@
+"date","sport","home_team","away_team","team","spread","spread_handle","spread_bets","total","total_handle","total_bets","money","money_handle","money_bets","updated_at","home_team_score","away_team_score","winning_team","result","pnl"
+2026-09-09,NFL,Seattle Seahawks,New England Patriots,New England Patriots,+3,0.31,0.32,"44.5",0.47,0.47,2.42,0.36,0.32,2026-09-10 22:25:14.577,13,10,Seattle Seahawks,Loss,-1.0
+2026-09-09,NFL,Seattle Seahawks,New England Patriots,Seattle Seahawks,-3,0.69,0.68,"44.5",0.53,0.53,1.5882353,0.64,0.68,2026-09-10 22:25:14.577,13,10,Seattle Seahawks,Win,0.5882352590560913
+2026-09-10,NFL,Los Angeles Rams,San Francisco 49ers,Los Angeles Rams,-3.5,0.54,0.59,"47.5",0.34,0.55,1.4587156,0.67,0.77,2026-09-11 22:25:10.848,7,27,San Francisco 49ers,Loss,-1.0
+2026-09-10,NFL,Los Angeles Rams,San Francisco 49ers,San Francisco 49ers,+3.5,0.46,0.41,"47.5",0.66,0.45,2.8,0.33,0.23,2026-09-11 22:25:10.848,7,27,San Francisco 49ers,Win,1.7999999523162842
+2026-09-13,NFL,Los Angeles Chargers,Arizona Cardinals,Arizona Cardinals,+8.5,0.47,0.36,"47.5",0.58,0.42,4.5,0.06,0.05,2026-09-14 22:25:07.730,14,26,Arizona Cardinals,Win,3.5
+2026-09-13,NFL,Los Angeles Chargers,Arizona Cardinals,Los Angeles Chargers,-8.5,0.53,0.64,"47.5",0.42,0.58,1.2197802,0.94,0.95,2026-09-14 22:25:07.730,14,26,Arizona Cardinals,Loss,-1.0
+2026-09-13,NFL,Pittsburgh Steelers,Atlanta Falcons,Atlanta Falcons,+6.5,0.24,0.28,"40.5",0.27,0.37,3.4,0.13,0.12,2026-09-14 22:25:07.730,20,13,Pittsburgh Steelers,Loss,-1.0
+2026-09-13,NFL,Pittsburgh Steelers,Atlanta Falcons,Pittsburgh Steelers,-6.5,0.76,0.72,"40.5",0.73,0.63,1.3355705,0.87,0.88,2026-09-14 22:25:07.730,20,13,Pittsburgh Steelers,Win,0.33557045459747314
+2026-09-13,NFL,Indianapolis Colts,Baltimore Ravens,Baltimore Ravens,-3,0.43,0.58,"48.5",0.58,0.43,1.6172839,0.78,0.82,2026-09-14 22:25:07.730,23,41,Baltimore Ravens,Win,0.6172839403152466
+2026-09-13,NFL,Indianapolis Colts,Baltimore Ravens,Indianapolis Colts,+3,0.57,0.42,"48.5",0.42,0.57,2.36,0.22,0.18,2026-09-14 22:25:07.730,23,41,Baltimore Ravens,Loss,-1.0
+2026-09-13,NFL,Houston Texans,Buffalo Bills,Buffalo Bills,-1.5,0.54,0.65,"44.5",0.6,0.47,1.8928572,0.85,0.77,2026-09-14 22:25:07.730,31,36,Buffalo Bills,Win,0.8928571939468384
+2026-09-13,NFL,Houston Texans,Buffalo Bills,Houston Texans,+1.5,0.46,0.35,"44.5",0.4,0.53,1.925926,0.15,0.23,2026-09-14 22:25:07.730,31,36,Buffalo Bills,Loss,-1.0
+2026-09-13,NFL,Carolina Panthers,Chicago Bears,Carolina Panthers,+3,0.36,0.27,"47.5",0.46,0.56,2.4,0.2,0.17,2026-09-14 22:25:07.730,37,59,Chicago Bears,Loss,-1.0
+2026-09-13,NFL,Carolina Panthers,Chicago Bears,Chicago Bears,-3,0.64,0.73,"47.5",0.54,0.44,1.6024096,0.8,0.83,2026-09-14 22:25:07.730,37,59,Chicago Bears,Win,0.6024096012115479
+2026-09-13,NFL,Jacksonville Jaguars,Cleveland Browns,Cleveland Browns,+8.5,0.25,0.34,"40.5",0.51,0.49,4.6,0.19,0.07,2026-09-14 22:25:07.730,34,10,Jacksonville Jaguars,Loss,-1.0
+2026-09-13,NFL,Jacksonville Jaguars,Cleveland Browns,Jacksonville Jaguars,-8.5,0.75,0.66,"40.5",0.49,0.51,1.2127659,0.81,0.93,2026-09-14 22:25:07.730,34,10,Jacksonville Jaguars,Win,0.21276593208312988
+2026-09-13,NFL,New York Giants,Dallas Cowboys,Dallas Cowboys,-3,0.62,0.6,"47.5",0.67,0.57,1.6024096,0.49,0.59,2026-09-14 22:25:07.730,28,20,New York Giants,Loss,-1.0
+2026-09-13,NFL,New York Giants,Dallas Cowboys,New York Giants,+3,0.38,0.4,"47.5",0.33,0.43,2.4,0.51,0.41,2026-09-14 22:25:07.730,28,20,New York Giants,Win,1.4000000953674316
+2026-09-13,NFL,Minnesota Vikings,Green Bay Packers,Green Bay Packers,+2.5,0.47,0.55,"46.5",0.29,0.46,2.2,0.37,0.54,2026-09-14 22:25:07.730,39,22,Minnesota Vikings,Loss,-1.0
+2026-09-13,NFL,Minnesota Vikings,Green Bay Packers,Minnesota Vikings,-2.5,0.53,0.45,"46.5",0.71,0.54,1.7042253,0.63,0.46,2026-09-14 22:25:07.730,39,22,Minnesota Vikings,Win,0.7042253017425537
+2026-09-13,NFL,Las Vegas Raiders,Miami Dolphins,Las Vegas Raiders,-3,0.76,0.68,"40.5",0.52,0.51,1.5882353,0.66,0.79,2026-09-14 22:25:07.730,27,13,Las Vegas Raiders,Win,0.5882352590560913
+2026-09-13,NFL,Las Vegas Raiders,Miami Dolphins,Miami Dolphins,+3,0.24,0.32,"40.5",0.48,0.49,2.42,0.34,0.21,2026-09-14 22:25:07.730,27,13,Las Vegas Raiders,Loss,-1.0
+2026-09-13,NFL,Detroit Lions,New Orleans Saints,Detroit Lions,-7,0.7,0.74,"49.5",0.16,0.41,1.3076923,0.93,0.95,2026-09-14 22:25:07.730,31,30,Detroit Lions,Win,0.307692289352417
+2026-09-13,NFL,Detroit Lions,New Orleans Saints,New Orleans Saints,+7,0.3,0.26,"49.5",0.84,0.59,3.6,0.07,0.05,2026-09-14 22:25:07.730,31,30,Detroit Lions,Loss,-1.0
+2026-09-13,NFL,Tennessee Titans,New York Jets,New York Jets,+1.5,0.54,0.63,"39.5",0.6,0.5,1.9803921,0.84,0.49,2026-09-14 22:25:07.730,10,23,New York Jets,Win,0.9803920984268188
+2026-09-13,NFL,Tennessee Titans,New York Jets,Tennessee Titans,-1.5,0.46,0.37,"39.5",0.4,0.5,1.8474576,0.16,0.51,2026-09-14 22:25:07.730,10,23,New York Jets,Loss,-1.0
+2026-09-13,NFL,Cincinnati Bengals,Tampa Bay Buccaneers,Cincinnati Bengals,-3.5,0.48,0.51,"50.5",0.35,0.43,1.4878049,0.68,0.76,2026-09-14 22:25:07.730,33,27,Cincinnati Bengals,Win,0.4878048896789551
+2026-09-13,NFL,Cincinnati Bengals,Tampa Bay Buccaneers,Tampa Bay Buccaneers,+3.5,0.52,0.49,"50.5",0.65,0.57,2.7,0.32,0.24,2026-09-14 22:25:07.730,33,27,Cincinnati Bengals,Loss,-1.0
+2026-09-13,NFL,Philadelphia Eagles,Washington Commanders,Philadelphia Eagles,-6,0.68,0.68,"43.5",0.38,0.46,1.420168,0.9,0.91,2026-09-14 22:25:07.730,24,22,Philadelphia Eagles,Win,0.42016804218292236
+2026-09-13,NFL,Philadelphia Eagles,Washington Commanders,Washington Commanders,+6,0.32,0.32,"43.5",0.62,0.54,2.95,0.1,0.09,2026-09-14 22:25:07.730,24,22,Philadelphia Eagles,Loss,-1.0
+2026-09-14,NFL,Kansas City Chiefs,Denver Broncos,Denver Broncos,+2.5,0.54,0.63,"42.5",0.53,0.53,2.1,0.44,0.54,2026-09-15 22:25:06.415,31,10,Kansas City Chiefs,Loss,-1.0
+2026-09-14,NFL,Kansas City Chiefs,Denver Broncos,Kansas City Chiefs,-2.5,0.46,0.37,"42.5",0.47,0.47,1.7692307,0.56,0.46,2026-09-15 22:25:06.415,31,10,Kansas City Chiefs,Win,0.7692307233810425
+2026-09-17,NFL,Buffalo Bills,Detroit Lions,Buffalo Bills,-4.5,0.82,0.64,"54.5",0.28,0.28,1.4444444,0.83,0.8,2026-09-16 19:25:07.282,,,,,
+2026-09-17,NFL,Buffalo Bills,Detroit Lions,Detroit Lions,+4.5,0.18,0.36,"54.5",0.72,0.72,2.85,0.17,0.2,2026-09-16 19:25:07.282,,,,,

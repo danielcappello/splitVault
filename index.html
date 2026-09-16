@@ -525,8 +525,10 @@
 const CSV_SOURCES = [
   { path:'./mlb_splits.csv', fallbackSport:null, type:'splits' },
   { path:'./soc_splits.csv', fallbackSport:'SOC', type:'splits' },
+  { path:'./nfl_splits.csv', fallbackSport:null, type:'splits' },
   { path:'./soc_h2h.csv', fallbackSport:null, type:'h2h' },
-  { path:'./mlb_h2h.csv', fallbackSport:null, type:'h2h' }
+  { path:'./mlb_h2h.csv', fallbackSport:null, type:'h2h' },
+  { path:'./nfl_h2h.csv', fallbackSport:null, type:'h2h' }
 ];
 
 /* ============================== CSV PARSING ============================== */
@@ -643,12 +645,11 @@ function buildGames(rows){
 
 /* ============================== RECENT FORM & HEAD-TO-HEAD ============================== */
 
-/* soc_h2h.csv / mlb_h2h.csv are plain historical results feeds (date, home, away,
-   scores) — completely separate from the splits data. We index them once into a
-   per-team chronological match list, then answer "last N matches" / "last N
-   head-to-heads" queries against it on demand. A team with no rows in either feed
-   simply returns empty results everywhere below — treated as "no data", never an
-   error. */
+/* soc_h2h.csv / mlb_h2h.csv / nfl_h2h.csv are plain historical results feeds (date,
+   home, away, scores) — completely separate from the splits data. We index them once
+   into a per-team chronological match list, then answer "last N matches" / "last N
+   head-to-heads" queries against it on demand. A team with no rows in any feed simply
+   returns empty results everywhere below — treated as "no data", never an error. */
 function buildTeamHistory(h2hRows){
   const map = new Map();
   const add = (team, opponent, ownScore, oppScore, dateISO, venue) => {
@@ -847,7 +848,7 @@ function fmtPct(x){ return Math.round(x*100)+'%'; }
 function fmtPP(x){ const s = x>0?'+':''; return s+x.toFixed(1)+'pp'; }
 function fmtPnl(x){ if(x===null||x===undefined) return null; const s = x>0?'+':''; return s+x.toFixed(2); }
 function sportLabel(s){
-  const map={MLB:'MLB', AFL:'AFL', SOC:'Soccer', BOX:'Boxing', UFC:'UFC/MMA'};
+  const map={MLB:'MLB', NFL:'NFL', AFL:'AFL', SOC:'Soccer', BOX:'Boxing', UFC:'UFC/MMA'};
   return map[s]||s;
 }
 function divergenceColorRGB(x){
