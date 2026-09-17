@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SplitVault — the gap between the tickets and the money</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0D18;
+    --panel: #12162A;
+    --panel-raised: #191F38;
+    --hairline: #262C4C;
+    --hairline-soft: #1D2340;
+    --ink: #EBEDFB;
+    --ink-muted: #9099C2;
+    --ink-faint: #5C6390;
+    --handle: #8B5CF6;
+    --handle-soft: rgba(139,92,246,0.14);
+    --bets: #F5A623;
+    --bets-soft: rgba(245,166,35,0.13);
+    --alert: #F0466E;
+    --positive: #4ADE80;
+    --link: #38BDF8;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 520px at 18% -8%, rgba(139,92,246,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 4%, rgba(56,189,248,0.09), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--handle-soft); color:var(--ink);}
+  .mono{font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums;}
+  h1,h2,h3{font-family:'Sora',sans-serif; margin:0; letter-spacing:-0.01em;}
+  a{color:var(--link); text-decoration:none;}
+  :focus-visible{outline:2px solid var(--link); outline-offset:2px; border-radius:4px;}
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- Nav ---------- */
+  nav.top{padding:22px 0; border-bottom:1px solid var(--hairline-soft);}
+  nav.top .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:700; font-size:17px;}
+  .brand-glyph{
+    width:28px; height:28px; border-radius:8px; flex:none;
+    background:linear-gradient(135deg, var(--handle), var(--link));
+    display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:800; color:#0A0D18;
+    font-family:'Sora',sans-serif;
+  }
+  .nav-cta{
+    background:var(--panel-raised); border:1px solid var(--hairline); color:var(--ink);
+    padding:9px 18px; border-radius:8px; font-family:'Sora',sans-serif; font-weight:600; font-size:13.5px;
+  }
+  .nav-cta:hover{border-color:var(--handle); color:var(--ink);}
+
+  /* ---------- Hero ---------- */
+  header.hero{padding:88px 0 56px;}
+  .hero-inner{max-width:680px;}
+  .hero h1{font-size:44px; font-weight:700; line-height:1.15;}
+  .hero h1 .accent{color:var(--handle);}
+  .hero .sub{
+    margin-top:20px; font-size:17px; color:var(--ink-muted); max-width:560px; line-height:1.65;
+  }
+  .hero-actions{display:flex; align-items:center; gap:18px; margin-top:32px;}
+  .btn-primary{
+    background:linear-gradient(135deg, var(--handle), var(--link)); color:#0A0D18;
+    font-family:'Sora',sans-serif; font-weight:700; font-size:14.5px;
+    padding:14px 28px; border-radius:9px; display:inline-block;
+  }
+  .btn-primary:hover{filter:brightness(1.08); color:#0A0D18;}
+  .hero-note{font-size:13px; color:var(--ink-faint);}
+
+  /* ---------- Signature visual: the split-bar demo ---------- */
+  .demo{
+    margin-top:64px; background:var(--panel); border:1px solid var(--hairline); border-radius:14px;
+    padding:28px 30px 24px; position:relative; overflow:hidden;
+  }
+  .demo::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--handle), var(--link));
+  }
+  .demo-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:22px; flex-wrap:wrap; gap:8px;}
+  .demo-head .matchup{font-family:'Sora',sans-serif; font-weight:600; font-size:15.5px;}
+  .demo-head .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint);
+    border:1px solid var(--hairline); border-radius:20px; padding:3px 10px;
+  }
+  .demo-rows{display:flex; flex-direction:column; gap:18px;}
+  .demo-row .row-label{display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink-muted); margin-bottom:7px;}
+  .demo-row .row-label .team{color:var(--ink); font-weight:600;}
+  .demo-row .row-label .price{font-family:'JetBrains Mono',monospace; color:var(--ink-muted);}
+  .splitbar{position:relative; height:9px; border-radius:5px; background:var(--hairline-soft); overflow:hidden;}
+  .splitbar .seg-bets{position:absolute; top:0; bottom:0; left:0; background:var(--bets); opacity:0.9;}
+  .splitbar .marker-handle{position:absolute; top:-3px; bottom:-3px; width:3px; border-radius:2px; background:var(--handle); box-shadow:0 0 8px rgba(139,92,246,0.6);}
+  .splitbar-foot{display:flex; justify-content:space-between; margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint);}
+  .splitbar-foot .handle-val{color:var(--handle); font-weight:600;}
+  .splitbar-foot .bets-val{color:var(--bets); font-weight:600;}
+  .demo-callout{
+    margin-top:20px; padding-top:16px; border-top:1px solid var(--hairline-soft);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+  }
+  .demo-callout .signal{font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink-muted);}
+  .demo-callout .signal b{color:var(--positive);}
+  .demo-callout .pnl{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--positive);}
+
+  /* ---------- Legend strip ---------- */
+  .legend{
+    display:flex; justify-content:center; gap:36px; flex-wrap:wrap;
+    padding:36px 0 8px; font-size:13px; color:var(--ink-muted);
+  }
+  .legend span{display:flex; align-items:center; gap:8px;}
+  .legend .dot{width:9px; height:9px; border-radius:3px; flex:none;}
+
+  /* ---------- Feature list ---------- */
+  section.features{padding:76px 0 20px;}
+  section.features h2{font-size:26px; font-weight:700; max-width:520px;}
+  .features-list{margin-top:40px; display:flex; flex-direction:column;}
+  .feature{
+    display:grid; grid-template-columns:4px 1fr; gap:22px; padding:26px 0;
+    border-bottom:1px solid var(--hairline-soft);
+  }
+  .feature:first-child{border-top:1px solid var(--hairline-soft);}
+  .feature .bar{border-radius:3px;}
+  .feature h3{font-size:17px; font-weight:600; margin-bottom:8px;}
+  .feature p{margin:0; color:var(--ink-muted); max-width:520px; font-size:14.5px;}
+
+  /* ---------- Strategies ---------- */
+  section.strategies{padding:64px 0;}
+  section.strategies h2{font-size:26px; font-weight:700; max-width:520px;}
+  section.strategies .sub{color:var(--ink-muted); margin-top:12px; max-width:540px; font-size:14.5px;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:9px; margin-top:28px;}
+  .pill{
+    font-family:'Inter',sans-serif; font-size:13px; color:var(--ink-muted);
+    background:var(--panel-raised); border:1px solid var(--hairline); border-radius:20px; padding:8px 15px;
+  }
+  .pill.highlight{color:var(--handle); border-color:var(--handle); background:var(--handle-soft); font-weight:600;}
+
+  .sport-row{display:flex; gap:14px; margin-top:20px; flex-wrap:wrap;}
+  .sport-chip{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink); border:1px solid var(--hairline);
+    border-radius:8px; padding:8px 14px; background:var(--panel);
+  }
+
+  /* ---------- Closing CTA ---------- */
+  section.close{padding:80px 0 90px; text-align:center;}
+  section.close h2{font-size:30px; font-weight:700; max-width:460px; margin:0 auto;}
+  section.close .sub{color:var(--ink-muted); margin:16px auto 32px; max-width:440px;}
+
+  footer{border-top:1px solid var(--hairline-soft); padding:26px 0 50px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  footer .fine{font-size:12px; color:var(--ink-faint); font-family:'JetBrains Mono',monospace;}
+
+  @media (max-width:640px){
+    .hero h1{font-size:32px;}
+    .demo{padding:22px 18px 18px;}
+    header.hero{padding:56px 0 40px;}
+    section.features, section.strategies{padding:48px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <div class="brand"><span class="brand-glyph">SV</span>SplitVault</div>
+    <a class="nav-cta" href="./index.html">Enter the Vault</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <h1>Most of the bets.<br>Not most of the <span class="accent">money</span>.</h1>
+      <p class="sub">SplitVault tracks the gap between ticket count and dollar volume on every game — then backtests what actually happens when you follow it, fade it, or fade the favourite everyone's piling onto.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="./index.html">Enter the Vault</a>
+        <span class="hero-note">Nothing to log into. It just opens.</span>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-head">
+        <div class="matchup">Denver Broncos @ Kansas City Chiefs</div>
+        <div class="tag">Moneyline</div>
+      </div>
+      <div class="demo-rows">
+        <div class="demo-row">
+          <div class="row-label"><span class="team">Kansas City Chiefs</span><span class="price mono">1.77</span></div>
+          <div class="splitbar"><div class="seg-bets" style="width:46%"></div><div class="marker-handle" style="left:56%"></div></div>
+          <div class="splitbar-foot"><span class="handle-val">Handle 56%</span><span class="bets-val">Bets 46%</span></div>
+        </div>
+        <div class="demo-row">
+          <div class="row-label"><span class="team">Denver Broncos</span><span class="price mono">2.20</span></div>
+          <div class="splitbar"><div class="seg-bets" style="width:54%"></div><div class="marker-handle" style="left:44%"></div></div>
+          <div class="splitbar-foot"><span class="handle-val">Handle 44%</span><span class="bets-val">Bets 54%</span></div>
+        </div>
+      </div>
+      <div class="demo-callout">
+        <span class="signal">Chiefs are getting <b>+10pp</b> more of the money than the ticket count alone would predict</span>
+        <span class="pnl">Chiefs won, +0.77u</span>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:var(--handle)"></span>Handle — share of dollars wagered</span>
+      <span><span class="dot" style="background:var(--bets)"></span>Bets — share of ticket count</span>
+    </div>
+  </div>
+</header>
+
+<section class="features">
+  <div class="wrap">
+    <h2>Everything you need to see the split, not just the score.</h2>
+    <div class="features-list">
+      <div class="feature">
+        <div class="bar" style="background:var(--handle);"></div>
+        <div>
+          <h3>A filter panel that goes past sport and date</h3>
+          <p>Narrow by price, by handle or bet percentage, by how many points handle and bets disagree, by a team's last-5 form, or by their head-to-head record against the exact opponent in front of them.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="bar" style="background:var(--bets);"></div>
+        <div>
+          <h3>Named strategies you can just press</h3>
+          <p>Follow the money, fade the public, fade a trapped favourite, back a sharp underdog — each one is a saved filter combination, not a vague idea you have to rebuild by hand every time.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="bar" style="background:var(--link);"></div>
+        <div>
+          <h3>A backtest, not a hunch</h3>
+          <p>Every strategy runs against real settled results: win rate, total units, ROI, a running PnL chart, and a breakdown by sport — so "this feels right" turns into a number you can check.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="bar" style="background:var(--positive);"></div>
+        <div>
+          <h3>Form and head-to-head, not just odds</h3>
+          <p>Every matchup carries each team's recent record and their history against this exact opponent, with the underlying scorelines one click away — not just a number, the games behind it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="strategies">
+  <div class="wrap">
+    <h2>Strategies already sitting in the vault.</h2>
+    <p class="sub">Click one, or build your own from the same filters and save it under its own name.</p>
+    <div class="pill-row">
+      <span class="pill highlight">Follow the money</span>
+      <span class="pill highlight">Fade the public</span>
+      <span class="pill">Underdogs only</span>
+      <span class="pill">Favourites only</span>
+      <span class="pill highlight">Favourite trap</span>
+      <span class="pill">Sharp underdog</span>
+      <span class="pill">Contested match</span>
+      <span class="pill">Soccer Method #1</span>
+      <span class="pill">Soccer Method #2</span>
+    </div>
+    <div class="sport-row">
+      <span class="sport-chip">MLB</span>
+      <span class="sport-chip">NFL</span>
+      <span class="sport-chip">Soccer</span>
+    </div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h2>The tickets tell you what the crowd thinks.</h2>
+    <p class="sub">The handle tells you what the money thinks. SplitVault is built to show you both, every time they disagree.</p>
+    <a class="btn-primary" href="./index.html">Enter the Vault</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="brand-glyph">SV</span>SplitVault</div>
+    <span class="fine">For personal research use. Not financial advice.</span>
+  </div>
+</footer>
+
+</body>
+</html>
