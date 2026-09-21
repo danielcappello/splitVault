@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — SplitVault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+<style>
+  :root{
+    --bg: #0A0D18;
+    --panel: #12162A;
+    --panel-raised: #191F38;
+    --hairline: #262C4C;
+    --hairline-soft: #1D2340;
+    --ink: #EBEDFB;
+    --ink-muted: #9099C2;
+    --ink-faint: #5C6390;
+    --handle: #8B5CF6;
+    --handle-soft: rgba(139,92,246,0.14);
+    --alert: #F0466E;
+    --alert-soft: rgba(240,70,110,0.12);
+    --positive: #4ADE80;
+    --positive-soft: rgba(74,222,128,0.12);
+    --link: #38BDF8;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 520px at 18% -8%, rgba(139,92,246,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 4%, rgba(56,189,248,0.09), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    min-height:100vh;
+    display:flex; flex-direction:column;
+  }
+  a{color:var(--link); text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  nav.top{padding:22px 24px;}
+  nav.top .wrap{max-width:1080px; margin:0 auto; display:flex; align-items:center; justify-content:space-between;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:700; font-size:16px;}
+  .brand-glyph{
+    width:26px; height:26px; border-radius:8px; flex:none;
+    background:linear-gradient(135deg, var(--handle), var(--link));
+    display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:800; color:#0A0D18;
+    font-family:'Sora',sans-serif;
+  }
+  .back-link{font-size:13px; color:var(--ink-muted);}
+  .back-link:hover{color:var(--ink);}
+
+  main{flex:1; display:flex; align-items:center; justify-content:center; padding:24px;}
+  .card{
+    width:100%; max-width:380px; background:var(--panel); border:1px solid var(--hairline);
+    border-radius:16px; padding:34px 30px 28px;
+  }
+  .mode-switch{display:flex; gap:2px; background:var(--panel-raised); border-radius:9px; padding:3px; margin-bottom:24px;}
+  .mode-btn{
+    flex:1; background:none; border:none; color:var(--ink-muted); font-family:'Sora',sans-serif; font-weight:600;
+    font-size:13px; padding:9px 0; border-radius:7px; cursor:pointer;
+  }
+  .mode-btn.active{background:linear-gradient(135deg, var(--handle), var(--link)); color:#0A0D18;}
+
+  h1{font-family:'Sora',sans-serif; font-size:19px; font-weight:700; margin:0 0 6px;}
+  .card-sub{font-size:13px; color:var(--ink-faint); margin-bottom:22px;}
+
+  form{display:flex; flex-direction:column; gap:13px;}
+  .field label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); margin-bottom:5px;}
+  .field input{
+    width:100%; background:var(--panel-raised); color:var(--ink); border:1px solid var(--hairline);
+    border-radius:8px; padding:11px 13px; font-family:'Inter',sans-serif; font-size:14px; outline:none;
+  }
+  .field input:focus{border-color:var(--link);}
+
+  .submit-btn{
+    margin-top:6px; width:100%; background:linear-gradient(135deg, var(--handle), var(--link)); border:none;
+    color:#0A0D18; border-radius:8px; padding:12px 14px; font-family:'Sora',sans-serif; font-weight:700;
+    font-size:14px; cursor:pointer;
+  }
+  .submit-btn:hover{filter:brightness(1.08);}
+  .submit-btn:disabled{opacity:0.6; cursor:default; filter:none;}
+
+  .msg{font-size:12.5px; padding:10px 12px; border-radius:8px; margin-top:14px; display:none;}
+  .msg.show{display:block;}
+  .msg.error{background:var(--alert-soft); color:var(--alert);}
+  .msg.success{background:var(--positive-soft); color:var(--positive);}
+  .msg.info{background:var(--handle-soft); color:var(--handle);}
+
+  .foot-links{margin-top:22px; text-align:center; font-size:12.5px; color:var(--ink-faint);}
+  .foot-links a{color:var(--ink-muted);}
+  .foot-links a:hover{color:var(--link);}
+
+  .unconfigured{
+    max-width:420px; margin:0 auto; text-align:center; color:var(--ink-muted); font-size:13.5px; line-height:1.6;
+  }
+  .unconfigured code{background:var(--panel-raised); padding:2px 6px; border-radius:5px; font-family:'JetBrains Mono',monospace; font-size:12.5px;}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <div class="brand"><span class="brand-glyph">SV</span>SplitVault</div>
+    <a class="back-link" href="./landing.html">← Back</a>
+  </div>
+</nav>
+
+<main>
+  <div id="unconfiguredNotice" style="display:none;" class="unconfigured">
+    <h1 style="text-align:center;">Sign-in isn't set up yet</h1>
+    <p>This page needs a Supabase project URL and anon key filled in before accounts work. See <code>SUPABASE_SETUP.md</code> for the exact steps, then edit <code>supabase-config.js</code>.</p>
+    <p><a href="./index.html">Continue to the vault without an account →</a></p>
+  </div>
+
+  <div class="card" id="authCard" style="display:none;">
+    <div class="mode-switch">
+      <button class="mode-btn active" id="modeSignup" type="button">Sign up</button>
+      <button class="mode-btn" id="modeSignin" type="button">Sign in</button>
+    </div>
+
+    <h1 id="cardTitle">Create your account</h1>
+    <div class="card-sub" id="cardSub">Save your own filter views — visible only to you.</div>
+
+    <form id="authForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="new-password" required minlength="6">
+      </div>
+      <button type="submit" class="submit-btn" id="submitBtn">Create account</button>
+    </form>
+
+    <div class="msg" id="authMsg"></div>
+
+    <div class="foot-links">
+      <a href="./index.html">Browse the vault without an account</a>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  if(!SUPABASE_CONFIGURED || !window.supabase){
+    document.getElementById('unconfiguredNotice').style.display = 'block';
+    return;
+  }
+  document.getElementById('authCard').style.display = 'block';
+
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let mode = 'signup'; // 'signup' | 'signin'
+  const modeSignup = document.getElementById('modeSignup');
+  const modeSignin = document.getElementById('modeSignin');
+  const cardTitle = document.getElementById('cardTitle');
+  const cardSub = document.getElementById('cardSub');
+  const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById('authForm');
+  const msg = document.getElementById('authMsg');
+
+  function setMode(next){
+    mode = next;
+    modeSignup.classList.toggle('active', mode==='signup');
+    modeSignin.classList.toggle('active', mode==='signin');
+    if(mode==='signup'){
+      cardTitle.textContent = 'Create your account';
+      cardSub.textContent = 'Save your own filter views — visible only to you.';
+      submitBtn.textContent = 'Create account';
+    } else {
+      cardTitle.textContent = 'Welcome back';
+      cardSub.textContent = 'Sign in to see your saved views.';
+      submitBtn.textContent = 'Sign in';
+    }
+    hideMsg();
+  }
+  modeSignup.addEventListener('click', ()=>setMode('signup'));
+  modeSignin.addEventListener('click', ()=>setMode('signin'));
+
+  function showMsg(text, kind){
+    msg.textContent = text;
+    msg.className = 'msg show ' + kind;
+  }
+  function hideMsg(){
+    msg.className = 'msg';
+  }
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    hideMsg();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = mode==='signup' ? 'Creating…' : 'Signing in…';
+
+    try{
+      if(mode==='signup'){
+        const { data, error } = await sb.auth.signUp({ email, password });
+        if(error){ showMsg(error.message, 'error'); return; }
+        if(data.session){
+          // email confirmation is off in this project — user is already signed in
+          window.location.href = './index.html';
+          return;
+        }
+        showMsg('Account created — check your email to confirm it, then sign in.', 'success');
+        setMode('signin');
+      } else {
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        if(error){ showMsg(error.message, 'error'); return; }
+        if(data.session){
+          window.location.href = './index.html';
+        }
+      }
+    } catch(err){
+      showMsg('Something went wrong. Please try again.', 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  });
+
+  // already signed in? skip straight to the vault
+  sb.auth.getSession().then(({data})=>{
+    if(data && data.session){
+      window.location.href = './index.html';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

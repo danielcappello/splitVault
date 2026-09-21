@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
 <style>
   :root{
     --bg: #0A0D18;
@@ -136,6 +138,57 @@
   }
   .preset-btn:hover{color:var(--ink); border-color:var(--ink-muted);}
   .preset-btn.active{color:var(--handle); border-color:var(--handle); background:var(--handle-soft); font-weight:600;}
+
+  .views-note{font-size:11.5px; color:var(--ink-faint); line-height:1.5; margin-bottom:8px;}
+  .views-signin-link{
+    display:block; text-align:center; background:var(--panel-raised); border:1px solid var(--hairline);
+    color:var(--ink); border-radius:var(--radius); padding:8px 10px; font-size:12.5px; font-family:'Inter',sans-serif;
+  }
+  .views-signin-link:hover{border-color:var(--handle); color:var(--ink);}
+  .account-row{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:12px;
+    padding-bottom:12px; border-bottom:1px solid var(--hairline-soft);
+  }
+  .account-email{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-muted);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:150px;
+  }
+  .signout-btn{
+    flex:none; background:none; border:1px solid var(--hairline); color:var(--ink-faint);
+    border-radius:6px; padding:4px 9px; font-size:11px; cursor:pointer; font-family:'Inter',sans-serif;
+  }
+  .signout-btn:hover{color:var(--alert); border-color:var(--alert);}
+  .save-view-row{display:flex; gap:6px; margin-bottom:6px;}
+  .save-view-row input{
+    flex:1; min-width:0; background:var(--panel-raised); color:var(--ink); border:1px solid var(--hairline);
+    border-radius:var(--radius); padding:7px 9px; font-family:'Inter',sans-serif; font-size:12px; outline:none;
+  }
+  .save-view-row input:focus{border-color:var(--link);}
+  .save-view-btn{
+    flex:none; background:linear-gradient(135deg, var(--handle), var(--link)); border:none;
+    color:#0A0D18; border-radius:var(--radius); padding:7px 14px; font-family:'Sora',sans-serif; font-weight:700;
+    font-size:12px; cursor:pointer;
+  }
+  .save-view-btn:hover{filter:brightness(1.08);}
+  .save-view-btn:disabled{opacity:0.6; cursor:default; filter:none;}
+  .views-status{font-size:11px; color:var(--alert); margin-bottom:6px; display:none;}
+  .views-status.show{display:block;}
+  .views-list{display:flex; flex-direction:column; gap:5px;}
+  .view-row{
+    display:flex; align-items:center; gap:6px; background:var(--panel-raised);
+    border:1px solid var(--hairline); border-radius:var(--radius); padding:4px 4px 4px 12px;
+  }
+  .view-name{
+    flex:1; min-width:0; background:none; border:none; color:var(--ink); text-align:left;
+    font-family:'Inter',sans-serif; font-size:12px; cursor:pointer; padding:5px 0;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .view-name:hover{color:var(--link);}
+  .view-delete{
+    flex:none; background:none; border:none; color:var(--ink-faint); cursor:pointer;
+    font-size:15px; line-height:1; padding:4px 7px; border-radius:6px;
+  }
+  .view-delete:hover{color:var(--alert); background:var(--alert-soft);}
 
   /* ---------- Main content ---------- */
   .content{flex:1; min-width:0; padding:34px 40px 80px; max-width:1180px;}
@@ -397,6 +450,11 @@
         <button class="preset-btn" data-preset="soccerMethod1">Soccer Method #1</button>
         <button class="preset-btn" data-preset="soccerMethod2">Soccer Method #2</button>
       </div>
+    </div>
+
+    <div class="side-section">
+      <div class="side-label">My views</div>
+      <div id="viewsSection"><div class="views-note">Loading…</div></div>
     </div>
   </aside>
 
@@ -1710,7 +1768,134 @@ function renderSportBreakdown(){
 }
 
 
+/* ============================== SUPABASE AUTH + SAVED VIEWS ============================== */
+
+/* Saving/loading views is entirely separate from the CSV data pipeline above — it
+   works (or doesn't) independent of whether the match data loaded. If Supabase
+   isn't configured yet (supabase-config.js still has placeholder values), this
+   degrades to a plain notice rather than throwing network errors at load time. */
+let sb = null;
+let currentUser = null;
+
+function getSb(){
+  if(sb) return sb;
+  if(typeof SUPABASE_CONFIGURED !== 'undefined' && SUPABASE_CONFIGURED && window.supabase){
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+  return sb;
+}
+
+async function initViewsAuth(){
+  const client = getSb();
+  if(!client){
+    document.getElementById('viewsSection').innerHTML =
+      '<div class="views-note">Saved views need a Supabase project connected — see SUPABASE_SETUP.md.</div>';
+    return;
+  }
+  const { data } = await client.auth.getSession();
+  currentUser = data && data.session ? data.session.user : null;
+  renderViewsSection();
+  client.auth.onAuthStateChange((event, session)=>{
+    currentUser = session ? session.user : null;
+    renderViewsSection();
+  });
+}
+
+function renderViewsSection(){
+  const el = document.getElementById('viewsSection');
+  if(!currentUser){
+    el.innerHTML =
+      '<div class="views-note">Sign in to save your own filter views — visible only to you.</div>'+
+      '<a class="views-signin-link" href="./signup.html">Sign in / Sign up</a>';
+    return;
+  }
+  el.innerHTML =
+    '<div class="account-row"><span class="account-email" title="'+escapeHtml(currentUser.email)+'">'+escapeHtml(currentUser.email)+'</span><button class="signout-btn" id="viewsSignOut">Sign out</button></div>'+
+    '<div class="save-view-row"><input type="text" id="viewNameInput" placeholder="Name this view…" maxlength="40"><button class="save-view-btn" id="saveViewBtn">Save</button></div>'+
+    '<div class="views-status" id="viewsStatus"></div>'+
+    '<div class="views-list" id="viewsList"><div class="views-note">Loading…</div></div>';
+
+  document.getElementById('viewsSignOut').addEventListener('click', async ()=>{
+    await getSb().auth.signOut();
+  });
+  document.getElementById('saveViewBtn').addEventListener('click', saveCurrentView);
+  document.getElementById('viewNameInput').addEventListener('keydown', e=>{
+    if(e.key==='Enter') saveCurrentView();
+  });
+  loadSavedViews();
+}
+
+function showViewsStatus(text){
+  const el = document.getElementById('viewsStatus');
+  if(!el) return;
+  if(!text){ el.classList.remove('show'); el.textContent=''; return; }
+  el.textContent = text;
+  el.classList.add('show');
+}
+
+async function saveCurrentView(){
+  const input = document.getElementById('viewNameInput');
+  const name = input.value.trim();
+  if(!name){ showViewsStatus('Give this view a name first.'); input.focus(); return; }
+  const btn = document.getElementById('saveViewBtn');
+  btn.disabled = true;
+  /* Same snapshot shape the old local-only presets used — every field in
+     state.filters except the built-in preset flag, so a saved view always
+     applies as its own thing rather than pretending to be a preset. */
+  const snapshot = Object.assign({}, state.filters);
+  delete snapshot.preset;
+  const { error } = await getSb().from('saved_views').insert({
+    user_id: currentUser.id,
+    name: name,
+    filters: snapshot
+  });
+  btn.disabled = false;
+  if(error){ showViewsStatus('Could not save: '+error.message); return; }
+  input.value = '';
+  showViewsStatus('');
+  loadSavedViews();
+}
+
+async function loadSavedViews(){
+  const listEl = document.getElementById('viewsList');
+  if(!listEl) return;
+  /* No manual user filtering here — RLS on the saved_views table means this
+     query can only ever return rows owned by whoever is currently signed in. */
+  const { data, error } = await getSb().from('saved_views').select('*').order('created_at', {ascending:false});
+  if(error){
+    listEl.innerHTML = '<div class="views-note">Could not load views: '+escapeHtml(error.message)+'</div>';
+    return;
+  }
+  if(!data || !data.length){
+    listEl.innerHTML = '<div class="views-note">No saved views yet.</div>';
+    return;
+  }
+  listEl.innerHTML = data.map(row=>
+    '<div class="view-row">'+
+      '<button class="view-name" data-id="'+row.id+'">'+escapeHtml(row.name)+'</button>'+
+      '<button class="view-delete" data-id="'+row.id+'" title="Delete '+escapeHtml(row.name)+'">×</button>'+
+    '</div>'
+  ).join('');
+  listEl.querySelectorAll('.view-name').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const row = data.find(d=>String(d.id)===btn.dataset.id);
+      if(!row) return;
+      setFilters(Object.assign(blankFilters(), row.filters, {preset:null}));
+      applyFiltersToControls();
+      renderAll();
+    });
+  });
+  listEl.querySelectorAll('.view-delete').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      await getSb().from('saved_views').delete().eq('id', btn.dataset.id);
+      loadSavedViews();
+    });
+  });
+}
+
 init();
+initViewsAuth();
 })();
 </script>
 
