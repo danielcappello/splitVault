@@ -349,9 +349,49 @@
     .sidebar{width:100%; position:relative; height:auto; max-height:none; overflow-y:visible; border-right:none; border-bottom:1px solid var(--hairline);}
     .content{padding:26px 20px 60px; max-width:100%;}
   }
+
+  /* ---------- Auth gate — covers the whole shell until a session is confirmed ---------- */
+  .gate{
+    position:fixed; inset:0; z-index:9999;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(139,92,246,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(56,189,248,0.09), transparent 55%),
+      var(--bg);
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .gate-card{
+    width:100%; max-width:380px; background:var(--panel); border:1px solid var(--hairline);
+    border-radius:14px; padding:34px 30px 28px; text-align:center;
+  }
+  .gate-glyph{
+    width:44px; height:44px; border-radius:12px; margin:0 auto 16px;
+    background:linear-gradient(135deg, var(--handle), var(--link));
+    display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; color:#0A0D18;
+    font-family:'Sora',sans-serif;
+  }
+  .gate-title{font-family:'Sora',sans-serif; font-weight:700; font-size:18px; color:var(--ink); margin-bottom:6px;}
+  .gate-sub{font-size:13px; color:var(--ink-faint); line-height:1.6; margin-bottom:22px;}
+  .gate-btn{
+    display:block; width:100%; background:linear-gradient(135deg, var(--handle), var(--link)); border:none;
+    color:#0A0D18; border-radius:9px; padding:12px 14px; font-family:'Sora',sans-serif; font-weight:700;
+    font-size:13.5px; text-decoration:none;
+  }
+  .gate-btn:hover{filter:brightness(1.08); color:#0A0D18;}
+  .gate-fine{font-size:11.5px; color:var(--ink-faint); margin-top:16px; font-family:'JetBrains Mono',monospace;}
+  .gate-fine code{background:var(--panel-raised); padding:1px 5px; border-radius:4px;}
+  body.gate-locked{overflow:hidden;}
 </style>
 </head>
-<body>
+<body class="gate-locked">
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-glyph">SV</div>
+    <div class="gate-title" id="gateTitle">Sign in required</div>
+    <div class="gate-sub" id="gateSub">An account is required to enter the vault.</div>
+    <a class="gate-btn" id="gateBtn" href="./signup.html">Sign in / Sign up</a>
+  </div>
+</div>
 
 <div class="shell">
   <aside class="sidebar">
@@ -1894,8 +1934,64 @@ async function loadSavedViews(){
   });
 }
 
-init();
-initViewsAuth();
+/* ============================== AUTH GATE ============================== */
+
+/* Mandatory sign-in: nothing above this — no CSV fetch, no rendering — runs until
+   a session is confirmed. This mirrors the earlier password-gate approach: the
+   overlay isn't just a CSS layer hiding the shell, init() itself is never called
+   until checkAuthGate() decides a real signed-in session exists, so there's no
+   data sitting behind the overlay waiting to be revealed by deleting a <div>. */
+let appUnlocked = false;
+
+function unlockApp(){
+  if(appUnlocked) return;
+  appUnlocked = true;
+  document.getElementById('gate').style.display = 'none';
+  document.body.classList.remove('gate-locked');
+  init();
+  initViewsAuth();
+}
+
+function showGate(reason){
+  const titleEl = document.getElementById('gateTitle');
+  const subEl = document.getElementById('gateSub');
+  const btnEl = document.getElementById('gateBtn');
+  if(reason==='unconfigured'){
+    titleEl.textContent = "Sign-in isn't set up yet";
+    subEl.innerHTML = 'An account is required to enter the vault, but no Supabase project is connected yet. See <code>SUPABASE_SETUP.md</code>, then fill in <code>supabase-config.js</code>.';
+    btnEl.style.display = 'none';
+  } else {
+    titleEl.textContent = 'Sign in required';
+    subEl.textContent = 'An account is required to enter the vault.';
+    btnEl.style.display = 'block';
+  }
+  document.getElementById('gate').style.display = 'flex';
+  document.body.classList.add('gate-locked');
+}
+
+async function checkAuthGate(){
+  const client = getSb();
+  if(!client){
+    showGate('unconfigured');
+    return;
+  }
+  const { data } = await client.auth.getSession();
+  if(data && data.session){
+    unlockApp();
+  } else {
+    showGate('signin');
+  }
+  client.auth.onAuthStateChange((event, session)=>{
+    if(session){
+      unlockApp();
+    } else if(appUnlocked){
+      // signed out mid-session — reload to fully reset state and re-show the gate
+      window.location.reload();
+    }
+  });
+}
+
+checkAuthGate();
 })();
 </script>
 
