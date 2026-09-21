@@ -11526,3 +11526,57 @@ usa_match_date,utc_start_time,status,home_team_id,home_team,away_team_id,away_te
 2026-09-16,2026-09-17T00:40Z,Final,27,Colorado Rockies,25,San Diego Padres,3,9
 2026-09-16,2026-09-17T01:38Z,Final,3,Los Angeles Angels,12,Seattle Mariners,2,7
 2026-09-16,2026-09-17T01:40Z,Final,29,Arizona Diamondbacks,28,Miami Marlins,3,4
+2026-09-17,2026-09-17T16:35Z,Final,23,Pittsburgh Pirates,8,Milwaukee Brewers,7,4
+2026-09-17,2026-09-17T16:40Z,Final,17,Cincinnati Reds,19,Los Angeles Dodgers,2,8
+2026-09-17,2026-09-17T17:10Z,Final,30,Tampa Bay Rays,11,Athletics,10,1
+2026-09-17,2026-09-17T19:10Z,Final,27,Colorado Rockies,25,San Diego Padres,2,9
+2026-09-17,2026-09-17T23:15Z,Final,21,New York Mets,22,Philadelphia Phillies,0,3
+2026-09-17,2026-09-17T23:15Z,Final,18,Houston Astros,7,Kansas City Royals,6,2
+2026-09-17,2026-09-17T23:40Z,Final,4,Chicago White Sox,6,Detroit Tigers,3,1
+2026-09-17,2026-09-18T00:05Z,Final,13,Texas Rangers,2,Boston Red Sox,3,4
+2026-09-17,2026-09-18T01:38Z,Final,3,Los Angeles Angels,9,Minnesota Twins,5,4
+2026-09-18,2026-09-18T22:40Z,Final,17,Cincinnati Reds,16,Chicago Cubs,6,4
+2026-09-18,2026-09-18T22:40Z,Final,23,Pittsburgh Pirates,7,Kansas City Royals,8,5
+2026-09-18,2026-09-18T23:05Z,Final,1,Baltimore Orioles,8,Milwaukee Brewers,5,6
+2026-09-18,2026-09-18T23:10Z,Final,5,Cleveland Guardians,11,Athletics,5,3
+2026-09-18,2026-09-18T23:10Z,Final,30,Tampa Bay Rays,2,Boston Red Sox,2,4
+2026-09-18,2026-09-18T23:10Z,Final,21,New York Mets,22,Philadelphia Phillies,6,3
+2026-09-18,2026-09-18T23:40Z,Final,4,Chicago White Sox,6,Detroit Tigers,8,11
+2026-09-18,2026-09-19T00:05Z,Final,13,Texas Rangers,14,Toronto Blue Jays,7,1
+2026-09-18,2026-09-19T00:10Z,Final,18,Houston Astros,15,Atlanta Braves,2,6
+2026-09-18,2026-09-19T00:10Z,Final,27,Colorado Rockies,12,Seattle Mariners,4,5
+2026-09-18,2026-09-19T00:15Z,Final,24,St. Louis Cardinals,20,Washington Nationals,1,9
+2026-09-18,2026-09-19T01:38Z,Final,3,Los Angeles Angels,9,Minnesota Twins,0,3
+2026-09-18,2026-09-19T01:40Z,Final,25,San Diego Padres,28,Miami Marlins,8,2
+2026-09-18,2026-09-19T01:40Z,Final,29,Arizona Diamondbacks,10,New York Yankees,2,9
+2026-09-18,2026-09-19T02:15Z,Final,19,Los Angeles Dodgers,26,San Francisco Giants,8,2
+2026-09-19,2026-09-19T18:10Z,Final,4,Chicago White Sox,6,Detroit Tigers,3,1
+2026-09-19,2026-09-19T20:05Z,Final,1,Baltimore Orioles,8,Milwaukee Brewers,0,1
+2026-09-19,2026-09-19T20:10Z,Final,30,Tampa Bay Rays,2,Boston Red Sox,2,1
+2026-09-19,2026-09-19T20:10Z,Final,21,New York Mets,22,Philadelphia Phillies,10,3
+2026-09-19,2026-09-19T22:10Z,Final,5,Cleveland Guardians,11,Athletics,12,6
+2026-09-19,2026-09-19T22:40Z,Final,17,Cincinnati Reds,16,Chicago Cubs,2,5
+2026-09-19,2026-09-19T22:40Z,Final,23,Pittsburgh Pirates,7,Kansas City Royals,6,5
+2026-09-19,2026-09-19T23:05Z,Final,13,Texas Rangers,14,Toronto Blue Jays,6,2
+2026-09-19,2026-09-19T23:10Z,Final,18,Houston Astros,15,Atlanta Braves,3,6
+2026-09-19,2026-09-19T23:15Z,Final,24,St. Louis Cardinals,20,Washington Nationals,5,8
+2026-09-19,2026-09-20T00:10Z,Final,27,Colorado Rockies,12,Seattle Mariners,5,3
+2026-09-19,2026-09-20T00:10Z,Final,29,Arizona Diamondbacks,10,New York Yankees,5,3
+2026-09-19,2026-09-20T00:40Z,Final,25,San Diego Padres,28,Miami Marlins,7,6
+2026-09-19,2026-09-20T01:10Z,Final,19,Los Angeles Dodgers,26,San Francisco Giants,10,4
+2026-09-19,2026-09-20T01:38Z,Final,3,Los Angeles Angels,9,Minnesota Twins,6,5
+2026-09-20,2026-09-20T17:10Z,Final,21,New York Mets,22,Philadelphia Phillies,2,7
+2026-09-20,2026-09-20T17:35Z,Final,23,Pittsburgh Pirates,7,Kansas City Royals,4,3
+2026-09-20,2026-09-20T17:40Z,Final,5,Cleveland Guardians,11,Athletics,1,0
+2026-09-20,2026-09-20T17:40Z,Final,30,Tampa Bay Rays,2,Boston Red Sox,5,1
+2026-09-20,2026-09-20T17:40Z,Final,17,Cincinnati Reds,16,Chicago Cubs,1,9
+2026-09-20,2026-09-20T18:10Z,Final,18,Houston Astros,15,Atlanta Braves,2,4
+2026-09-20,2026-09-20T18:10Z,Final,4,Chicago White Sox,6,Detroit Tigers,8,1
+2026-09-20,2026-09-20T18:15Z,Final,24,St. Louis Cardinals,20,Washington Nationals,5,3
+2026-09-20,2026-09-20T18:35Z,Final,13,Texas Rangers,14,Toronto Blue Jays,2,7
+2026-09-20,2026-09-20T19:10Z,Final,27,Colorado Rockies,12,Seattle Mariners,1,2
+2026-09-20,2026-09-20T20:07Z,Final,3,Los Angeles Angels,9,Minnesota Twins,0,8
+2026-09-20,2026-09-20T20:10Z,Final,25,San Diego Padres,28,Miami Marlins,7,3
+2026-09-20,2026-09-20T20:10Z,Final,29,Arizona Diamondbacks,10,New York Yankees,8,4
+2026-09-20,2026-09-20T20:10Z,Final,19,Los Angeles Dodgers,26,San Francisco Giants,3,1
+2026-09-20,2026-09-20T23:20Z,Final,1,Baltimore Orioles,8,Milwaukee Brewers,0,3

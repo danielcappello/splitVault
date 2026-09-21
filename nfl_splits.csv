@@ -31,5 +31,7 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-09-13,NFL,Philadelphia Eagles,Washington Commanders,Washington Commanders,+6,0.32,0.32,43.5,0.62,0.54,2.95,0.1,0.09,2026-09-14 22:25:07.730558,24,22,Philadelphia Eagles,Loss,-1.0
 2026-09-14,NFL,Kansas City Chiefs,Denver Broncos,Denver Broncos,+2.5,0.54,0.63,42.5,0.53,0.53,2.1,0.44,0.54,2026-09-15 22:25:06.415433,31,10,Kansas City Chiefs,Loss,-1.0
 2026-09-14,NFL,Kansas City Chiefs,Denver Broncos,Kansas City Chiefs,-2.5,0.46,0.37,42.5,0.47,0.47,1.7692307,0.56,0.46,2026-09-15 22:25:06.415433,31,10,Kansas City Chiefs,Win,0.7692307233810425
-2026-09-17,NFL,Buffalo Bills,Detroit Lions,Buffalo Bills,-5.5,0.8,0.64,54.5,0.45,0.31,1.420168,0.77,0.81,2026-09-17 19:55:07.178599,,,,,
-2026-09-17,NFL,Buffalo Bills,Detroit Lions,Detroit Lions,+5.5,0.2,0.36,54.5,0.55,0.69,2.95,0.23,0.19,2026-09-17 19:55:07.178599,,,,,
+2026-09-17,NFL,Buffalo Bills,Detroit Lions,Buffalo Bills,-5.5,0.67,0.64,54.5,0.34,0.34,1.420168,0.71,0.75,2026-09-18 22:25:07.248386,41,31,Buffalo Bills,Win,0.42016804218292236
+2026-09-17,NFL,Buffalo Bills,Detroit Lions,Detroit Lions,+5.5,0.33,0.36,54.5,0.66,0.66,2.95,0.29,0.25,2026-09-18 22:25:07.248386,41,31,Buffalo Bills,Loss,-1.0
+2026-09-20,NFL,New England Patriots,Pittsburgh Steelers,New England Patriots,-4.5,0.56,0.47,41.5,0.58,0.57,1.4444444,0.75,0.72,2026-09-21 19:55:07.252329,20,3,New England Patriots,Win,0.4444444179534912
+2026-09-20,NFL,New England Patriots,Pittsburgh Steelers,Pittsburgh Steelers,+4.5,0.44,0.53,41.5,0.42,0.43,2.85,0.25,0.28,2026-09-21 19:55:07.252329,20,3,New England Patriots,Loss,-1.0
