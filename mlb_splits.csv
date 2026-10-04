@@ -395,14 +395,14 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-08-29,MLB,Minnesota Twins,Chicago White Sox,Chicago White Sox,-1.5,0.59,0.56,9,0.76,0.59,1.9803921,0.71,0.6,2026-08-30 22:25:07.858727,2,3,Chicago White Sox,Win,0.9803920984268188
 2026-08-29,MLB,New York Mets,Houston Astros,Houston Astros,+1.5,0.17,0.58,8,0.3,0.45,2.42,0.32,0.34,2026-08-30 22:25:07.858727,6,2,New York Mets,Loss,-1.0
 2026-08-29,MLB,New York Mets,Houston Astros,New York Mets,-1.5,0.83,0.42,8,0.7,0.55,1.6535947,0.68,0.66,2026-08-30 22:25:07.858727,6,2,New York Mets,Win,0.6535947322845459
-2026-08-29,MLB,New York Yankees,Boston Red Sox,Boston Red Sox,-1.5,0.32,0.46,7.5,0.43,0.52,1.9708738,0.39,0.39,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Win,0.9708738327026367
 2026-08-29,MLB,New York Yankees,Boston Red Sox,Boston Red Sox,-1.5,0.32,0.46,7.5,0.43,0.52,1.9708738,0.39,0.39,2026-08-30 22:25:07.858727,9,2,New York Yankees,Loss,-1.0
-2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,+1.5,0.68,0.54,7.5,0.57,0.48,1.9615384,0.61,0.61,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Loss,-1.0
+2026-08-29,MLB,New York Yankees,Boston Red Sox,Boston Red Sox,-1.5,0.32,0.46,7.5,0.43,0.52,1.9708738,0.39,0.39,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Win,0.9708738327026367
 2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,+1.5,0.68,0.54,7.5,0.57,0.48,1.9615384,0.61,0.61,2026-08-30 22:25:07.858727,9,2,New York Yankees,Win,0.9615384340286255
-2026-08-29,MLB,New York Yankees,Boston Red Sox,Boston Red Sox,+1.5,0.05,0.29,7,0.71,0.59,2.3,0.22,0.23,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Win,1.2999999523162842
+2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,+1.5,0.68,0.54,7.5,0.57,0.48,1.9615384,0.61,0.61,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Loss,-1.0
 2026-08-29,MLB,New York Yankees,Boston Red Sox,Boston Red Sox,+1.5,0.05,0.29,7,0.71,0.59,2.3,0.22,0.23,2026-08-30 22:25:07.858727,9,2,New York Yankees,Loss,-1.0
-2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,-1.5,0.95,0.71,7,0.29,0.41,1.7142857,0.78,0.77,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Loss,-1.0
+2026-08-29,MLB,New York Yankees,Boston Red Sox,Boston Red Sox,+1.5,0.05,0.29,7,0.71,0.59,2.3,0.22,0.23,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Win,1.2999999523162842
 2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,-1.5,0.95,0.71,7,0.29,0.41,1.7142857,0.78,0.77,2026-08-30 22:25:07.858727,9,2,New York Yankees,Win,0.7142857313156128
+2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,-1.5,0.95,0.71,7,0.29,0.41,1.7142857,0.78,0.77,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Loss,-1.0
 2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.77,0.54,8,0.84,0.73,1.8064516,0.4,0.67,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Win,0.8064515590667725
 2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.77,0.54,8,0.84,0.73,1.8064516,0.4,0.67,2026-08-30 22:25:07.858727,7,2,San Francisco Giants,Loss,-1.0
 2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,San Francisco Giants,+1.5,0.2,0.55,8.5,0.53,0.32,2.06,0.24,0.31,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Loss,-1.0
@@ -943,5 +943,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-09-30,MLB,Atlanta Braves,Philadelphia Phillies,Philadelphia Phillies,-1.5,0.6,0.54,7,0.64,0.76,1.877193,0.62,0.64,2026-10-01 22:25:07.560565,3,4,Philadelphia Phillies,Win,0.8771929740905762
 2026-10-01,MLB,Atlanta Braves,Philadelphia Phillies,Atlanta Braves,+1.5,0.44,0.57,7.5,0.23,0.29,1.877193,0.43,0.47,2026-10-02 22:25:05.890365,6,2,Atlanta Braves,Win,0.8771929740905762
 2026-10-01,MLB,Atlanta Braves,Philadelphia Phillies,Philadelphia Phillies,-1.5,0.56,0.43,7.5,0.77,0.71,1.9433962,0.57,0.53,2026-10-02 22:25:05.890365,6,2,Atlanta Braves,Loss,-1.0
-2026-10-03,MLB,Cleveland Guardians,Chicago White Sox,Chicago White Sox,+1.5,0.23,0.63,7,0.81,0.77,2.29,0.48,0.49,2026-10-03 19:55:09.267973,,,,,
-2026-10-03,MLB,Cleveland Guardians,Chicago White Sox,Cleveland Guardians,-1.5,0.77,0.38,7,0.19,0.23,1.6410257,0.52,0.51,2026-10-03 19:55:09.267973,,,,,
+2026-10-03,MLB,Cleveland Guardians,Chicago White Sox,Chicago White Sox,+1.5,0.28,0.58,6.5,0.68,0.73,2.24,0.61,0.5,2026-10-04 19:55:12.387987,0,3,Chicago White Sox,Win,1.2400000095367432
+2026-10-03,MLB,Cleveland Guardians,Chicago White Sox,Cleveland Guardians,-1.5,0.72,0.42,6.5,0.32,0.27,1.6711409,0.39,0.5,2026-10-04 19:55:12.387987,0,3,Chicago White Sox,Loss,-1.0
