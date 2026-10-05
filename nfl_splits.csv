@@ -45,5 +45,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-09-28,NFL,Chicago Bears,Philadelphia Eagles,Philadelphia Eagles,-3.5,0.55,0.73,42.5,0.5,0.56,1.5050505,0.81,0.87,2026-09-29 22:25:07.158543,27,7,Chicago Bears,Loss,-1.0
 2026-10-01,NFL,Cleveland Browns,Pittsburgh Steelers,Cleveland Browns,+2.5,0.34,0.43,38.5,0.67,0.59,2.24,0.27,0.41,2026-10-02 22:25:07.558757,27,24,Cleveland Browns,Win,1.2400000095367432
 2026-10-01,NFL,Cleveland Browns,Pittsburgh Steelers,Pittsburgh Steelers,-2.5,0.66,0.57,38.5,0.33,0.41,1.6756756,0.73,0.59,2026-10-02 22:25:07.558757,27,24,Cleveland Browns,Loss,-1.0
-2026-10-04,NFL,Washington Commanders,Indianapolis Colts,Indianapolis Colts,-4.5,0.73,0.45,46.5,0.72,0.6,1.4878049,0.54,0.69,2026-10-04 19:55:14.059481,,,,,
-2026-10-04,NFL,Washington Commanders,Indianapolis Colts,Washington Commanders,+4.5,0.27,0.55,46.5,0.28,0.4,2.7,0.46,0.31,2026-10-04 19:55:14.059481,,,,,
+2026-10-04,NFL,Washington Commanders,Indianapolis Colts,Indianapolis Colts,-4.5,0.74,0.48,46.5,0.5,0.57,1.4347826,0.55,0.67,2026-10-05 19:55:08.720095,13,30,Indianapolis Colts,Win,0.43478262424468994
+2026-10-04,NFL,Washington Commanders,Indianapolis Colts,Washington Commanders,+4.5,0.26,0.52,46.5,0.5,0.43,2.9,0.45,0.33,2026-10-05 19:55:08.720095,13,30,Indianapolis Colts,Loss,-1.0
