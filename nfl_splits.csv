@@ -49,5 +49,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-10-04,NFL,Washington Commanders,Indianapolis Colts,Washington Commanders,+4.5,0.26,0.52,46.5,0.5,0.43,2.9,0.45,0.33,2026-10-05 23:25:10.486338,13,30,Indianapolis Colts,Loss,-1.0
 2026-10-05,NFL,New Orleans Saints,Atlanta Falcons,Atlanta Falcons,+1.5,0.44,0.38,47.5,0.91,0.78,1.9803921,0.45,0.44,2026-10-06 23:25:11.099835,24,45,Atlanta Falcons,Win,0.9803920984268188
 2026-10-05,NFL,New Orleans Saints,Atlanta Falcons,New Orleans Saints,-1.5,0.56,0.62,47.5,0.09,0.22,1.8474576,0.55,0.56,2026-10-06 23:25:11.099835,24,45,Atlanta Falcons,Loss,-1.0
-2026-10-08,NFL,Dallas Cowboys,Tampa Bay Buccaneers,Dallas Cowboys,-8.5,0.9,0.69,47.5,0.19,0.21,1.2127659,0.46,0.81,2026-10-08 19:55:07.459075,,,,,
-2026-10-08,NFL,Dallas Cowboys,Tampa Bay Buccaneers,Tampa Bay Buccaneers,+8.5,0.1,0.31,47.5,0.81,0.79,4.6,0.54,0.19,2026-10-08 19:55:07.459075,,,,,
+2026-10-08,NFL,Dallas Cowboys,Tampa Bay Buccaneers,Dallas Cowboys,-8.5,0.73,0.64,49.5,0.19,0.35,1.2,0.66,0.77,2026-10-09 19:55:06.863359,16,24,Tampa Bay Buccaneers,Loss,-1.0
+2026-10-08,NFL,Dallas Cowboys,Tampa Bay Buccaneers,Tampa Bay Buccaneers,+8.5,0.27,0.36,49.5,0.81,0.65,4.8,0.34,0.23,2026-10-09 19:55:06.863359,16,24,Tampa Bay Buccaneers,Win,3.8000001907348633
