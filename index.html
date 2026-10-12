@@ -118,6 +118,29 @@
   }
   .toggle-btn:hover, .reset-btn:hover{color:var(--ink); border-color:var(--ink-muted);}
   .toggle-btn.open{color:var(--link); border-color:var(--link);}
+  .fade-toggle{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer;
+    background:var(--panel-raised); border:1px solid var(--hairline); border-radius:var(--radius);
+    padding:9px 12px; margin:4px 0 2px; user-select:none;
+  }
+  .fade-toggle:hover{border-color:var(--ink-muted);}
+  .fade-toggle-text{display:flex; flex-direction:column; gap:1px; min-width:0;}
+  .fade-toggle-title{font-family:'Sora',sans-serif; font-weight:600; font-size:12.5px; color:var(--ink);}
+  .fade-toggle-hint{font-size:10.5px; color:var(--ink-faint); line-height:1.35;}
+  .fade-toggle input{position:absolute; opacity:0; pointer-events:none;}
+  .fade-switch{
+    flex:none; position:relative; width:36px; height:20px; border-radius:20px;
+    background:var(--hairline); transition:background 0.15s;
+  }
+  .fade-switch::after{
+    content:''; position:absolute; top:3px; left:3px; width:14px; height:14px; border-radius:50%;
+    background:var(--ink-muted); transition:transform 0.15s, background 0.15s;
+  }
+  .fade-toggle input:checked + .fade-switch{background:var(--handle);}
+  .fade-toggle input:checked + .fade-switch::after{transform:translateX(16px); background:#fff;}
+  .fade-toggle:has(input:checked){border-color:var(--handle); background:var(--handle-soft);}
+  .fade-toggle input:focus-visible + .fade-switch{outline:2px solid var(--link); outline-offset:2px;}
+
   .more-filters{display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--hairline-soft);}
   .more-filters.open{display:block;}
 
@@ -424,6 +447,14 @@
           <option value="away">Away only</option>
         </select>
       </div>
+      <label class="fade-toggle" for="gFade">
+        <span class="fade-toggle-text">
+          <span class="fade-toggle-title">Fade pick</span>
+          <span class="fade-toggle-hint">Bet the opposite team to the one these filters select</span>
+        </span>
+        <input type="checkbox" id="gFade">
+        <span class="fade-switch" aria-hidden="true"></span>
+      </label>
       <button class="toggle-btn" id="moreToggle">More filters ▾</button>
       <div class="more-filters" id="moreFilters">
         <div class="num-row">
@@ -1098,6 +1129,7 @@ function activeFilterCount(){
   if(f.betsMax!==null) n++;
   if(f.divMin!==null) n++;
   if(f.divMax!==null) n++;
+  if(f.fadePick) n++;
   return n;
 }
 
@@ -1136,7 +1168,7 @@ function renderStats(){
   const cells = [
     {label:'Settled games', value:settledGames.length, sub:'backtest, matching filters'},
     {label:'Upcoming games', value:upcomingGamesCount, sub:'not yet settled, matching filters'},
-    {label:'Settled ML bets', value:settled.length, sub:'team-sides included'},
+    {label:'Settled ML bets', value:settled.length, sub: state.filters.fadePick ? 'faded side of each match' : 'team-sides included'},
     {label:'Win rate', value: winRate!==null ? winRate.toFixed(1)+'%' : '—', sub: settled.length+' settled'},
     {label:'Total PnL', value: fmtPnl(totalPnl)!==null ? fmtPnl(totalPnl)+'u' : '—', sub:'flat $1 stakes', cls: totalPnl>0?'pos':(totalPnl<0?'neg':'')},
     {label:'ROI', value: roi!==null ? (roi>0?'+':'')+roi.toFixed(1)+'%' : '—', sub:'per bet placed', cls: roi>0?'pos':(roi<0?'neg':'')}
@@ -1282,6 +1314,7 @@ function applyFiltersToControls(){
   document.getElementById('gFormWinsMin').value = f.formWinsMin===null ? '' : f.formWinsMin;
   document.getElementById('gH2HCount').value = f.h2hCount===null ? '' : f.h2hCount;
   document.getElementById('gH2HWinsMin').value = f.h2hWinsMin===null ? '' : f.h2hWinsMin;
+  document.getElementById('gFade').checked = !!f.fadePick;
   updateMarketUI();
   document.querySelectorAll('.preset-btn').forEach(b=> b.classList.toggle('active', b.dataset.preset===f.preset));
 }
@@ -1302,6 +1335,16 @@ function wireGlobalFilters(){
   bindSelect('gDateTo','dateTo');
   bindSelect('gResult','result');
   bindSelect('gRole','role');
+
+  /* Fade pick: flips which team of each matching game is the bet. The tables, the PnL
+     chart and every total all read state.filters.fadePick (via pickedSide() and
+     matchingSides()), so flipping this one field re-prices everything at once. */
+  document.getElementById('gFade').addEventListener('change', e=>{
+    f.fadePick = e.target.checked;
+    f.preset = null;
+    document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+    renderAll();
+  });
 
   document.getElementById('gTeam').addEventListener('input', e=>{
     f.team = e.target.value.toLowerCase();
