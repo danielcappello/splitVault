@@ -51,5 +51,9 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-10-05,NFL,New Orleans Saints,Atlanta Falcons,New Orleans Saints,-1.5,0.56,0.62,47.5,0.09,0.22,1.8474576,0.55,0.56,2026-10-06 23:25:11.099835,24,45,Atlanta Falcons,Loss,-1.0
 2026-10-08,NFL,Dallas Cowboys,Tampa Bay Buccaneers,Dallas Cowboys,-8.5,0.73,0.64,49.5,0.19,0.35,1.2,0.66,0.77,2026-10-09 23:25:09.571249,16,24,Tampa Bay Buccaneers,Loss,-1.0
 2026-10-08,NFL,Dallas Cowboys,Tampa Bay Buccaneers,Tampa Bay Buccaneers,+8.5,0.27,0.36,49.5,0.81,0.65,4.8,0.34,0.23,2026-10-09 23:25:09.571249,16,24,Tampa Bay Buccaneers,Win,3.8000001907348633
-2026-10-11,NFL,Jacksonville Jaguars,Philadelphia Eagles,Jacksonville Jaguars,-7.5,0.53,0.47,41.5,0.24,0.31,1.2631578,0.5,0.74,2026-10-12 19:55:07.706157,19,17,Jacksonville Jaguars,Win,0.26315784454345703
-2026-10-11,NFL,Jacksonville Jaguars,Philadelphia Eagles,Philadelphia Eagles,+7.5,0.47,0.53,41.5,0.76,0.69,4.0,0.5,0.26,2026-10-12 19:55:07.706157,19,17,Jacksonville Jaguars,Loss,-1.0
+2026-10-11,NFL,Jacksonville Jaguars,Philadelphia Eagles,Jacksonville Jaguars,-7.5,0.53,0.47,41.5,0.24,0.31,1.2631578,0.5,0.74,2026-10-12 23:25:10.942049,19,17,Jacksonville Jaguars,Win,0.26315784454345703
+2026-10-11,NFL,Jacksonville Jaguars,Philadelphia Eagles,Philadelphia Eagles,+7.5,0.47,0.53,41.5,0.76,0.69,4.0,0.5,0.26,2026-10-12 23:25:10.942049,19,17,Jacksonville Jaguars,Loss,-1.0
+2026-10-12,NFL,Los Angeles Rams,Buffalo Bills,Buffalo Bills,+3.5,0.51,0.7,55.5,0.58,0.74,2.54,0.66,0.67,2026-10-13 13:55:06.780495,34,37,Buffalo Bills,Win,1.5399999618530273
+2026-10-12,NFL,Los Angeles Rams,Buffalo Bills,Los Angeles Rams,-3.5,0.49,0.3,55.5,0.42,0.26,1.5405406,0.34,0.33,2026-10-13 13:55:06.780495,34,37,Buffalo Bills,Loss,-1.0
+2026-10-15,NFL,Denver Broncos,Seattle Seahawks,Denver Broncos,+2.5,0.12,0.32,40.5,0.19,0.28,2.2,0.18,0.29,2026-10-15 19:55:09.510293,,,,,
+2026-10-15,NFL,Denver Broncos,Seattle Seahawks,Seattle Seahawks,-2.5,0.88,0.68,40.5,0.81,0.72,1.7042253,0.82,0.71,2026-10-15 19:55:09.510293,,,,,
