@@ -63,14 +63,14 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-08-17,MLB,Boston Red Sox,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.44,0.55,9,0.59,0.51,2.2,0.36,0.37,2026-08-18 22:25:04.296912,11,1,Boston Red Sox,Loss,-1.0
 2026-08-17,MLB,Chicago Cubs,Chicago White Sox,Chicago White Sox,+1.5,0.4,0.48,8,0.89,0.72,2.45,0.6,0.29,2026-08-18 22:25:04.296912,7,5,Chicago Cubs,Loss,-1.0
 2026-08-17,MLB,Chicago Cubs,Chicago White Sox,Chicago Cubs,-1.5,0.6,0.52,8,0.11,0.28,1.6451613,0.4,0.71,2026-08-18 22:25:04.296912,7,5,Chicago Cubs,Win,0.6451612710952759
-2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.33,0.5,9,0.28,0.52,2.04,0.13,0.31,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Win,1.0399999618530273
 2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.33,0.5,9,0.28,0.52,2.04,0.13,0.31,2026-08-18 22:25:04.296912,1,2,St. Louis Cardinals,Loss,-1.0
-2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.93,0.56,9.5,0.7,0.53,1.9174312,0.35,0.66,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Loss,-1.0
+2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.33,0.5,9,0.28,0.52,2.04,0.13,0.31,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Win,1.0399999618530273
 2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.93,0.56,9.5,0.7,0.53,1.9174312,0.35,0.66,2026-08-18 22:25:04.296912,1,2,St. Louis Cardinals,Win,0.9174312353134155
-2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.07,0.44,9.5,0.3,0.47,2.01,0.65,0.34,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Win,1.0099999904632568
+2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.93,0.56,9.5,0.7,0.53,1.9174312,0.35,0.66,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Loss,-1.0
 2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.07,0.44,9.5,0.3,0.47,2.01,0.65,0.34,2026-08-18 22:25:04.296912,1,2,St. Louis Cardinals,Loss,-1.0
-2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.67,0.5,9,0.72,0.48,1.8928572,0.87,0.69,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Loss,-1.0
+2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,Cincinnati Reds,+1.5,0.07,0.44,9.5,0.3,0.47,2.01,0.65,0.34,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Win,1.0099999904632568
 2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.67,0.5,9,0.72,0.48,1.8928572,0.87,0.69,2026-08-18 22:25:04.296912,1,2,St. Louis Cardinals,Win,0.8928571939468384
+2026-08-17,MLB,Cincinnati Reds,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.67,0.5,9,0.72,0.48,1.8928572,0.87,0.69,2026-08-18 22:25:04.296912,6,5,Cincinnati Reds,Loss,-1.0
 2026-08-17,MLB,Colorado Rockies,Los Angeles Dodgers,Los Angeles Dodgers,-1.5,0.9,0.74,11,0.81,0.47,1.3891051,0.74,0.85,2026-08-18 22:25:04.296912,5,11,Los Angeles Dodgers,Win,0.38910508155822754
 2026-08-17,MLB,Colorado Rockies,Los Angeles Dodgers,Colorado Rockies,+1.5,0.1,0.26,11,0.19,0.53,3.37,0.26,0.15,2026-08-18 22:25:04.296912,5,11,Los Angeles Dodgers,Loss,-1.0
 2026-08-17,MLB,Kansas City Royals,Athletics,Kansas City Royals,-1.5,0.6,0.6,9,0.27,0.53,1.5524862,0.7,0.79,2026-08-18 22:25:04.296912,9,5,Kansas City Royals,Win,0.5524861812591553
@@ -403,14 +403,14 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-08-29,MLB,New York Yankees,Boston Red Sox,Boston Red Sox,+1.5,0.05,0.29,7,0.71,0.59,2.3,0.22,0.23,2026-08-30 22:25:07.858727,9,2,New York Yankees,Loss,-1.0
 2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,-1.5,0.95,0.71,7,0.29,0.41,1.7142857,0.78,0.77,2026-08-30 22:25:07.858727,0,6,Boston Red Sox,Loss,-1.0
 2026-08-29,MLB,New York Yankees,Boston Red Sox,New York Yankees,-1.5,0.95,0.71,7,0.29,0.41,1.7142857,0.78,0.77,2026-08-30 22:25:07.858727,9,2,New York Yankees,Win,0.7142857313156128
-2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.77,0.54,8,0.84,0.73,1.8064516,0.4,0.67,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Win,0.8064515590667725
 2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.77,0.54,8,0.84,0.73,1.8064516,0.4,0.67,2026-08-30 22:25:07.858727,7,2,San Francisco Giants,Loss,-1.0
-2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.8,0.45,8.5,0.47,0.68,1.877193,0.76,0.69,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Win,0.8771929740905762
+2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.77,0.54,8,0.84,0.73,1.8064516,0.4,0.67,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Win,0.8064515590667725
 2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.8,0.45,8.5,0.47,0.68,1.877193,0.76,0.69,2026-08-30 22:25:07.858727,7,2,San Francisco Giants,Loss,-1.0
-2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,San Francisco Giants,+1.5,0.2,0.55,8.5,0.53,0.32,2.06,0.24,0.31,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Loss,-1.0
+2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,Arizona Diamondbacks,-1.5,0.8,0.45,8.5,0.47,0.68,1.877193,0.76,0.69,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Win,0.8771929740905762
 2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,San Francisco Giants,+1.5,0.2,0.55,8.5,0.53,0.32,2.06,0.24,0.31,2026-08-30 22:25:07.858727,7,2,San Francisco Giants,Win,1.059999942779541
-2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,San Francisco Giants,+1.5,0.23,0.46,8,0.16,0.27,2.16,0.6,0.33,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Loss,-1.0
+2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,San Francisco Giants,+1.5,0.2,0.55,8.5,0.53,0.32,2.06,0.24,0.31,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Loss,-1.0
 2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,San Francisco Giants,+1.5,0.23,0.46,8,0.16,0.27,2.16,0.6,0.33,2026-08-30 22:25:07.858727,7,2,San Francisco Giants,Win,1.1600000858306885
+2026-08-29,MLB,San Francisco Giants,Arizona Diamondbacks,San Francisco Giants,+1.5,0.23,0.46,8,0.16,0.27,2.16,0.6,0.33,2026-08-30 22:25:07.858727,1,7,Arizona Diamondbacks,Loss,-1.0
 2026-08-29,MLB,St. Louis Cardinals,Pittsburgh Pirates,Pittsburgh Pirates,+1.5,0.24,0.48,8,0.75,0.6,2.14,0.47,0.27,2026-08-30 22:25:07.858727,2,6,Pittsburgh Pirates,Win,1.1400001049041748
 2026-08-29,MLB,St. Louis Cardinals,Pittsburgh Pirates,St. Louis Cardinals,-1.5,0.76,0.52,8,0.25,0.4,1.8130082,0.53,0.73,2026-08-30 22:25:07.858727,2,6,Pittsburgh Pirates,Loss,-1.0
 2026-08-29,MLB,Tampa Bay Rays,San Diego Padres,San Diego Padres,+1.5,0.31,0.54,8,0.07,0.56,2.19,0.52,0.27,2026-08-30 22:25:07.858727,7,6,Tampa Bay Rays,Loss,-1.0
@@ -963,5 +963,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-10-12,MLB,Milwaukee Brewers,Los Angeles Dodgers,Milwaukee Brewers,+1.5,0.19,0.37,6.5,0.77,0.6,2.16,0.25,0.21,2026-10-13 13:55:05.249594,,,,,
 2026-10-13,MLB,Tampa Bay Rays,Cleveland Guardians,Cleveland Guardians,+1.5,0.3,0.31,6.5,0.79,0.74,2.13,0.29,0.31,2026-10-14 08:12:27.533112,,,,,
 2026-10-13,MLB,Tampa Bay Rays,Cleveland Guardians,Tampa Bay Rays,-1.5,0.7,0.69,6.5,0.21,0.26,1.7352941,0.71,0.69,2026-10-14 08:12:27.533112,,,,,
-2026-10-14,MLB,Los Angeles Dodgers,Milwaukee Brewers,Los Angeles Dodgers,-1.5,0.77,0.73,7.5,0.66,0.52,1.5494505,0.75,0.75,2026-10-15 05:57:27.449498,,,,,
-2026-10-14,MLB,Los Angeles Dodgers,Milwaukee Brewers,Milwaukee Brewers,+1.5,0.23,0.27,7.5,0.34,0.48,2.5,0.25,0.25,2026-10-15 05:57:27.449498,,,,,
+2026-10-14,MLB,Los Angeles Dodgers,Milwaukee Brewers,Los Angeles Dodgers,-1.5,0.81,0.72,7,0.4,0.42,1.5714285,0.66,0.72,2026-10-15 19:55:07.980373,2,6,Milwaukee Brewers,Loss,-1.0
+2026-10-14,MLB,Los Angeles Dodgers,Milwaukee Brewers,Milwaukee Brewers,+1.5,0.19,0.28,7,0.6,0.58,2.56,0.34,0.28,2026-10-15 19:55:07.980373,2,6,Milwaukee Brewers,Win,1.559999942779541
