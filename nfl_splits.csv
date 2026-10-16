@@ -55,5 +55,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-10-11,NFL,Jacksonville Jaguars,Philadelphia Eagles,Philadelphia Eagles,+7.5,0.47,0.53,41.5,0.76,0.69,4.0,0.5,0.26,2026-10-12 23:25:10.942049,19,17,Jacksonville Jaguars,Loss,-1.0
 2026-10-12,NFL,Los Angeles Rams,Buffalo Bills,Buffalo Bills,+3.5,0.51,0.7,55.5,0.58,0.74,2.54,0.66,0.67,2026-10-13 13:55:06.780495,34,37,Buffalo Bills,Win,1.5399999618530273
 2026-10-12,NFL,Los Angeles Rams,Buffalo Bills,Los Angeles Rams,-3.5,0.49,0.3,55.5,0.42,0.26,1.5405406,0.34,0.33,2026-10-13 13:55:06.780495,34,37,Buffalo Bills,Loss,-1.0
-2026-10-15,NFL,Denver Broncos,Seattle Seahawks,Denver Broncos,+2.5,0.12,0.32,40.5,0.19,0.28,2.2,0.18,0.29,2026-10-15 19:55:09.510293,,,,,
-2026-10-15,NFL,Denver Broncos,Seattle Seahawks,Seattle Seahawks,-2.5,0.88,0.68,40.5,0.81,0.72,1.7042253,0.82,0.71,2026-10-15 19:55:09.510293,,,,,
+2026-10-15,NFL,Denver Broncos,Seattle Seahawks,Denver Broncos,+2.5,0.29,0.28,40.5,0.54,0.28,2.3,0.24,0.32,2026-10-16 19:55:10.269404,17,14,Denver Broncos,Win,1.2999999523162842
+2026-10-15,NFL,Denver Broncos,Seattle Seahawks,Seattle Seahawks,-2.5,0.71,0.72,40.5,0.46,0.72,1.6451613,0.76,0.68,2026-10-16 19:55:10.269404,17,14,Denver Broncos,Loss,-1.0
