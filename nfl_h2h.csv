@@ -1084,3 +1084,15 @@ usa_match_date,utc_start_time,status,home_team_id,home_team,away_team_id,away_te
 2026-10-11,2026-10-12T00:20Z,Final,1,Atlanta Falcons,33,Baltimore Ravens,23,30
 2026-10-12,2026-10-13T00:15Z,Final,14,Los Angeles Rams,2,Buffalo Bills,34,37
 2026-10-15,2026-10-16T00:15Z,Final,7,Denver Broncos,26,Seattle Seahawks,17,14
+2026-10-18,2026-10-18T13:30Z,Final,30,Jacksonville Jaguars,34,Houston Texans,31,34
+2026-10-18,2026-10-18T17:00Z,Final,1,Atlanta Falcons,3,Chicago Bears,23,31
+2026-10-18,2026-10-18T17:00Z,Final,5,Cleveland Browns,33,Baltimore Ravens,13,10
+2026-10-18,2026-10-18T17:00Z,Final,11,Indianapolis Colts,10,Tennessee Titans,20,26
+2026-10-18,2026-10-18T17:00Z,Final,17,New England Patriots,20,New York Jets,26,19
+2026-10-18,2026-10-18T17:00Z,Final,19,New York Giants,18,New Orleans Saints,27,34
+2026-10-18,2026-10-18T17:00Z,Final,21,Philadelphia Eagles,29,Carolina Panthers,14,25
+2026-10-18,2026-10-18T17:00Z,Final,27,Tampa Bay Buccaneers,23,Pittsburgh Steelers,19,26
+2026-10-18,2026-10-18T20:05Z,Final,14,Los Angeles Rams,22,Arizona Cardinals,16,18
+2026-10-18,2026-10-18T20:25Z,Final,12,Kansas City Chiefs,24,Los Angeles Chargers,22,6
+2026-10-18,2026-10-18T20:25Z,Final,13,Las Vegas Raiders,2,Buffalo Bills,30,33
+2026-10-18,2026-10-19T00:20Z,Final,9,Green Bay Packers,6,Dallas Cowboys,23,13
