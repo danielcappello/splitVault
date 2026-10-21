@@ -59,5 +59,7 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-10-15,NFL,Denver Broncos,Seattle Seahawks,Seattle Seahawks,-2.5,0.71,0.72,40.5,0.46,0.72,1.6451613,0.76,0.68,2026-10-16 23:25:26.817439,17,14,Denver Broncos,Loss,-1.0
 2026-10-18,NFL,Jacksonville Jaguars,Houston Texans,Houston Texans,+2.5,0.46,0.37,42.5,0.69,0.6,2.2,0.56,0.34,2026-10-19 23:25:11.743253,31,34,Houston Texans,Win,1.2000000476837158
 2026-10-18,NFL,Jacksonville Jaguars,Houston Texans,Jacksonville Jaguars,-2.5,0.54,0.63,42.5,0.31,0.4,1.7042253,0.44,0.66,2026-10-19 23:25:11.743253,31,34,Houston Texans,Loss,-1.0
-2026-10-19,NFL,San Francisco 49ers,Washington Commanders,San Francisco 49ers,-7.5,0.38,0.58,51.5,0.34,0.44,1.2439024,0.7,0.86,2026-10-20 19:55:06.624515,23,17,San Francisco 49ers,Win,0.24390244483947754
-2026-10-19,NFL,San Francisco 49ers,Washington Commanders,Washington Commanders,+7.5,0.62,0.42,51.5,0.66,0.56,4.2,0.3,0.14,2026-10-20 19:55:06.624515,23,17,San Francisco 49ers,Loss,-1.0
+2026-10-19,NFL,San Francisco 49ers,Washington Commanders,San Francisco 49ers,-7.5,0.38,0.58,51.5,0.34,0.44,1.2439024,0.7,0.86,2026-10-20 23:25:09.866476,23,17,San Francisco 49ers,Win,0.24390244483947754
+2026-10-19,NFL,San Francisco 49ers,Washington Commanders,Washington Commanders,+7.5,0.62,0.42,51.5,0.66,0.56,4.2,0.3,0.14,2026-10-20 23:25:09.866476,23,17,San Francisco 49ers,Loss,-1.0
+2026-10-22,NFL,Chicago Bears,New England Patriots,Chicago Bears,-3,0.77,0.51,50.5,0.56,0.35,1.6451613,0.84,0.54,2026-10-21 19:55:06.732093,,,,,
+2026-10-22,NFL,Chicago Bears,New England Patriots,New England Patriots,+3,0.23,0.49,50.5,0.44,0.65,2.3,0.16,0.46,2026-10-21 19:55:06.732093,,,,,
