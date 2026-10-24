@@ -555,14 +555,14 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-09-04,MLB,Chicago White Sox,Minnesota Twins,Minnesota Twins,+1.5,0.09,0.44,9,0.93,0.56,2.08,0.19,0.34,2026-09-05 22:25:17.384286,4,1,Chicago White Sox,Loss,-1.0
 2026-09-04,MLB,Cincinnati Reds,Milwaukee Brewers,Cincinnati Reds,+1.5,0.19,0.31,9.5,0.43,0.41,2.28,0.11,0.16,2026-09-05 22:25:17.384286,7,10,Milwaukee Brewers,Loss,-1.0
 2026-09-04,MLB,Cincinnati Reds,Milwaukee Brewers,Milwaukee Brewers,-1.5,0.81,0.69,9.5,0.57,0.59,1.6451613,0.89,0.84,2026-09-05 22:25:17.384286,7,10,Milwaukee Brewers,Win,0.6451612710952759
-2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Detroit Tigers,+1.5,0.4,0.59,8,0.83,0.64,2.08,0.56,0.41,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Loss,-1.0
 2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Detroit Tigers,+1.5,0.4,0.59,8,0.83,0.64,2.08,0.56,0.41,2026-09-05 22:25:17.384286,4,3,Cleveland Guardians,Loss,-1.0
-2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Cleveland Guardians,-1.5,0.6,0.41,8,0.17,0.36,1.7692307,0.44,0.59,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Win,0.7692307233810425
+2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Detroit Tigers,+1.5,0.4,0.59,8,0.83,0.64,2.08,0.56,0.41,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Loss,-1.0
 2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Cleveland Guardians,-1.5,0.6,0.41,8,0.17,0.36,1.7692307,0.44,0.59,2026-09-05 22:25:17.384286,4,3,Cleveland Guardians,Win,0.7692307233810425
-2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Cleveland Guardians,-1.5,0.93,0.57,7.5,0.53,0.35,1.6211181,0.83,0.76,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Win,0.6211180686950684
+2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Cleveland Guardians,-1.5,0.6,0.41,8,0.17,0.36,1.7692307,0.44,0.59,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Win,0.7692307233810425
 2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Cleveland Guardians,-1.5,0.93,0.57,7.5,0.53,0.35,1.6211181,0.83,0.76,2026-09-05 22:25:17.384286,4,3,Cleveland Guardians,Win,0.6211180686950684
-2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Detroit Tigers,+1.5,0.07,0.43,7.5,0.47,0.65,2.33,0.17,0.24,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Loss,-1.0
+2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Cleveland Guardians,-1.5,0.93,0.57,7.5,0.53,0.35,1.6211181,0.83,0.76,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Win,0.6211180686950684
 2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Detroit Tigers,+1.5,0.07,0.43,7.5,0.47,0.65,2.33,0.17,0.24,2026-09-05 22:25:17.384286,4,3,Cleveland Guardians,Loss,-1.0
+2026-09-04,MLB,Cleveland Guardians,Detroit Tigers,Detroit Tigers,+1.5,0.07,0.43,7.5,0.47,0.65,2.33,0.17,0.24,2026-09-05 22:25:17.384286,7,6,Cleveland Guardians,Loss,-1.0
 2026-09-04,MLB,Colorado Rockies,St. Louis Cardinals,Colorado Rockies,+1.5,0.3,0.39,11,0.68,0.49,2.1,0.36,0.19,2026-09-05 22:25:17.384286,6,7,St. Louis Cardinals,Loss,-1.0
 2026-09-04,MLB,Colorado Rockies,St. Louis Cardinals,St. Louis Cardinals,-1.5,0.7,0.61,11,0.32,0.51,1.7518797,0.64,0.81,2026-09-05 22:25:17.384286,6,7,St. Louis Cardinals,Win,0.7518796920776367
 2026-09-04,MLB,Houston Astros,Arizona Diamondbacks,Arizona Diamondbacks,+1.5,0.37,0.62,9,0.78,0.52,2.09,0.18,0.34,2026-09-05 22:25:17.384286,3,1,Houston Astros,Loss,-1.0
@@ -919,10 +919,10 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-09-21,MLB,Baltimore Orioles,Toronto Blue Jays,Toronto Blue Jays,-1.5,0.64,0.48,7.5,0.51,0.81,1.900901,0.55,0.58,2026-09-22 07:25:06.003451,4,3,Baltimore Orioles,Loss,-1.0
 2026-09-21,MLB,Detroit Tigers,Washington Nationals,Detroit Tigers,-1.5,0.9,0.59,8.5,0.03,0.15,1.7407408,0.71,0.67,2026-09-22 22:25:05.699854,9,2,Detroit Tigers,Win,0.7407407760620117
 2026-09-21,MLB,Detroit Tigers,Washington Nationals,Washington Nationals,+1.5,0.1,0.41,8.5,0.97,0.85,2.12,0.29,0.33,2026-09-22 22:25:05.699854,9,2,Detroit Tigers,Loss,-1.0
-2026-09-22,MLB,New York Yankees,Tampa Bay Rays,New York Yankees,-1.5,0.83,0.56,6.5,0.53,0.32,1.6896552,0.48,0.63,2026-09-23 22:25:05.634378,2,0,New York Yankees,Win,0.6896551847457886
 2026-09-22,MLB,New York Yankees,Tampa Bay Rays,New York Yankees,-1.5,0.83,0.56,6.5,0.53,0.32,1.6896552,0.48,0.63,2026-09-23 22:25:05.634378,1,6,Tampa Bay Rays,Loss,-1.0
-2026-09-22,MLB,New York Yankees,Tampa Bay Rays,Tampa Bay Rays,+1.5,0.17,0.44,6.5,0.47,0.68,2.2,0.52,0.37,2026-09-23 22:25:05.634378,2,0,New York Yankees,Loss,-1.0
+2026-09-22,MLB,New York Yankees,Tampa Bay Rays,New York Yankees,-1.5,0.83,0.56,6.5,0.53,0.32,1.6896552,0.48,0.63,2026-09-23 22:25:05.634378,2,0,New York Yankees,Win,0.6896551847457886
 2026-09-22,MLB,New York Yankees,Tampa Bay Rays,Tampa Bay Rays,+1.5,0.17,0.44,6.5,0.47,0.68,2.2,0.52,0.37,2026-09-23 22:25:05.634378,1,6,Tampa Bay Rays,Win,1.2000000476837158
+2026-09-22,MLB,New York Yankees,Tampa Bay Rays,Tampa Bay Rays,+1.5,0.17,0.44,6.5,0.47,0.68,2.2,0.52,0.37,2026-09-23 22:25:05.634378,2,0,New York Yankees,Loss,-1.0
 2026-09-23,MLB,Detroit Tigers,Washington Nationals,Washington Nationals,+1.5,0.04,0.32,7.5,0.73,0.78,2.44,0.26,0.22,2026-09-24 22:25:11.107435,2,4,Washington Nationals,Win,1.440000057220459
 2026-09-23,MLB,Detroit Tigers,Washington Nationals,Detroit Tigers,-1.5,0.96,0.68,7.5,0.27,0.22,1.5747126,0.74,0.78,2026-09-24 22:25:11.107435,2,4,Washington Nationals,Loss,-1.0
 2026-09-24,MLB,Pittsburgh Pirates,St. Louis Cardinals,Pittsburgh Pirates,-1.5,0.67,0.69,7,0.55,0.37,1.5988024,0.51,0.76,2026-09-25 22:25:12.153529,2,1,Pittsburgh Pirates,Win,0.5988024473190308
@@ -975,5 +975,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-10-18,MLB,Cleveland Guardians,Tampa Bay Rays,Tampa Bay Rays,-1.5,0.65,0.59,6,0.48,0.68,1.8333334,0.8,0.69,2026-10-19 23:25:10.005255,1,3,Tampa Bay Rays,Win,0.8333333730697632
 2026-10-19,MLB,Tampa Bay Rays,Cleveland Guardians,Cleveland Guardians,+1.5,0.51,0.27,7,0.57,0.7,2.36,0.28,0.25,2026-10-20 23:25:08.137589,7,3,Tampa Bay Rays,Loss,-1.0
 2026-10-19,MLB,Tampa Bay Rays,Cleveland Guardians,Tampa Bay Rays,-1.5,0.49,0.73,7,0.43,0.3,1.6578947,0.72,0.75,2026-10-20 23:25:08.137589,7,3,Tampa Bay Rays,Win,0.6578947305679321
-2026-10-23,MLB,Milwaukee Brewers,Tampa Bay Rays,Milwaukee Brewers,-1.5,0.9,0.7,6,0.3,0.27,1.6211181,0.82,0.68,2026-10-22 21:55:08.885029,,,,,
-2026-10-23,MLB,Milwaukee Brewers,Tampa Bay Rays,Tampa Bay Rays,+1.5,0.1,0.3,6,0.7,0.73,2.33,0.18,0.32,2026-10-22 21:55:08.885029,,,,,
+2026-10-23,MLB,Milwaukee Brewers,Tampa Bay Rays,Milwaukee Brewers,-1.5,0.9,0.7,6,0.3,0.27,1.6211181,0.82,0.68,2026-10-22 21:55:08.885029,3,2,Milwaukee Brewers,Win,0.6211180686950684
+2026-10-23,MLB,Milwaukee Brewers,Tampa Bay Rays,Tampa Bay Rays,+1.5,0.1,0.3,6,0.7,0.73,2.33,0.18,0.32,2026-10-22 21:55:08.885029,3,2,Milwaukee Brewers,Loss,-1.0
