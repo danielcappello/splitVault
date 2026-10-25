@@ -1003,13 +1003,13 @@ date,league,home_team,away_team,team,spread,spread_handle,spread_bets,total,tota
 2026-10-21,40031,Levante,Athletic Club,Levante,-,0.0,0.0,-,0.0,0.0,3.4,0.15,0.08,2026-10-22 21:55:16.058619,3,1,Levante,Win,2.4000000953674316
 2026-10-22,41410,Ferencvaros,Uniao Torreense,Ferencvaros,-,0.0,0.0,-,0.0,0.0,1.3030303,1.0,1.0,2026-10-22 21:55:27.342154,,,,,
 2026-10-22,41410,Ferencvaros,Uniao Torreense,Uniao Torreense,-,0.0,0.0,-,0.0,0.0,10.0,0.0,0.0,2026-10-22 21:55:27.342154,,,,,
-2026-10-23,40817,Bolton Wanderers,Middlesbrough,Middlesbrough,-,0.0,0.0,-,0.0,0.0,1.5882353,1.0,1.0,2026-10-22 21:55:17.429739,,,,,
-2026-10-23,40817,Bolton Wanderers,Middlesbrough,Bolton Wanderers,-,0.0,0.0,-,0.0,0.0,5.0,0.0,0.0,2026-10-22 21:55:17.429739,,,,,
-2026-10-23,40032,Brest,Nice,Nice,-,0.0,0.0,-,0.0,0.0,3.25,0.41,0.33,2026-10-22 21:55:21.671558,,,,,
-2026-10-23,40032,Brest,Nice,Brest,-,0.0,0.0,-,0.0,0.0,2.25,0.59,0.67,2026-10-22 21:55:21.671558,,,,,
-2026-10-23,40253,Ipswich Town,Nottingham Forest,Nottingham Forest,-,0.0,0.0,-,0.0,0.0,2.25,0.62,0.57,2026-10-22 21:55:20.328248,,,,,
-2026-10-23,40253,Ipswich Town,Nottingham Forest,Ipswich Town,-,0.0,0.0,-,0.0,0.0,3.15,0.38,0.43,2026-10-22 21:55:20.328248,,,,,
-2026-10-23,40030,Torino,Monza,Monza,-,0.0,0.0,-,0.0,0.0,3.3,0.05,0.2,2026-10-22 21:55:18.906689,,,,,
-2026-10-23,40030,Torino,Monza,Torino,-,0.0,0.0,-,0.0,0.0,2.1,0.95,0.8,2026-10-22 21:55:18.906689,,,,,
-2026-10-23,40481,VfB Stuttgart,Borussia MÃ¶nchengladbach,VfB Stuttgart,-,0.0,0.0,-,0.0,0.0,1.3636364,1.0,0.98,2026-10-22 21:55:23.046281,,,,,
-2026-10-23,40481,VfB Stuttgart,Borussia MÃ¶nchengladbach,Borussia MÃ¶nchengladbach,-,0.0,0.0,-,0.0,0.0,6.0,0.0,0.02,2026-10-22 21:55:23.046281,,,,,
+2026-10-23,40817,Bolton Wanderers,Middlesbrough,Middlesbrough,-,0.0,0.0,-,0.0,0.0,1.5882353,1.0,1.0,2026-10-22 21:55:17.429739,1,5,Middlesbrough,Win,0.5882352590560913
+2026-10-23,40817,Bolton Wanderers,Middlesbrough,Bolton Wanderers,-,0.0,0.0,-,0.0,0.0,5.0,0.0,0.0,2026-10-22 21:55:17.429739,1,5,Middlesbrough,Loss,-1.0
+2026-10-23,40032,Brest,Nice,Nice,-,0.0,0.0,-,0.0,0.0,3.25,0.41,0.33,2026-10-22 21:55:21.671558,1,2,Nice,Win,2.25
+2026-10-23,40032,Brest,Nice,Brest,-,0.0,0.0,-,0.0,0.0,2.25,0.59,0.67,2026-10-22 21:55:21.671558,1,2,Nice,Loss,-1.0
+2026-10-23,40253,Ipswich Town,Nottingham Forest,Nottingham Forest,-,0.0,0.0,-,0.0,0.0,2.25,0.62,0.57,2026-10-22 21:55:20.328248,1,1,Draw,Loss,-1.0
+2026-10-23,40253,Ipswich Town,Nottingham Forest,Ipswich Town,-,0.0,0.0,-,0.0,0.0,3.15,0.38,0.43,2026-10-22 21:55:20.328248,1,1,Draw,Loss,-1.0
+2026-10-23,40030,Torino,Monza,Monza,-,0.0,0.0,-,0.0,0.0,3.3,0.05,0.2,2026-10-22 21:55:18.906689,3,2,Torino,Loss,-1.0
+2026-10-23,40030,Torino,Monza,Torino,-,0.0,0.0,-,0.0,0.0,2.1,0.95,0.8,2026-10-22 21:55:18.906689,3,2,Torino,Win,1.0999999046325684
+2026-10-23,40481,VfB Stuttgart,Borussia MÃ¶nchengladbach,VfB Stuttgart,-,0.0,0.0,-,0.0,0.0,1.3636364,1.0,0.98,2026-10-22 21:55:23.046281,2,3,Borussia MÃ¶nchengladbach,Loss,-1.0
+2026-10-23,40481,VfB Stuttgart,Borussia MÃ¶nchengladbach,Borussia MÃ¶nchengladbach,-,0.0,0.0,-,0.0,0.0,6.0,0.0,0.02,2026-10-22 21:55:23.046281,2,3,Borussia MÃ¶nchengladbach,Win,5.0
