@@ -1112,3 +1112,15 @@ usa_match_date,utc_start_time,status,home_team_id,home_team,away_team_id,away_te
 2026-10-25,2026-10-26T00:20Z,Final,26,Seattle Seahawks,12,Kansas City Chiefs,20,3
 2026-10-26,2026-10-27T00:15Z,Final,21,Philadelphia Eagles,6,Dallas Cowboys,21,38
 2026-10-29,2026-10-30T00:15Z,Final,9,Green Bay Packers,29,Carolina Panthers,27,19
+2026-11-01,2026-11-01T18:00Z,Final,2,Buffalo Bills,33,Baltimore Ravens,36,10
+2026-11-01,2026-11-01T18:00Z,Final,4,Cincinnati Bengals,10,Tennessee Titans,43,36
+2026-11-01,2026-11-01T18:00Z,Final,6,Dallas Cowboys,22,Arizona Cardinals,30,33
+2026-11-01,2026-11-01T18:00Z,Final,8,Detroit Lions,16,Minnesota Vikings,19,15
+2026-11-01,2026-11-01T18:00Z,Final,20,New York Jets,13,Las Vegas Raiders,33,38
+2026-11-01,2026-11-01T18:00Z,Final,23,Pittsburgh Steelers,5,Cleveland Browns,27,6
+2026-11-01,2026-11-01T18:00Z,Final,27,Tampa Bay Buccaneers,1,Atlanta Falcons,16,0
+2026-11-01,2026-11-01T18:00Z,Final,30,Jacksonville Jaguars,11,Indianapolis Colts,42,7
+2026-11-01,2026-11-01T21:05Z,Final,14,Los Angeles Rams,24,Los Angeles Chargers,24,9
+2026-11-01,2026-11-01T21:25Z,Final,7,Denver Broncos,12,Kansas City Chiefs,28,24
+2026-11-01,2026-11-01T21:25Z,Final,15,Miami Dolphins,17,New England Patriots,19,24
+2026-11-01,2026-11-02T01:20Z,Final,28,Washington Commanders,21,Philadelphia Eagles,27,10
