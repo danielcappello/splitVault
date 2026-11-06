@@ -65,5 +65,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-10-22,NFL,Chicago Bears,New England Patriots,New England Patriots,+3,0.27,0.45,50.5,0.51,0.6,2.3,0.24,0.46,2026-10-22 21:55:10.273734,30,24,Chicago Bears,Loss,-1.0
 2026-11-02,NFL,Seattle Seahawks,Chicago Bears,Chicago Bears,+3,0.4,0.47,46.5,0.59,0.65,2.4,0.37,0.44,2026-11-03 23:55:15.719647,17,34,Chicago Bears,Win,1.4000000953674316
 2026-11-02,NFL,Seattle Seahawks,Chicago Bears,Seattle Seahawks,-3,0.6,0.53,46.5,0.41,0.35,1.6024096,0.63,0.56,2026-11-03 23:55:15.719647,17,34,Chicago Bears,Loss,-1.0
-2026-11-05,NFL,Baltimore Ravens,Jacksonville Jaguars,Baltimore Ravens,+10,0.3,0.23,39.5,0.43,0.39,5.0,0.12,0.11,2026-11-05 19:55:06.441284,,,,,
-2026-11-05,NFL,Baltimore Ravens,Jacksonville Jaguars,Jacksonville Jaguars,-10,0.7,0.77,39.5,0.57,0.61,1.1869159,0.88,0.89,2026-11-05 19:55:06.441284,,,,,
+2026-11-05,NFL,Baltimore Ravens,Jacksonville Jaguars,Baltimore Ravens,+8.5,0.36,0.31,40.5,0.34,0.34,4.5,0.2,0.19,2026-11-06 19:55:06.354185,10,33,Jacksonville Jaguars,Loss,-1.0
+2026-11-05,NFL,Baltimore Ravens,Jacksonville Jaguars,Jacksonville Jaguars,-8.5,0.64,0.69,40.5,0.66,0.66,1.2197802,0.8,0.81,2026-11-06 19:55:06.354185,10,33,Jacksonville Jaguars,Win,0.21978020668029785
