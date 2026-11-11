@@ -69,5 +69,7 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-11-05,NFL,Baltimore Ravens,Jacksonville Jaguars,Jacksonville Jaguars,-8.5,0.64,0.69,40.5,0.66,0.66,1.2197802,0.8,0.81,2026-11-06 23:55:09.853226,10,33,Jacksonville Jaguars,Win,0.21978020668029785
 2026-11-08,NFL,Atlanta Falcons,Cincinnati Bengals,Atlanta Falcons,+3,0.29,0.25,52.5,0.2,0.35,2.5,0.29,0.2,2026-11-09 23:55:10.925296,17,34,Cincinnati Bengals,Loss,-1.0
 2026-11-08,NFL,Atlanta Falcons,Cincinnati Bengals,Cincinnati Bengals,-3,0.71,0.75,52.5,0.8,0.65,1.5555556,0.71,0.8,2026-11-09 23:55:10.925296,17,34,Cincinnati Bengals,Win,0.5555555820465088
-2026-11-09,NFL,Minnesota Vikings,Buffalo Bills,Buffalo Bills,-3,0.58,0.73,45.5,0.64,0.66,1.5208334,0.69,0.81,2026-11-10 19:55:06.760955,6,23,Buffalo Bills,Win,0.5208333730697632
-2026-11-09,NFL,Minnesota Vikings,Buffalo Bills,Minnesota Vikings,+3,0.42,0.27,45.5,0.36,0.34,2.6,0.31,0.19,2026-11-10 19:55:06.760955,6,23,Buffalo Bills,Loss,-1.0
+2026-11-09,NFL,Minnesota Vikings,Buffalo Bills,Buffalo Bills,-3,0.58,0.73,45.5,0.64,0.66,1.5208334,0.69,0.81,2026-11-10 23:55:08.689106,6,23,Buffalo Bills,Win,0.5208333730697632
+2026-11-09,NFL,Minnesota Vikings,Buffalo Bills,Minnesota Vikings,+3,0.42,0.27,45.5,0.36,0.34,2.6,0.31,0.19,2026-11-10 23:55:08.689106,6,23,Buffalo Bills,Loss,-1.0
+2026-11-12,NFL,New York Giants,Washington Commanders,New York Giants,-2.5,0.89,0.78,41.5,0.67,0.47,1.7407408,0.81,0.69,2026-11-11 19:55:05.624017,,,,,
+2026-11-12,NFL,New York Giants,Washington Commanders,Washington Commanders,+2.5,0.11,0.22,41.5,0.33,0.53,2.14,0.19,0.31,2026-11-11 19:55:05.624017,,,,,
