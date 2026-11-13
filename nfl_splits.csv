@@ -71,5 +71,5 @@ date,sport,home_team,away_team,team,spread,spread_handle,spread_bets,total,total
 2026-11-08,NFL,Atlanta Falcons,Cincinnati Bengals,Cincinnati Bengals,-3,0.71,0.75,52.5,0.8,0.65,1.5555556,0.71,0.8,2026-11-09 23:55:10.925296,17,34,Cincinnati Bengals,Win,0.5555555820465088
 2026-11-09,NFL,Minnesota Vikings,Buffalo Bills,Buffalo Bills,-3,0.58,0.73,45.5,0.64,0.66,1.5208334,0.69,0.81,2026-11-10 23:55:08.689106,6,23,Buffalo Bills,Win,0.5208333730697632
 2026-11-09,NFL,Minnesota Vikings,Buffalo Bills,Minnesota Vikings,+3,0.42,0.27,45.5,0.36,0.34,2.6,0.31,0.19,2026-11-10 23:55:08.689106,6,23,Buffalo Bills,Loss,-1.0
-2026-11-12,NFL,New York Giants,Washington Commanders,New York Giants,-2.5,0.75,0.75,40.5,0.49,0.42,1.7042253,0.8,0.7,2026-11-12 19:55:08.265330,,,,,
-2026-11-12,NFL,New York Giants,Washington Commanders,Washington Commanders,+2.5,0.25,0.25,40.5,0.51,0.58,2.2,0.2,0.3,2026-11-12 19:55:08.265330,,,,,
+2026-11-12,NFL,New York Giants,Washington Commanders,New York Giants,-2.5,0.71,0.75,40.5,0.43,0.47,1.7692307,0.71,0.71,2026-11-13 05:55:04.197703,21,24,Washington Commanders,Loss,-1.0
+2026-11-12,NFL,New York Giants,Washington Commanders,Washington Commanders,+2.5,0.29,0.25,40.5,0.57,0.53,2.1,0.29,0.29,2026-11-13 05:55:04.197703,21,24,Washington Commanders,Win,1.0999999046325684
